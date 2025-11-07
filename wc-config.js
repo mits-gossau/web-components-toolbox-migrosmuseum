@@ -4,6 +4,9 @@
 /* global self */
 /* global CustomEvent */
 
+// bug fix version 2024-10-03 (set load-custom-elements attribute on body asap.)
+// extended version 2024-09-12 (allow hash attach for cache clearing)
+// extended version 2024-09-04 (dynamic custom element define on event trigger)
 // wc-config is a loader script which finds all not defined nodes / web components, takes their node.tagNames and tries to resolve them by the directory given or url attribute directly set on the web components node
 // the javascript files to be resolved must have a default export to be applied as customElements.define constructor
 
@@ -20,6 +23,8 @@
 //  8) {boolean}[debug=true] assumes we are on debug and does post the result on console.info. Set to 'false' to suppress the console.info
 //  9) {boolean}[resolveImmediately=false] if true, customElements.define all elements immediately after import promise resolved. This can lead to the blitz/flashing when web components already connect while others are not. shadow doms then possibly prevent css rules like ":not(:defined) {display: none;}" to be effective
 //  10) {boolean}[triggerImmediately=false] if true, does not wait for window load event but trigger immediately
+//  11) {string}[loadCustomElementsEventName='load-custom-elements'] the event name which gets added to self (window)
+//  12) {string}[hash=''] to be append on the file extension, eg.: hello.js?{hash}
 (function (self, document, baseUrl, directories) {
   /**
    * Directory sets selector and url by which a reference between tagName/selector and url/file can be done (customElements.define(name aka. tagName, constructor))
@@ -46,6 +51,11 @@
    * @type {string}
    */
   const urlAttributeName = src.searchParams.get('urlAttributeName') || 'url'
+  /**
+   * the loading hash for clearing the cache
+   * @type {string}
+   */
+  const hash = src.searchParams.get('hash') || ''
   /**
    * the event and console.info name used to signal when imports are done
    * @type {string}
@@ -89,7 +99,7 @@
     // baseUrl is only used if url is relative / does not start with "." nor "/"
     if (!customElements.get(tagName)) {
       /** @type {Directory} */
-      const directory = directories.find(directory => tagName.includes(directory.selector)) || { url: '', selector: '' }
+      const directory = directories.find(directory => (new RegExp(`^${directory.selector}`)).test(tagName)) || { url: '', selector: '' }
       /**
        * urls priority is node.attribute, searchParams.directory, preset adjustable directory
        * @type {string}
@@ -105,9 +115,10 @@
          * if the url points to a javascript file the fileName will be an empty string '' else it will replace the directory.selector from tagName, if possible, then it will convert hyphen separated tagNames to camel case example: playlist-item => PlaylistItem
          * @type {string}
          */
+        // @ts-ignore
         const fileName = /.[m]{0,1}js/.test(url) ? '' : `${(tagName.replace(directory.selector, '') || tagName).charAt(0).toUpperCase()}${(tagName.replace(directory.selector, '') || tagName).slice(1).replace(/-([a-z]{1})/g, (match, p1) => p1.toUpperCase())}.${fileEnding}`
         if (directory.separateFolder) url += `${`${fileName.slice(0, 1).toLowerCase()}${fileName.slice(1)}`.replace(`.${fileEnding}`, '')}${directory.separateFolderPlural ? 's' : ''}/`
-        const importPath = `${/[./]{1}/.test(url.charAt(0)) ? '' : baseUrl}${url}${fileName}${query}`
+        const importPath = `${/[./]{1}/.test(url.charAt(0)) ? '' : baseUrl}${url}${fileName}${query}${hash ? query ? `&${hash}` : `?${hash}` : ''}`
         /** @type {ImportEl} */
         const importEl = import(importPath).then(module => /** @returns {[string, CustomElementConstructor]} */ [tagName, module.default || module, undefined, importPath])
         if (src.searchParams.get('resolveImmediately') === 'true') resolve([importEl])
@@ -117,28 +128,34 @@
     }
     return Promise.resolve(`${tagName} is already defined @load`)
   }
-  const loadListener = event => {
+  // @ts-ignore
+  const loadListener = (event, nodes = Array.from(document.querySelectorAll(`${src.searchParams.get('querySelector') || ''}:not(:defined)`)), dispatchWcConfigLoadEvent = true) => {
     /** @type {ImportEl[]} */
     const imports = []
     // finding all not defined web component nodes in the dom and forwarding their tagNames to the load function
-    Array.from(document.querySelectorAll(`${src.searchParams.get('querySelector') || ''}:not(:defined)`)).reduce((nodes, currentNode) => {
+    // @ts-ignore
+    nodes.reduce((nodes, currentNode) => {
+      // @ts-ignore
       const index = nodes.findIndex(node => node.tagName === currentNode.tagName)
       if (index !== -1) {
+        // @ts-ignore
         if ((src.searchParams.get('urlAttributeLastTrumpsAll') !== 'false' || !nodes[index].hasAttribute(urlAttributeName)) && currentNode.hasAttribute(urlAttributeName)) nodes.splice(index, 1, currentNode)
         return nodes
       }
       return [...nodes, currentNode]
+    // @ts-ignore
     }, []).forEach(node => {
       // assemble query to url that the attributes can be read by the web components script before defining its class expl. ("import.meta.url" before "export default class Breadcrumb extends Shadow() {")
       let query = ''
       if (node.hasAttribute('query') && node.attributes) {
         for (const key in node.attributes) {
-          if (node.attributes[key] && node.attributes[key].nodeName) query += `${query ? '&' : '?'}${node.attributes[key].nodeName}${node.attributes[key].nodeValue ? `=${self.encodeURIComponent(node.attributes[key].nodeValue)}` : ''}`
+          if (node.attributes[key] && node.attributes[key].nodeName && node.attributes[key].nodeName !== 'query') query += `${query ? '&' : '?'}${node.attributes[key].nodeName}${node.attributes[key].nodeValue ? `=${self.encodeURIComponent(node.attributes[key].nodeValue)}` : ''}`
         }
       }
       imports.push(load(node.tagName.toLowerCase(), node.getAttribute(urlAttributeName) || '', query))
     })
     // after all the imports have started we can resolve and do customElements.define
+    // @ts-ignore
     Promise.all(imports).then(elements => {
       if (src.searchParams.get('resolveImmediately') !== 'true') resolve(imports)
     }).catch(error => {
@@ -149,17 +166,26 @@
       if (src.searchParams.get('wc-config-load') !== 'false') {
         if (src.searchParams.get('debug') !== 'false') console.info(wcConfigLoad, imports)
         document.body.setAttribute(wcConfigLoad, 'true')
-        document.body.dispatchEvent(new CustomEvent(wcConfigLoad,
-          {
+        if (dispatchWcConfigLoadEvent) {
+          document.body.dispatchEvent(new CustomEvent(wcConfigLoad, {
             detail: { imports },
             bubbles: true,
             cancelable: true,
             composed: true
-          }
-        ))
+          }))
+        }
       }
     })
   }
+  if (document && document.body) {
+    document.body.setAttribute(src.searchParams.get('loadCustomElementsEventName') || 'load-custom-elements', 'true')
+  } else {
+    self.addEventListener('load', () => {
+      document.body.setAttribute(src.searchParams.get('loadCustomElementsEventName') || 'load-custom-elements', 'true')
+    }, { once: true })
+  }
+  // @ts-ignore
+  self.addEventListener(src.searchParams.get('loadCustomElementsEventName') || 'load-custom-elements', event => loadListener(event, event.detail.nodes, false))
   if (src.searchParams.get('triggerImmediately') === 'true') {
     loadListener()
   } else {
@@ -169,6 +195,31 @@
   // ↓↓↓ adjustable ↓↓↓
   './src/es/components/', // baseUrl
   [
+    {
+      selector: 'migrosmuseum-a-',
+      url: 'atoms/',
+      separateFolder: true
+    },
+    {
+      selector: 'migrosmuseum-c-',
+      url: 'controllers/',
+      separateFolder: true
+    },
+    {
+      selector: 'migrosmuseum-m-',
+      url: 'molecules/',
+      separateFolder: true
+    },
+    {
+      selector: 'migrosmuseum-o-',
+      url: 'organisms/',
+      separateFolder: true
+    },
+    {
+      selector: 'migrosmuseum-p-',
+      url: 'pages/',
+      separateFolder: true
+    },
     {
       selector: 'a-',
       url: 'web-components-toolbox/src/es/components/atoms/',
@@ -185,16 +236,6 @@
       separateFolder: true
     },
     {
-      selector: 'msrc-',
-      url: 'web-components-toolbox/src/es/components/msrc/',
-      separateFolder: true
-    },
-    {
-      selector: 'contentful-',
-      url: 'web-components-toolbox/src/es/components/contentful/',
-      separateFolder: true
-    },
-    {
       selector: 'o-',
       url: 'web-components-toolbox/src/es/components/organisms/',
       separateFolder: true
@@ -202,11 +243,6 @@
     {
       selector: 'p-',
       url: 'web-components-toolbox/src/es/components/pages/',
-      separateFolder: true
-    },
-    {
-      selector: 'third-party-',
-      url: 'web-components-toolbox/src/es/components/thirdParty/',
       separateFolder: true
     }
   ] // directories

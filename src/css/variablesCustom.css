@@ -7,78 +7,54 @@
 /* font tracking */
 @import url("https://cdn.fonts.net/t/1.css?apiType=css&projectid=b2e5ea60-e0d9-11ec-b713-06e2001461d0");
 
-/* custom alnatura fonts */
+/* custom alnatura fonts 
+  TODO: replace https://www.onlinewebfonts.com/download/7e39d05fff188430a1cb860db9b38881 with cdn fonts
+*/
 @font-face {
-  font-family: "FrutigerRegular";
-  src: url("https://cdn.migros.ch/ch.migros/static/fonts/Frutiger/Frutiger55Roman.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/Frutiger/Frutiger55Roman.woff") format("woff");
+  font-family: "PPMori";
+  src: url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff2") format("woff2"), url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "FrutigerBold";
-  src: url("https://cdn.migros.ch/ch.migros/static/fonts/Frutiger/Frutiger65Bold.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/Frutiger/Frutiger65Bold.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "KalamRegular";
-  src: url("https://cdn.migros.ch/ch.migros/static/fonts/Kalam/Kalam-Regular.woff") format("woff");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Helvetica Neue Condensed';
-  src: url(https://cdn.migros.ch/ch.migros/static/fonts/helveticaneue-condensed-bold/helveticaneue-condensed-bold.woff);
-  font-weight: 600;
+  font-family: "PPMoriBold";
+  src: url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff2") format("woff2"), url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff") format("woff");
+  font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
+  --a-emotion-pictures-margin-top-first-child: 0;
+  --header-default-a-menu-icon-padding-top-custom: 0;
+  --header-default-height-mobile-custom: 95px;
   --background-color: #ffffff;
-  --bg-line-height: 1.5em;
-  --button-category-color-custom: #ffffff;
-  --button-category-background-color-active-custom: #ffffff;
-  --button-category-color-hover-custom:var(--color-secondary);
-  --button-category-border-width: 2px;
-  --button-category-border-color: var(--color-secondary);
-  --button-category-border-radius-custom: 5px;
-  --button-category-background-color-hover-custom:#ffffff;
-  --button-category-background-color-custom:var(--color-secondary);
-  --button-category-background-color-hover-mobile-custom: var(--color-secondary);
-  --button-secondary-background-color-active:var(--color-secondary);
-  --button-secondary-background-color-hover:var(--color-secondary);
-  --button-secondary-color-active: #ffffff;
-  --button-secondary-background-color-hover: var(--color-secondary);
-  --color-active: #592037;
-  --color-disabled: #592037;
-  --color-hover: #b37187;
-  --color-quaternary:#ffffff;
-  --color-secondary: #8b254c;
-  --color-tertiary: #b5ce34;
-  --details-default-svg-color-custom: var(--color-tertiary);
-  --download-box-shadow-color-custom: var(--download-color-custom);
-  --download-color-custom: var(--color-tertiary);
-  --emotion-pictures-default-img-max-height: 50vh;
-  --emotion-pictures-with-button-img-max-height: var(--emotion-pictures-default-img-max-height);
-  --emotion-pictures-with-logo-img-max-height: var(--emotion-pictures-default-img-max-height);
-  --emotion-pictures-with-title-img-max-height: var(--emotion-pictures-default-img-max-height);
-  --font-family-bold: FrutigerBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
-  --font-family-secondary: KalamRegular, Avenir35Light, sans-serif;
-  --font-family: FrutigerRegular, HelveticaNowText, Helvetica, Arial, sans-serif;
-  --footer-default-h4-color: var(--background-color);
-  --footer-default-invert-a-color-hover-custom: var(--color-tertiary);
-  --footer-default-invert-color-hover-custom: var(--color-tertiary);
-  --footer-default-invert-orange-a-color-hover-custom: var(--color-hover);
-  --footer-default-invert-orange-background-color-custom: var(--color-tertiary);
-  --footer-default-invert-svg-color-custom: var(--background-color);
-  --footer-default-invert-svg-color-hover-custom: var(--color-tertiary);
+  --line-height: 1.234em;
+  --bg-line-height: var(--line-height);
+  --bg-color: var(--color);
+  --color-active: var(--m-orange-600);
+  --color-disabled: grey;
+  --color-hover: var(--m-orange-600);
+  --header-default-margin-mobile-custom: 0;
+  --header-default-margin-custom: 0;
+  --header-default-background-color-custom: transparent;
+  --navigation-default-section-background-color: var(--background-color);
+  --header-default-padding: 3em 2em;
+  --header-default-padding-mobile: 3em 2em;
+  --font-size: 23px;
+  --font-size-mobile: 13px;
+  --header-default-a-menu-icon-background-color-custom: var(--color);
+  --header-default-align-items-custom: center;
+  --header-default-flex-direction-mobile: row;
+  --navigation-default-color-custom: var(--color);
+  --header-default-justify-content-custom: space-between;
+  --navigation-default-justify-content: flex-end;
+  --color-secondary: #F4F4F4;
+  --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
+  --font-family-secondary: PPMori, Avenir35Light, sans-serif;
+  --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
   --h-color: var(--color-secondary);
   --h1-font-size: calc(1.5 * 1.75em);
   --h6-font-family: var(--font-family-secondary);
@@ -90,17 +66,4 @@
   --hr-border-width: 0 0 2px;
   --hr-secondary-border-bottom: 2px solid var(--color-secondary);
   --hr-secondary-opacity: 1;
-  --navigation-alnatura-a-link-line-height-mobile: 1.5;
-  --navigation-alnatura-a-link-line-height: 1.5;
-  --navigation-alnatura-color-mobile-custom: var(--navigation-alnatura-color-second-level-custom);
-  --navigation-alnatura-color-second-level-custom: var(--color);
-  --navigation-alnatura-line-height-mobile: 1.5;
-  --news-alnatura-line-height-mobile:100%;
-  --news-alnatura-line-height:100%;
-  --news-alnatura-li-before-left: -18px;
-  --picture-close-btn-background-color:var(--color-secondary);
-  --search-input-width-big:100%;
-  --teaser-round-figcaption-color: var(--color-secondary);
-  --teaser-tile-rounded-h6-figcaption-color-custom: var(--color-secondary);
-  --title-border-display: none;
 }
