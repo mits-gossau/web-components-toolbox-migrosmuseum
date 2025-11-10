@@ -41,26 +41,30 @@
   --font-size: max(17px, 0.7vw);
   --h-color: var(--color-secondary);
   --h1-font-size: calc(1.5 * 1.75em);
-  --header-default-h3-font-size: 1.352em;
   --h6-font-family: var(--font-family-secondary);
   --h6-font-size: var(--h2-font-size, 1.5em);
   --header-default-a-menu-icon-background-color-custom: var(--color);
+  --header-default-a-menu-icon-padding-custom: 0;
+  --header-default-a-menu-icon-padding-open-custom: 0;
   --header-default-a-menu-icon-padding-top-custom: 0;
   --header-default-align-items-custom: center;
-  --header-default-background-color-custom: transparent;
+  --header-default-background-color-custom: var(--background-color);
   --header-default-flex-direction-mobile: row;
   --header-default-font-size-mobile: var(--font-size);
-  --header-default-height-mobile-custom: auto;
+  --header-default-h3-font-size: 1.352em;
+  --header-default-height-mobile-custom: 5.225em;
   --header-default-justify-content-custom: space-between;
   --header-default-logo-width-custom: max(11em, 198px);
   --header-default-margin-mobile-custom: 0;
   --header-default-padding-mobile: 1.35em 1.7em;
+  --header-default-position-open-mobile-custom: static;
   --hr-border-bottom: 2px dotted var(--m-gray-600);
   --hr-border-width: 0 0 2px;
   --hr-secondary-border-bottom: 2px solid var(--color-secondary);
   --hr-secondary-opacity: 1;
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
+  --menu-icon-font-size: 2.5em;
   --navigation-default-color-custom: var(--color);
   --navigation-default-justify-content: flex-end;
   --navigation-default-section-background-color: var(--background-color);
@@ -69,7 +73,9 @@
 @media only screen and (max-width: 1200px) {
   :root {
     --header-default-font-size-mobile: var(--font-size-mobile);
-    --header-default-padding-mobile: 4.23em 0.8em 1.23em 1.29em;
     --header-default-h3-font-size: 0.777em;
+    --header-default-height-mobile-custom: 8.155em;
+    --header-default-padding-mobile: 4.23em 0.8em 1.23em 1.29em;
+    --menu-icon-font-size: 1.35em;
   }
 }

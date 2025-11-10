@@ -24,6 +24,10 @@ import MenuIcon from '../../web-components-toolbox/src/es/components/atoms/menuI
  * }
  */
 export default class MigrosmuseumMenuIcon extends MenuIcon {
+  constructor (...args) {
+    super(...args)
+  }
+
   /**
    * renders the css
    *
@@ -32,59 +36,41 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
   renderCSS () {
     this.css = /* css */`
       :host {
-        display: inline-block;
+        --transition: 0.5s;
+        --width: 40px;
         cursor: pointer;
-        transition: var(--transition, 0.2s);
-        margin: var(--margin, 0);
-        transition: var(--transition, 0.2s);
-        font-size: 14px;
+        position: relative;
       }
-      .${this.barClass}1, .${this.barClass}2, .${this.barClass}3 {
-        width: var(--width, 35px);
-        height: var(--height, 5px);
-        background-color: var(--background-color, white);
-        margin: 0;
-        transition: var(--transition, all 0.2s ease);
-        border-radius: var(--border-radius, 0);
-      }
-      :host(:hover) .${this.barClass}1, :host(:hover) .${this.barClass}2, :host(:hover) .${this.barClass}3 {
-        background-color: var(--background-color-hover, var(--background-color, white));
-      }
-      .${this.barClass}2 {
-        margin: var(--spacing, var(--height, 5px)) 0;
-        transition: var(--transition, 0.2s);
-      }
-      /* Rotate first ${this.barClass} */
-      :host(.${this.openClass}) .${this.barClass}1, :host(.${this.openClass}) .${this.barClass}2 {
-        transform: var(--one-transform, rotate(-45deg) translateY(calc(var(--height, 5px) * 5.5 / 2)));
-      }
-      /* Fade out the second ${this.barClass} */
-      :host(.${this.openClass}) .${this.barClass}2 {
+      :host(:not(.${this.openClass})) *:not(span):not(style), :host(.${this.openClass}) span {
         opacity: 0;
       }
-      /* Rotate last ${this.barClass} */
-      :host(.${this.openClass}) .${this.barClass}3 {
-        transform: var(--two-transform, rotate(45deg) translateY(calc(var(--height, 5px) * -5.5 / 2)));
+      :host(.${this.openClass}) span {
+        transform: scaleX(0) skewX(65deg) translateX(3em);
       }
-      :host([background])::before {
-        --size-before: 3em;
-        content: "";
+      :host span {
+        font-size: var(--menu-icon-font-size);
+        text-transform: uppercase;
+        vertical-align: middle;
         position: absolute;
-        display: block;
-        height: var(--height-before, var(--size-before));
-        width: var(--width-before, var(--size-before));
-        background: var(--background-before, var(--color-secondary, red));
-        border-radius: var(--border-radius-before, 50%);
-        outline: var(--outline-before, none);
-        right: var(--right-before, unset);
-        left: var(--left-before, calc(0.135 * var(--size-before)));
-        top: var(--top-before, calc(-0.325 * var(--size-before)));
-        bottom: var(--bottom-before, unset);
-        transition: var(--transition-before, background-color 0.3s ease-out)
+        right: 0;
+        top: 20%;
       }
-      :host([background]:hover)::before {
-        background: var(--background-before-hover, var(--background-before, var(--color-secondary, red)));
+      :host :not(style) {
+        transition: all 0.3s ease-in-out;
       }
+    `
+    super.renderCSS()
+  }
+
+  /**
+   * renders the html
+   *
+   * @return {void}
+   */
+  renderHTML () {
+    super.renderHTML()
+    this.html = /* html */`
+      <span>${this.getAttribute('value') || 'Menu'}</span>
     `
   }
 }

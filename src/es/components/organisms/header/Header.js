@@ -22,7 +22,7 @@ export default class MigrosmuseumHeader extends Header {
     const result = super.renderCSS()
     this.css = /* css */`
       :host > header {
-        --header-default-a-menu-icon-align-self-mobile: center;
+        --a-menu-icon-align-self-mobile: center;
         gap: 2.23em;
       }
       :host > header::before {
@@ -46,6 +46,9 @@ export default class MigrosmuseumHeader extends Header {
       }
       :host > header > a-logo {
         flex-grow: 0;
+      }
+      :host > header > a-menu-icon.open {
+        margin-right: 5px;
       }
     `
     return result
@@ -82,6 +85,7 @@ export default class MigrosmuseumHeader extends Header {
         }
       ]).then(children => {
         this.MenuIcon = new children[0].constructorClass({ namespace: this.getAttribute('namespace') ? `${this.getAttribute('namespace')}a-menu-icon-` : '', namespaceFallback: this.hasAttribute('namespace-fallback'), mobileBreakpoint: this.mobileBreakpoint }) // eslint-disable-line
+        this.MenuIcon.setAttribute('value', this.getAttribute('menu-icon-value'))
         this.MenuIcon.addEventListener('click', event => {
           this.header.classList.toggle('open')
           const prop = this.header.classList.contains('open') ? 'add' : 'remove'
