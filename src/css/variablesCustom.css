@@ -34,15 +34,26 @@
   --color-disabled: grey;
   --color-hover: var(--m-orange-600);
   --color-secondary: #F4F4F4;
+  --content-spacing-mobile: 0.769rem;
+  --content-spacing: 1.647rem;
   --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-size-mobile: min(13px, 4vw);
   --font-size: max(17px, 0.7vw);
   --h-color: var(--color-secondary);
-  --h1-font-size: calc(1.5 * 1.75em);
+  --h1-font-size-mobile: 4.46em;
+  --h1-font-size: 14.12em;
+  --h2-font-size-mobile: 3.54em;
+  --h2-font-size: 6.47em;
+  --h3-font-size-mobile: 2.077em;
+  --h3-font-size: 3.3em;
+  --h4-font-size-mobile: 1.46em;
+  --h4-font-size: 2.12em;
+  --h5-font-size-mobile: 1em;
+  --h5-font-size: 1.352em;
   --h6-font-family: var(--font-family-secondary);
-  --h6-font-size: var(--h2-font-size, 1.5em);
+  --h6-font-size: var(--h5-font-size);
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
   --header-default-a-menu-icon-padding-open-custom: 0;
@@ -51,12 +62,12 @@
   --header-default-background-color-custom: var(--background-color);
   --header-default-flex-direction-mobile: row;
   --header-default-font-size-mobile: var(--font-size);
-  --header-default-h3-font-size: 1.352em;
+  --header-default-h3-font-size: var(--h3-font-size);
   --header-default-height-mobile-custom: 5.225em;
   --header-default-justify-content-custom: space-between;
   --header-default-logo-width-custom: max(11em, 198px);
   --header-default-margin-mobile-custom: 0;
-  --header-default-padding-mobile: 1.35em 1.7em;
+  --header-default-padding-mobile: 1.35em var(--content-spacing);
   --header-default-position-open-mobile-custom: static;
   --hr-border-bottom: 2px dotted var(--m-gray-600);
   --hr-border-width: 0 0 2px;
@@ -65,6 +76,7 @@
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --menu-icon-font-size: 2.5em;
+  --navigation-default-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing);
   --navigation-default-color-custom: var(--color);
   --navigation-default-justify-content: flex-end;
   --navigation-default-section-background-color: var(--background-color);
@@ -72,10 +84,11 @@
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
 @media only screen and (max-width: 1200px) {
   :root {
+    --h6-font-size: 0.777em;
     --header-default-font-size-mobile: var(--font-size-mobile);
-    --header-default-h3-font-size: 0.777em;
     --header-default-height-mobile-custom: 8.155em;
-    --header-default-padding-mobile: 4.23em 0.8em 1.23em 1.29em;
+    --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.23em;
     --menu-icon-font-size: 1.35em;
+    --navigation-default-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing-mobile);
   }
 }

@@ -22,6 +22,7 @@ export default class MigrosmuseumHeader extends Header {
     const result = super.renderCSS()
     this.css = /* css */`
       :host > header {
+        --details-shadow-icon-justify-content: flex-start;
         --a-menu-icon-align-self-mobile: center;
         gap: 2.23em;
       }
@@ -41,7 +42,7 @@ export default class MigrosmuseumHeader extends Header {
         flex: 1;
         order: 2;
         text-align: center;
-        font-size: var(--h3-font-size);
+        font-size: var(--h6-font-size);
         margin: 0;
       }
       :host > header > a-logo {
