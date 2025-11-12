@@ -89,7 +89,6 @@
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --menu-icon-font-size: 2.5em;
-  --navigation-default-with-styles-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing);
   --navigation-default-with-styles-a-margin-mobile: 0;
   --navigation-default-with-styles-a-text-decoration: none;
   --navigation-default-with-styles-color-custom: var(--color);
@@ -102,7 +101,6 @@
   --navigation-default-with-styles-language-switcher-justify-content: flex-start;
   --navigation-default-with-styles-language-switcher-margin-last-child-mobile: 0 calc(-1 * var(--content-spacing) / 2) 0 0;
   --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
-  --navigation-default-with-styles-padding-no-scroll: 0 0 0.5rem;
   --navigation-default-with-styles-section-background-color: var(--background-color);
 }
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
@@ -115,11 +113,10 @@
     --header-default-height-mobile-custom: 8.155em;
     --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.23em;
     --menu-icon-font-size: 1.35em;
-    --navigation-default-with-styles-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing-mobile);
     --navigation-default-with-styles-language-switcher-align-items-mobile: flex-start;
     --navigation-default-with-styles-language-switcher-flex-direction: column;
     --navigation-default-with-styles-language-switcher-gap-mobile: 0.62em;
     --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing-mobile);
-    --navigation-default-with-styles-padding-no-scroll: 0 0 1rem;
+    --navigation-default-with-styles-language-switcher-padding: 1rem var(--content-spacing-mobile) 0;
   }
 }
