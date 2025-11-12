@@ -27,6 +27,9 @@
 }
 
 :root {
+  --a-color: var(--color);
+  --a-text-decoration: underline;
+  --ArrowUpRight-svg-transform: translateY(0.35em);
   --background-color: #ffffff;
   --bg-color: var(--color);
   --bg-line-height: var(--line-height);
@@ -34,26 +37,36 @@
   --color-disabled: grey;
   --color-hover: var(--m-orange-600);
   --color-secondary: #F4F4F4;
+  --color: black;
   --content-spacing-mobile: 0.769rem;
   --content-spacing: 1.647rem;
+  --details-shadow-a-color: var(--color);
+  --details-shadow-a-text-decoration: none;
+  --details-shadow-child-margin-custom: 0;
   --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-size-mobile: min(13px, 4vw);
   --font-size: max(17px, 0.7vw);
-  --h-color: var(--color-secondary);
+  --h-color: var(--color);
   --h1-font-size-mobile: 4.46em;
   --h1-font-size: 14.12em;
+  --h1-line-height: 1em;
   --h2-font-size-mobile: 3.54em;
   --h2-font-size: 6.47em;
+  --h2-line-height: 1em;
   --h3-font-size-mobile: 2.077em;
   --h3-font-size: 3.3em;
-  --h4-font-size-mobile: 1.46em;
+  --h3-line-height: 1em;
+  --h4-font-size-mobile: 2.12em;
   --h4-font-size: 2.12em;
+  --h4-line-height: 1em;
   --h5-font-size-mobile: 1em;
   --h5-font-size: 1.352em;
+  --h5-line-height: 1em;
   --h6-font-family: var(--font-family-secondary);
   --h6-font-size: var(--h5-font-size);
+  --h6-line-height: 1em;
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
   --header-default-a-menu-icon-padding-open-custom: 0;
@@ -76,19 +89,37 @@
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --menu-icon-font-size: 2.5em;
-  --navigation-default-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing);
-  --navigation-default-color-custom: var(--color);
-  --navigation-default-justify-content: flex-end;
-  --navigation-default-section-background-color: var(--background-color);
+  --navigation-default-with-styles-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing);
+  --navigation-default-with-styles-a-margin-mobile: 0;
+  --navigation-default-with-styles-a-text-decoration: none;
+  --navigation-default-with-styles-color-custom: var(--color);
+  --navigation-default-with-styles-h4-margin-mobile: 0;
+  --navigation-default-with-styles-justify-content: flex-end;
+  --navigation-default-with-styles-language-switcher-align-items-mobile: flex-end;
+  --navigation-default-with-styles-language-switcher-flex-last-child-mobile: 1;
+  --navigation-default-with-styles-language-switcher-gap: 1.59em;
+  --navigation-default-with-styles-language-switcher-justify-content-last-child-mobile: flex-end;
+  --navigation-default-with-styles-language-switcher-justify-content: flex-start;
+  --navigation-default-with-styles-language-switcher-margin-last-child-mobile: 0 calc(-1 * var(--content-spacing) / 2) 0 0;
+  --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
+  --navigation-default-with-styles-padding-no-scroll: 0 0 0.5rem;
+  --navigation-default-with-styles-section-background-color: var(--background-color);
 }
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
 @media only screen and (max-width: 1200px) {
   :root {
+    --ArrowUpRight-svg-transform: translate(-0.3em, 0.35em);
+    --h4-font-size-mobile: 1.46em;
     --h6-font-size: 0.777em;
     --header-default-font-size-mobile: var(--font-size-mobile);
     --header-default-height-mobile-custom: 8.155em;
     --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.23em;
     --menu-icon-font-size: 1.35em;
-    --navigation-default-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing-mobile);
+    --navigation-default-with-styles-a-link-content-spacing-custom-no-scroll: 0 var(--content-spacing-mobile);
+    --navigation-default-with-styles-language-switcher-align-items-mobile: flex-start;
+    --navigation-default-with-styles-language-switcher-flex-direction: column;
+    --navigation-default-with-styles-language-switcher-gap-mobile: 0.62em;
+    --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing-mobile);
+    --navigation-default-with-styles-padding-no-scroll: 0 0 1rem;
   }
 }
