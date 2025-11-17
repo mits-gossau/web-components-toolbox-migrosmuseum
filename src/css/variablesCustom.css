@@ -4,8 +4,6 @@
   * - if a component holds other components or nodes you can declare or remap classes eg. :host > h1 {--color: var(--h1-color, white);}
   * - if a component holds other components you should share the attribute namespace with its children
   */
-/* font tracking */
-@import url("https://cdn.fonts.net/t/1.css?apiType=css&projectid=b2e5ea60-e0d9-11ec-b713-06e2001461d0");
 
 /* custom fonts 
   TODO: replace https://www.onlinewebfonts.com/download/7e39d05fff188430a1cb860db9b38881 with cdn fonts
