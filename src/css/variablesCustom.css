@@ -12,7 +12,7 @@
 */
 @font-face {
   font-family: "PPMori";
-  src: url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff2") format("woff2"), url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff") format("woff");
+  src: url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -20,7 +20,15 @@
 
 @font-face {
   font-family: "PPMoriBold";
-  src: url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff2") format("woff2"), url("https://db.onlinewebfonts.com/t/7e39d05fff188430a1cb860db9b38881.woff") format("woff");
+  src: url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "PPMoriItalic";
+  src: url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-SemiboldItalic.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-SemiboldItalic.woff") format("woff");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -40,10 +48,13 @@
   --color: black;
   --content-spacing-mobile: 0.769rem;
   --content-spacing: 1.647rem;
+  --content-width-mobile: calc(100% - var(--content-spacing-mobile) * 2);
+  --content-width: calc(100% - var(--content-spacing) * 2);
   --details-shadow-a-color: var(--color);
   --details-shadow-a-text-decoration: none;
   --details-shadow-child-margin-custom: 0;
   --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
+  --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-size-mobile: min(13px, 4vw);
@@ -55,7 +66,7 @@
   --h2-font-size-mobile: 3.54em;
   --h2-font-size: 6.47em;
   --h2-line-height: 1em;
-  --h3-font-size-mobile: 2.077em;
+  --h3-font-size-mobile: 2.1em;
   --h3-font-size: 3.3em;
   --h3-line-height: 1em;
   --h4-font-size-mobile: 2.12em;
@@ -107,16 +118,15 @@
 @media only screen and (max-width: 1200px) {
   :root {
     --ArrowUpRight-svg-transform: translate(-0.3em, 0.35em);
-    --h4-font-size-mobile: 1.46em;
+    --h4-font-size-mobile: 1.23em;
     --h6-font-size: 0.777em;
     --header-default-font-size-mobile: var(--font-size-mobile);
     --header-default-height-mobile-custom: 8.155em;
-    --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.23em;
+    --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.231em;
     --menu-icon-font-size: 1.35em;
     --navigation-default-with-styles-language-switcher-align-items-mobile: flex-start;
     --navigation-default-with-styles-language-switcher-flex-direction: column;
     --navigation-default-with-styles-language-switcher-gap-mobile: 0.62em;
-    --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing-mobile);
-    --navigation-default-with-styles-language-switcher-padding: 1rem var(--content-spacing-mobile) 0;
+    --navigation-default-with-styles-language-switcher-padding: 1.31rem var(--content-spacing-mobile) 0;
   }
 }
