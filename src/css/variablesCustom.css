@@ -7,7 +7,7 @@
 /* font tracking */
 @import url("https://cdn.fonts.net/t/1.css?apiType=css&projectid=b2e5ea60-e0d9-11ec-b713-06e2001461d0");
 
-/* custom alnatura fonts 
+/* custom fonts 
   TODO: replace https://www.onlinewebfonts.com/download/7e39d05fff188430a1cb860db9b38881 with cdn fonts
 */
 @font-face {
@@ -44,7 +44,8 @@
   --color-active: var(--m-orange-600);
   --color-disabled: grey;
   --color-hover: var(--m-orange-600);
-  --color-secondary: #F4F4F4;
+  --color-secondary: var(--color);
+  --color-tertiary: #F4F4F4;
   --color: black;
   --content-spacing-mobile: 0.769rem;
   --content-spacing: 1.647rem;
@@ -59,25 +60,35 @@
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-size-mobile: min(13px, 4vw);
   --font-size: max(17px, 0.7vw);
+  --grid-12er-grid-gap: 0;
+  --grid-12er-section-child-padding-mobile: var(--content-spacing-mobile);
+  --grid-12er-section-child-padding: var(--content-spacing);
+  --grid-12er-width: 100%;
   --h-color: var(--color);
   --h1-font-size-mobile: 4.46em;
   --h1-font-size: 14.12em;
-  --h1-line-height: 1em;
+  --h1-line-height: 0.9em;
+  --h1-margin: 0 auto 0.8rem;
   --h2-font-size-mobile: 3.54em;
   --h2-font-size: 6.47em;
-  --h2-line-height: 1em;
+  --h2-line-height: 0.9em;
+  --h2-margin: 0 auto 0.8rem;
   --h3-font-size-mobile: 2.1em;
   --h3-font-size: 3.3em;
-  --h3-line-height: 1em;
+  --h3-line-height: 0.9em;
+  --h3-margin: 0 auto 0.8rem;
   --h4-font-size-mobile: 2.12em;
   --h4-font-size: 2.12em;
-  --h4-line-height: 1em;
+  --h4-line-height: 0.9em;
+  --h4-margin: 0 auto 0.8rem;
   --h5-font-size-mobile: 1em;
   --h5-font-size: 1.352em;
-  --h5-line-height: 1em;
+  --h5-line-height: 0.9em;
+  --h5-margin: 0 auto 0.8rem;
   --h6-font-family: var(--font-family-secondary);
   --h6-font-size: var(--h5-font-size);
-  --h6-line-height: 1em;
+  --h6-line-height: 0.9em;
+  --h6-margin: 0 auto 0.8rem;
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
   --header-default-a-menu-icon-padding-open-custom: 0;
@@ -99,6 +110,7 @@
   --hr-secondary-opacity: 1;
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
+  --m-orange-600: #F60;
   --menu-icon-font-size: 2.5em;
   --navigation-default-with-styles-a-margin-mobile: 0;
   --navigation-default-with-styles-a-text-decoration: none;
@@ -113,6 +125,19 @@
   --navigation-default-with-styles-language-switcher-margin-last-child-mobile: 0 calc(-1 * var(--content-spacing) / 2) 0 0;
   --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
   --navigation-default-with-styles-section-background-color: var(--background-color);
+  --p-margin: auto;
+  --picture-grid-img-height: 100%;
+  --picture-grid-img-min-height: 100%;
+  --picture-grid-img-min-width: 100%;
+  --picture-grid-img-object-fit: cover;
+  --picture-grid-img-width: 100%;
+}
+/* color schemes */
+:root {
+  --color-scheme-one-background-color: #7124A7;
+  --color-scheme-one-color: #DFEA52;
+  --color-scheme-two-background-color: #BFE9FF;
+  --color-scheme-two-color: #5B3A47;
 }
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
 @media only screen and (max-width: 1200px) {
