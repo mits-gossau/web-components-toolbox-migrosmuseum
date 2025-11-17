@@ -60,6 +60,11 @@
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-size-mobile: min(13px, 4vw);
   --font-size: max(17px, 0.7vw);
+  --grid-12er-a-color: --grid-12er-h-color;
+  --grid-12er-a-height: auto;
+  --grid-12er-a-margin: 0;
+  --grid-12er-a-text-decoration: none;
+  --grid-12er-a-width: 100%;
   --grid-12er-grid-gap: 0;
   --grid-12er-section-child-padding-mobile: var(--content-spacing-mobile);
   --grid-12er-section-child-padding: var(--content-spacing);
