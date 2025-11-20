@@ -38,6 +38,7 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
       :host {
         --transition: 0.5s;
         --width: 40px;
+        display: grid;
         cursor: pointer;
         position: relative;
       }
@@ -55,6 +56,15 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
         right: 0;
         top: 20%;
       }
+      :host :where(.bar1, .bar2, .bar3) {
+        justify-self: end;
+      }
+      :host div.hidden {
+        visibility: hidden;
+        font-size: var(--menu-icon-font-size);
+        text-transform: uppercase;
+        height: 0;
+      }
       :host :not(style) {
         transition: all 0.3s ease-in-out;
       }
@@ -71,6 +81,7 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
     super.renderHTML()
     this.html = /* html */`
       <span>${this.getAttribute('value') || 'Menu'}</span>
+      <div class="hidden">${this.getAttribute('value') || 'Menu'}</div>
     `
   }
 }

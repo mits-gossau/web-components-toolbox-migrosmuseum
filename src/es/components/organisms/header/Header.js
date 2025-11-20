@@ -29,6 +29,10 @@ export default class MigrosmuseumHeader extends Header {
       :host > header::before {
         display: none;
       }
+      :host > header > * {
+        flex-grow: 0;
+        flex-shrink: 0;
+      }
       :host > header > a-logo {
         display: block;
         position: static;
@@ -39,17 +43,20 @@ export default class MigrosmuseumHeader extends Header {
         transition: none;
       }
       :host > header > :where(h1,h2,h3,h4,h5,h6,time) {
-        flex: 1;
+        flex-grow: 1;
+        flex-shrink: 1;
         order: 2;
         text-align: center;
         font-size: var(--h6-font-size);
         margin: 0;
       }
-      :host > header > a-logo {
-        flex-grow: 0;
-      }
       :host > header > a-menu-icon.open {
         margin-right: 5px;
+      }
+      @media only screen and (max-width: _max-width_) {
+        :host > header > a-logo {
+          flex-grow: 0;
+        }
       }
     `
     return result
