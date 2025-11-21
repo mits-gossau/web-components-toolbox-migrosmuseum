@@ -35,10 +35,14 @@
 :root {
   --a-color: var(--color);
   --a-text-decoration: underline;
+  --any-content-spacing-mobile: 0;
+  --any-content-spacing: 0;
   --ArrowUpRight-svg-transform: translateY(0.35em);
   --background-color: #ffffff;
   --bg-color: var(--color);
   --bg-line-height: var(--line-height);
+  --box-shadow-mobile: 0px -5.6em 3em -6.4em rgba(0,0,0,1) inset;
+  --box-shadow: 0px -6.6em 2.4em -4.4em rgba(0,0,0,0.17) inset;
   --color-active: var(--m-orange-600);
   --color-disabled: grey;
   --color-hover: var(--m-orange-600);
@@ -52,6 +56,7 @@
   --details-shadow-a-color: var(--color);
   --details-shadow-a-text-decoration: none;
   --details-shadow-child-margin-custom: 0;
+  --details-shadow-details-box-shadow: var(--box-shadow);
   --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
@@ -70,27 +75,27 @@
   --h-color: var(--color);
   --h1-font-size-mobile: 4.46em;
   --h1-font-size: 14.12em;
-  --h1-line-height: 0.9em;
+  --h1-line-height: 1;
   --h1-margin: 0 auto 0.8rem;
   --h2-font-size-mobile: 3.54em;
   --h2-font-size: 6.47em;
-  --h2-line-height: 0.9em;
+  --h2-line-height: 1;
   --h2-margin: 0 auto 0.8rem;
   --h3-font-size-mobile: 2.1em;
   --h3-font-size: 3.3em;
-  --h3-line-height: 0.9em;
+  --h3-line-height: 1;
   --h3-margin: 0 auto 0.8rem;
   --h4-font-size-mobile: 2.12em;
   --h4-font-size: 2.12em;
-  --h4-line-height: 0.9em;
+  --h4-line-height: 1;
   --h4-margin: 0 auto 0.8rem;
   --h5-font-size-mobile: 1em;
   --h5-font-size: 1.352em;
-  --h5-line-height: 0.9em;
+  --h5-line-height: 1;
   --h5-margin: 0 auto 0.8rem;
   --h6-font-family: var(--font-family-secondary);
   --h6-font-size: var(--h5-font-size);
-  --h6-line-height: 0.9em;
+  --h6-line-height: 1;
   --h6-margin: 0 auto 0.8rem;
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
@@ -143,7 +148,7 @@
   --color-scheme-two-color: #5B3A47;
 }
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 767px) {
   :root {
     --ArrowUpRight-svg-transform: translate(-0.3em, 0.35em);
     --h4-font-size-mobile: 1.23em;
