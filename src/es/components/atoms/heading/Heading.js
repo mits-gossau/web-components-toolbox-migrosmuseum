@@ -80,7 +80,7 @@ export default class Heading extends Shadow() {
       :host([crop]) > * {
         transform: translateY(0.35em);
         margin-top: -0.35em !important;
-        clip-path: rect(0 100% 82.5% 0);
+        clip-path: rect(0 100% calc(100% - 0.35em) 0)
       }
       :host([fix-first-letter-spacing]) > * {
         transform: translateX(-0.075em);
@@ -91,9 +91,6 @@ export default class Heading extends Shadow() {
       @media only screen and (max-width: _max-width_) {
         :host {
           padding: 0 var(--content-spacing-mobile, var(--content-spacing, unset));
-        }
-        :host([crop]) > * {
-          clip-path: rect(0 100% 66% 0);
         }
       }
     `
