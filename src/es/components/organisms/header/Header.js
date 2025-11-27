@@ -43,6 +43,7 @@ export default class MigrosmuseumHeader extends Header {
         transition: none;
       }
       :host > header > :where(h1,h2,h3,h4,h5,h6,time) {
+        line-height: var(--h6-line-height);
         flex-grow: 1;
         flex-shrink: 1;
         order: 2;
