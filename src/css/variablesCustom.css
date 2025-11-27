@@ -98,7 +98,8 @@
   --h5-line-height: 1;
   --h5-margin: 0 auto 0.8rem;
   --h6-font-family: var(--font-family-secondary);
-  --h6-font-size: var(--h5-font-size);
+  --h6-font-size-mobile: 1.462em;
+  --h6-font-size: 2.118em;
   --h6-line-height: 1;
   --h6-margin: 0 auto 0.8rem;
   --header-default-a-menu-icon-background-color-custom: var(--color);
@@ -123,6 +124,11 @@
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --m-orange-600: #F60;
+  --marquee-background-color: var(--color-scheme-two-color);
+  --marquee-color: var(--color-scheme-two-background-color);
+  --marquee-h-color: var(--marquee-color);
+  --marquee-padding-mobile: calc(var(--content-spacing-mobile) / 2) var(--content-spacing-mobile) calc(var(--content-spacing-mobile) / 4);
+  --marquee-padding: calc(var(--content-spacing) / 1.5) var(--content-spacing) calc(var(--content-spacing) / 2);
   --menu-icon-font-size: 2.5em;
   --navigation-default-with-styles-a-margin-mobile: 0;
   --navigation-default-with-styles-a-text-decoration: none;
