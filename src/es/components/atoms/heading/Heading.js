@@ -2,7 +2,7 @@
 import { Shadow } from '../../web-components-toolbox/src/es/components/prototypes/Shadow.js'
 import { Intersection } from '../../web-components-toolbox/src/es/components/prototypes/Intersection.js'
 
-// Sensor used when attribute is sticky
+// Sensor is used when attribute is sticky
 class IntersectionSensor extends Intersection() {
   constructor (intersectionFunction, options = {}, ...args) {
     super({
@@ -13,8 +13,67 @@ class IntersectionSensor extends Intersection() {
 
     this.intersectionFunction = intersectionFunction
   }
+
+  connectedCallback () {
+    super.connectedCallback()
+    if (this.shouldRenderCSS()) this.renderCSS()
+  }
+
   intersectionCallback (entries, observer) {
     this.intersectionFunction(this.areEntriesIntersecting(entries))
+  }
+
+  /**
+   * evaluates if a render is necessary
+   *
+   * @return {boolean}
+   */
+  shouldRenderCSS () {
+    return !this.root.querySelector(`${this.cssSelector} > style[_css]`)
+  }
+
+  /**
+   * renders the css
+   */
+  renderCSS () {
+    this.css = /* css */`
+      :host {
+        padding: 0;
+        margin: 0 !important;
+        height: 0;
+        width: 100% !important;
+      }
+      :host([hidden]) {
+        visibility: hidden;
+      }
+      :host([show][shadow]) {
+        animation: shadow 3s ease-in forwards !important;
+      }
+      :host([shadow]) {
+        height: 6.4em; /* matches the shadow spread */
+        margin-top: -6.4em !important;
+      }
+      :host(:not([shadow])) {
+        visibility: hidden;
+      }
+      @media only screen and (max-width: _max-width_) {
+        :host([show][shadow]) {
+          animation: shadow-mobile 3s ease-in forwards !important;
+        }
+        :host([shadow]) {
+          height: 4.4em; /* matches the shadow spread */
+          margin-top: -4.4em !important;
+        }
+      }
+      @keyframes shadow {
+        0% { box-shadow: none; }
+        100% { box-shadow: var(--box-shadow-inset); }
+      }
+      @keyframes shadow-mobile {
+        0% { box-shadow: none; }
+        100% { box-shadow: var(--box-shadow-inset-mobile); }
+      }
+    `
   }
 }
 
@@ -33,6 +92,7 @@ export default class Heading extends Shadow() {
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
+    // when sticky, this component is followed directly by the IntersectionSensor component, so we pick the siblings sibling
     const nextElementSibling = this.hasAttribute('sticky')
       ? this.nextElementSibling?.nextElementSibling || this.nextElementSibling
       : this.nextElementSibling
@@ -48,30 +108,10 @@ export default class Heading extends Shadow() {
         `
         return isWebComponent
       }
-      if (this.hasAttribute('shadow') && !fixZIndex(nextElementSibling)) setTimeout(() => fixZIndex(nextElementSibling), 50)
-      // set box-shadow late for slow transition, looks better with elements below building up
-      if (this.hasAttribute('sticky') && typeof nextElementSibling.setCss === 'function') {
-        nextElementSibling.setCss(/* css */`
-          :host > section {
-            box-shadow: var(--box-shadow);
-          }
-          @media only screen and (max-width: _max-width_) {
-            :host > section {
-              box-shadow: var(--box-shadow-mobile);
-            }
-          }
-        `, undefined, false)
-      } else {
-        this.css = /* css */`
-          :host([shadow]) {
-            box-shadow: var(--box-shadow-inset);
-          }
-          @media only screen and (max-width: _max-width_) {
-            :host([shadow]) {
-              box-shadow: var(--box-shadow-mobile-inset);
-            }
-          }
-        `
+      this.setAttribute('show', '')
+      if (this.hasAttribute('sticky')) {
+        this.nextElementSibling.setAttribute('show', '')
+        if (!fixZIndex(nextElementSibling)) setTimeout(() => fixZIndex(nextElementSibling), 50)
       }
       this.hidden = false
     })
@@ -103,10 +143,10 @@ export default class Heading extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
+        --show: none;
         display: flex !important;
         width: 100% !important;
         padding: 0 var(--content-spacing, unset);
-        transition: box-shadow 3s ease-in;
       }
       :host([sticky]) {
         position: sticky;
@@ -129,10 +169,24 @@ export default class Heading extends Shadow() {
       :host([crop][fix-first-letter-spacing]) > * {
         transform: translate(-0.075em, 0.35em);
       }
+      :host([show][shadow]:not([sticky])) {
+        animation: shadow 3s ease-in forwards !important;
+      }
       @media only screen and (max-width: _max-width_) {
         :host {
           padding: 0 var(--content-spacing-mobile, var(--content-spacing, unset));
         }
+        :host([show][shadow]:not([sticky])) {
+          animation: shadow-mobile 3s ease-in forwards !important;
+        }
+      }
+      @keyframes shadow {
+        0% { box-shadow: none; }
+        100% { box-shadow: var(--box-shadow-inset); }
+      }
+      @keyframes shadow-mobile {
+        0% { box-shadow: none; }
+        100% { box-shadow: var(--box-shadow-inset-mobile); }
       }
     `
     return this.fetchTemplate()
@@ -180,11 +234,13 @@ export default class Heading extends Shadow() {
       const intersectionSensor = new IntersectionSensor(isIntersecting => {
         if (isIntersecting) {
           this.removeAttribute('hidden')
+          intersectionSensor.removeAttribute('hidden')
         } else {
           this.setAttribute('hidden', '')
+          intersectionSensor.setAttribute('hidden', '')
         }
       })
-      intersectionSensor.setAttribute('style', 'visibility: hidden; width: 0; height: 0; padding: 0; margin: 0;')
+      if (this.hasAttribute('shadow')) intersectionSensor.setAttribute('shadow', '')
       this.insertAdjacentElement('afterend', intersectionSensor)
     }
     return Promise.resolve()
