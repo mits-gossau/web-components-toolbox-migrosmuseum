@@ -149,6 +149,10 @@
   --picture-grid-img-min-width: 100%;
   --picture-grid-img-object-fit: cover;
   --picture-grid-img-width: 100%;
+  --spacer-four-height-mobile: 4.6em;
+  --spacer-four-height: 3.6em;
+  --spacer-margin-mobile: 0 auto;
+  --spacer-margin: 0 auto;
 }
 /* color schemes */
 :root {
