@@ -73,8 +73,8 @@
   --grid-12er-a-text-decoration: none;
   --grid-12er-a-width: 100%;
   --grid-12er-grid-gap: 0;
-  --grid-12er-section-child-padding-mobile: var(--content-spacing-mobile);
-  --grid-12er-section-child-padding: var(--content-spacing);
+  --grid-12er-section-child-padding-mobile: calc(var(--content-spacing-mobile) + 0.385em) var(--content-spacing-mobile);
+  --grid-12er-section-child-padding: calc(var(--content-spacing) + 0.294em) var(--content-spacing);
   --grid-12er-width: 100%;
   --h-color: var(--color);
   --h1-font-size-mobile: 4.46em;
