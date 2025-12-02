@@ -160,6 +160,8 @@
   --color-scheme-one-color: #DFEA52;
   --color-scheme-two-background-color: #BFE9FF;
   --color-scheme-two-color: #5B3A47;
+  --color-scheme-three-background-color: #F8C9DF;
+  --color-scheme-three-color: #0E6265;
 }
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
 @media only screen and (max-width: 767px) {
