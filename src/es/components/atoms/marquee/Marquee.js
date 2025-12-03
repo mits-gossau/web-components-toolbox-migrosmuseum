@@ -154,9 +154,10 @@ export default class Marquee extends Shadow() {
       :host > section > * {
         margin: 0 !important;
       }
-      @media only screen and (max-width: ${this.getAttribute('mobile-breakpoint') ? this.getAttribute('mobile-breakpoint') : self.Environment && !!self.Environment.mobileBreakpoint ? self.Environment.mobileBreakpoint : '1000px'}) {
+      @media only screen and (max-width: _max-width_) {
         :host {
           font-size: var(--font-size-mobile, var(--font-size, 1rem));
+          padding: var(--padding-mobile, var(--padding, 0.672em 0));
         }
         :host > section > * a {
           margin: var(--a-margin-mobile, var(--a-margin, var(--content-spacing-mobile, var(--content-spacing, unset)))) auto;

@@ -48,6 +48,7 @@ export default class Link extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
+        --ArrowRight-svg-transform: translate(-0.25em, -0.09rem);
         --h1-margin: 0;
         --h2-margin: 0;
         --h3-margin: 0;

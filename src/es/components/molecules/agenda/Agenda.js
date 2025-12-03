@@ -47,8 +47,6 @@ export default class Agenda extends Shadow() {
     this.css = /* css */`
       :host {
         --a-color: 0;
-        --a-text-decoration: none;
-        --ArrowRight-svg-transform: translateY(-0.176rem);
         --h1-margin: 0;
         --h2-margin: 0;
         --h3-margin: 0;

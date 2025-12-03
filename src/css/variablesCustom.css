@@ -99,20 +99,20 @@
   --h2-margin: 0 auto 0.8rem;
   --h3-font-size-mobile: 2.1rem;
   --h3-font-size: 3.3rem;
-  --h3-line-height: 1;
+  --h3-line-height: 1.1;
   --h3-margin: 0 auto 0.8rem;
   --h4-font-size-mobile: 2.12rem;
   --h4-font-size: 2.12rem;
-  --h4-line-height: 1;
+  --h4-line-height: 1.1;
   --h4-margin: 0 auto 0.8rem;
   --h5-font-size-mobile: 1.462rem;
   --h5-font-size: 2.118rem;
-  --h5-line-height: 1;
+  --h5-line-height: 1.1;
   --h5-margin: 0 auto 0.8rem;
   --h6-font-family: var(--font-family-secondary);
   --h6-font-size-mobile: 0.769rem;
   --h6-font-size: 1.353rem;
-  --h6-line-height: 1;
+  --h6-line-height: var(--line-height);
   --h6-margin: 0 auto 0.8rem;
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
@@ -144,8 +144,8 @@
   --marquee-background-color: var(--color-scheme-two-color);
   --marquee-color: var(--color-scheme-two-background-color);
   --marquee-h-color: var(--marquee-color);
-  --marquee-padding-mobile: calc(var(--content-spacing-mobile) / 2) var(--content-spacing-mobile) calc(var(--content-spacing-mobile) / 4);
-  --marquee-padding: calc(var(--content-spacing) / 1.5) var(--content-spacing) calc(var(--content-spacing) / 2);
+  --marquee-padding-mobile: calc(var(--content-spacing-mobile) / 0.9) var(--content-spacing-mobile) calc(var(--content-spacing-mobile) / 1.2);
+  --marquee-padding: calc(var(--content-spacing) / 1.8) var(--content-spacing) calc(var(--content-spacing) / 2.3);
   --menu-icon-font-size: 2.5em;
   --navigation-default-with-styles-a-margin-mobile: 0;
   --navigation-default-with-styles-a-text-decoration: none;
@@ -172,10 +172,10 @@
   --spacer-height: 0.6em;
   --spacer-margin-mobile: 0 auto;
   --spacer-margin: 0 auto;
-  --spacer-three-height-mobile: 3.6em;
-  --spacer-three-height: 2.6em;
-  --spacer-two-height-mobile: 2.6em;
-  --spacer-two-height: 1.6em;
+  --spacer-three-height-mobile: 2.6em;
+  --spacer-three-height: 1.6em;
+  --spacer-two-height-mobile: 0.6em;
+  --spacer-two-height: 0.6em;
   --transition: color 1s ease-out, background-color 1s ease-out;
 }
 /* color schemes */
@@ -193,7 +193,6 @@
     --ArrowUpRight-svg-transform: translate(-0.3em, 0.35em);
     --h4-font-size-mobile: 1.23em;
     --h6-font-size: 0.777em;
-    --h6-line-height: 1.1;
     --header-default-font-size-mobile: var(--font-size-mobile);
     --header-default-height-mobile-custom: 8.155em;
     --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.231em;
