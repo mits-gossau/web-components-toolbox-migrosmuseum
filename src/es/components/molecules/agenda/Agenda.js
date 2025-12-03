@@ -8,7 +8,7 @@ import { Shadow } from '../../web-components-toolbox/src/es/components/prototype
 */
 export default class Agenda extends Shadow() {
   constructor (options = {}, ...args) {
-    super({ importMetaUrl: import.meta.url, ...options }, ...args)
+    super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
   }
 
   connectedCallback () {
@@ -58,15 +58,14 @@ export default class Agenda extends Shadow() {
         display: contents;
         width: 100% !important;
       }
-      :host > a {
+      :host > a, :host > migrosmuseum-a-link {
         --a-margin-mobile: var(--grid-12er-section-child-padding-mobile);
         --a-margin: var(--grid-12er-section-child-padding);
         margin-top: 1.176rem !important;
         margin-bottom: 0 !important;
       }
-      :host > a > h5 {
-        display: flex;
-        align-items: center;
+      :host > o-grid::part(section) {
+        min-height: 8em;
       }
       :host > o-grid::part(date), :host > o-grid::part(title), :host > o-grid::part(description) {
         padding: var(--grid-12er-section-child-padding);
@@ -79,8 +78,12 @@ export default class Agenda extends Shadow() {
         line-height: 1.5;
       }
       @media only screen and (max-width: _max-width_) {
-        :host > a {
+        :host > a, :host > migrosmuseum-a-link {
           margin-top: 0.77rem !important;
+        }
+        :host > o-grid::part(section) {
+          grid-template-rows: auto auto 1fr;
+          min-height: 10em;
         }
         :host > o-grid::part(date), :host > o-grid::part(title), :host > o-grid::part(description) {
           padding: var(--grid-12er-section-child-padding-mobile);
@@ -145,23 +148,37 @@ export default class Agenda extends Shadow() {
       console.error('JSON corrupted at Agenda.js component!', {error, json, target: this})
     }
     this.html = json
-      ? /* html */`
-        <o-grid namespace="grid-12er-" width="100%">
-            <section>
-              ${json.reduce((acc, curr) => {
-                const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-                return /* html */`${acc}
-                  <a ${link} part=date col-lg=2 col-sm=12 color="${curr.color}" background="${curr.backgroundColor}"><h5><time datetime="${curr.datetime}">${curr.date}</time></h5></a>
-                  <a ${link} part=title col-lg=6 col-sm=12 color="${curr.color}" background="${curr.backgroundColor}"><h5>${curr.title}</h5></a>
-                  <a ${link} part=description col-lg=4 col-sm=12 color="${curr.color}" background="${curr.backgroundColor}"><h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6></a>
-                `
-              }, '')}
-            </section>
-        </o-grid>
-      `
+      ? json.reduce((acc, curr) => {
+          const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
+          return /* html */`${acc}
+            <o-grid namespace="grid-12er-" width="100%" color="${curr.color}" background="${curr.backgroundColor}" color-hover="${curr.colorHover}" background-hover="${curr.backgroundColorHover}">
+              <style protected>
+                :host > section {
+                  --grid-12er-a-color: ${curr.color};
+                }
+                :host(:hover) > section {
+                  --grid-12er-a-color: ${curr.colorHover};
+                  --grid-12er-a-color-hover: ${curr.colorHover};
+                }
+              </style>
+              <section part=section>
+                <a ${link} part=date col-lg=2 col-sm=12>
+                  <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
+                </a>
+                <a ${link} part=title col-lg=6 col-sm=12>
+                  <h5>${curr.title}</h5>
+                </a>
+                <a ${link} part=description col-lg=4 col-sm=12>
+                  <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
+                </a>
+              </section>
+            </o-grid>
+          `
+        }, '')
       : `JSON corrupted at Agenda.js component! ${JSON.stringify({json, target: this})}`
-    // TODO: make sure the link is at the bottom, after reading json
-    this.root.appendChild(this.a)
+    if (this.a) this.root.appendChild(this.a)
+    // keeping the above to be compatible but now using the migrosmuseum link component
+    if (this.migrosmuseumALink) this.root.appendChild(this.migrosmuseumALink)
     return this.fetchModules([
       {
         path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/organisms/grid/Grid.js`,
@@ -172,6 +189,10 @@ export default class Agenda extends Shadow() {
 
   get a () {
     return this.root.querySelector('a')
+  }
+
+  get migrosmuseumALink () {
+    return this.root.querySelector('migrosmuseum-a-link')
   }
 
   get grid () {

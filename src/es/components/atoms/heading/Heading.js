@@ -148,6 +148,10 @@ export default class Heading extends Shadow() {
         width: 100% !important;
         padding: 0 var(--content-spacing, unset);
       }
+      :host(:not([sticky])) {
+        padding-top: 5.4em; /* matches the shadow spread */
+        margin-top: -5.4em !important;
+      }
       :host([sticky]) {
         position: sticky;
         top: 0;
@@ -156,6 +160,10 @@ export default class Heading extends Shadow() {
         display: none !important;
       }
       :host > * {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      :host([crop]) > * {
         margin: 0 !important;
       }
       :host([crop]) > * {

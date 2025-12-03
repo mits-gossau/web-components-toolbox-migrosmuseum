@@ -34,7 +34,9 @@
 
 :root {
   --a-color: var(--color);
+  --a-margin: 0;
   --a-text-decoration: underline;
+  --a-transition: var(--transition);
   --any-content-spacing-mobile: 0;
   --any-content-spacing: 0;
   --ArrowUpRight-svg-transform: translateY(0.35em);
@@ -58,6 +60,7 @@
   --details-shadow-a-color: var(--color);
   --details-shadow-a-text-decoration: none;
   --details-shadow-child-margin-custom: 0;
+  --details-shadow-child-margin-mobile-custom: 0;
   --details-shadow-details-box-shadow: var(--box-shadow);
   --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
@@ -71,10 +74,19 @@
   --grid-12er-a-height: auto;
   --grid-12er-a-margin: 0;
   --grid-12er-a-text-decoration: none;
+  --grid-12er-a-transition: var(--transition);
   --grid-12er-a-width: 100%;
   --grid-12er-grid-gap: 0;
+  --grid-12er-h1-margin: 0;
+  --grid-12er-h2-margin: 0;
+  --grid-12er-h3-margin: 0;
+  --grid-12er-h4-margin: 0;
+  --grid-12er-h5-margin: 0;
+  --grid-12er-h6-margin: 0;
+  --grid-12er-section-child-overflow: hidden;
   --grid-12er-section-child-padding-mobile: calc(var(--content-spacing-mobile) + 0.385em) var(--content-spacing-mobile);
   --grid-12er-section-child-padding: calc(var(--content-spacing) + 0.294em) var(--content-spacing);
+  --grid-12er-section-transition: var(--transition);
   --grid-12er-width: 100%;
   --h-color: var(--color);
   --h1-font-size-mobile: 4.46rem;
@@ -117,9 +129,14 @@
   --header-default-margin-mobile-custom: 0;
   --header-default-padding-mobile: 1.35em var(--content-spacing);
   --header-default-position-open-mobile-custom: static;
-  --hr-border-bottom: 2px dotted var(--m-gray-600);
-  --hr-border-width: 0 0 2px;
-  --hr-secondary-border-bottom: 2px solid var(--color-secondary);
+  --hr-border-bottom-mobile: 2px solid var(--color);
+  --hr-border-bottom: 3px solid var(--color);
+  --hr-border-width-mobile: 0 0 2px;
+  --hr-border-width: 0 0 3px;
+  --hr-margin: 0;
+  --hr-opacity: 0.2;
+  --hr-padding: 0;
+  --hr-secondary-border-bottom: 2px dotted var(--color-secondary);
   --hr-secondary-opacity: 1;
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
@@ -144,15 +161,22 @@
   --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
   --navigation-default-with-styles-section-background-color: var(--background-color);
   --p-margin: auto;
-  --picture-grid-img-height: 100%;
-  --picture-grid-img-min-height: 100%;
-  --picture-grid-img-min-width: 100%;
-  --picture-grid-img-object-fit: cover;
-  --picture-grid-img-width: 100%;
+  --picture-scale-up-img-height: 100%;
+  --picture-scale-up-img-min-height: 100%;
+  --picture-scale-up-img-min-width: 100%;
+  --picture-scale-up-img-object-fit: cover;
+  --picture-scale-up-img-width: 100%;
   --spacer-four-height-mobile: 4.6em;
   --spacer-four-height: 3.6em;
+  --spacer-height-mobile: 1.6em;
+  --spacer-height: 0.6em;
   --spacer-margin-mobile: 0 auto;
   --spacer-margin: 0 auto;
+  --spacer-three-height-mobile: 3.6em;
+  --spacer-three-height: 2.6em;
+  --spacer-two-height-mobile: 2.6em;
+  --spacer-two-height: 1.6em;
+  --transition: color 1s ease-out, background-color 1s ease-out;
 }
 /* color schemes */
 :root {
@@ -169,7 +193,7 @@
     --ArrowUpRight-svg-transform: translate(-0.3em, 0.35em);
     --h4-font-size-mobile: 1.23em;
     --h6-font-size: 0.777em;
-    --h6-line-height: unset;
+    --h6-line-height: 1.1;
     --header-default-font-size-mobile: var(--font-size-mobile);
     --header-default-height-mobile-custom: 8.155em;
     --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.231em;
