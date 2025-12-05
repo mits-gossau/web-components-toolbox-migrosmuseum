@@ -161,6 +161,7 @@
   --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
   --navigation-default-with-styles-section-background-color: var(--background-color);
   --p-margin: auto;
+  --picture-scale-up-aspect-ratio: 1/1;
   --picture-scale-up-img-height: 100%;
   --picture-scale-up-img-min-height: 100%;
   --picture-scale-up-img-min-width: 100%;
