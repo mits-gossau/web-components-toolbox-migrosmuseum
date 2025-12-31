@@ -43,13 +43,14 @@
   --background-color: #ffffff;
   --bg-color: var(--color);
   --bg-line-height: var(--line-height);
-  --box-shadow-inset-mobile: 0px -5.6em 3em -6.4em rgba(0,0,0,1) inset;
-  --box-shadow-inset: 0px -6.6em 2.4em -4.4em rgba(0,0,0,0.17) inset;
-  --box-shadow-mobile: 0px -1em 3em -2em rgba(0,0,0,1);
-  --box-shadow: 0px -1em 2.4em 2em rgba(0,0,0,0.17);
-  --color-active: var(--m-orange-600);
+  --box-shadow-inset-mobile: 0px 5.6em 3em -6.4em rgba(0,0,0,1) inset;
+  --box-shadow-inset: 0px 6.6em 2.4em -4.4em rgba(0,0,0,0.17) inset;
+  --box-shadow-mobile: 0px -5.6em 3em -6.4em rgba(0,0,0,1) inset;
+  --box-shadow: 0px -6.6em 2.4em -4.4em rgba(0,0,0,0.17) inset;
+  --color-active: var(--color-orange);
   --color-disabled: grey;
-  --color-hover: var(--m-orange-600);
+  --color-hover: var(--color-orange);
+  --color-orange: var(--m-orange-600);
   --color-secondary: var(--color);
   --color-tertiary: #F4F4F4;
   --color: black;
@@ -89,6 +90,7 @@
   --grid-12er-section-transition: var(--transition);
   --grid-12er-width: 100%;
   --h-color: var(--color);
+  --h-transition: var(--a-transition);
   --h1-font-size-mobile: 4.46rem;
   --h1-font-size: 14.12rem;
   --h1-line-height: 1;

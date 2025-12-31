@@ -41,6 +41,10 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
         cursor: pointer;
         position: relative;
       }
+      :host(:hover) {
+        --header-default-a-menu-icon-background-color: var(--color-hover);
+        color: var(--color-hover);
+      }
       :host(:not(.${this.openClass})) *:not(span):not(style), :host(.${this.openClass}) span {
         opacity: 0;
       }
@@ -65,7 +69,7 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
         height: 0;
       }
       :host :not(style) {
-        transition: all 0.3s ease-in-out;
+        transition: var(--transition, all 0.3s ease-in-out);
       }
     `
     super.renderCSS()

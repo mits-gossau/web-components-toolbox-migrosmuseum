@@ -15,7 +15,6 @@ export default class Footer extends Shadow() {
     this.hidden = true
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
-    if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
     Promise.all(showPromises).then(() => (this.hidden = false))
   }
 
@@ -31,25 +30,31 @@ export default class Footer extends Shadow() {
   }
 
   /**
-   * evaluates if a render is necessary
-   *
-   * @return {boolean}
-   */
-  shouldRenderHTML () {
-    return !this.div
-  }
-
-  /**
    * renders the css
    * @returns Promise<void>
    */
   renderCSS () {
     this.css = /* css */`
       :host {
+        animation: shadow 3s ease-in forwards !important;
+        content-visibility: auto;
         grid-area: footer;
       }
+      .today {
+        --h6-color: var(--color-orange);
+      }
       @media only screen and (max-width: _max-width_) {
-        :host {}
+        :host {
+          animation: shadow-mobile 3s ease-in forwards !important;
+        }
+      }
+      @keyframes shadow {
+        0% { box-shadow: none; }
+        100% { box-shadow: var(--box-shadow-inset); }
+      }
+      @keyframes shadow-mobile {
+        0% { box-shadow: none; }
+        100% { box-shadow: var(--box-shadow-inset-mobile); }
       }
     `
     return this.fetchTemplate()
@@ -71,26 +76,8 @@ export default class Footer extends Shadow() {
       }
     ]
     switch (this.getAttribute('namespace')) {
-      case 'footer-default-':
-        return this.fetchCSS([{
-          path: `${this.importMetaUrl}./default-/default-.css`, // apply namespace since it is specific and no fallback
-          namespace: false
-        }, ...styles], false) // using showPromises @connectedCallback makes hide action inside Shadow.fetchCSS obsolete, so second argument hide = false
       default:
         return this.fetchCSS(styles, false)
     }
-  }
-
-  /**
-   * Render HTML
-   * @returns Promise<void>
-   */
-  renderHTML () {
-    console.log('*********', 'render')
-    this.html = '<div>Content rendered from Component: Footer</div>'
-  }
-
-  get div () {
-    return this.root.querySelector('div')
   }
 }

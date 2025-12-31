@@ -67,11 +67,11 @@ class IntersectionSensor extends Intersection() {
       }
       @keyframes shadow {
         0% { box-shadow: none; }
-        100% { box-shadow: var(--box-shadow-inset); }
+        100% { box-shadow: var(--box-shadow); }
       }
       @keyframes shadow-mobile {
         0% { box-shadow: none; }
-        100% { box-shadow: var(--box-shadow-inset-mobile); }
+        100% { box-shadow: var(--box-shadow-mobile); }
       }
     `
   }
@@ -148,7 +148,10 @@ export default class Heading extends Shadow() {
         width: 100% !important;
         padding: 0 var(--content-spacing, unset);
       }
-      :host(:not([sticky])) {
+      :host([inline]) {
+        padding: 0;
+      }
+      :host([shadow]:not([sticky])) {
         padding-top: 5.4em; /* matches the shadow spread */
         margin-top: -5.4em !important;
       }
@@ -190,11 +193,11 @@ export default class Heading extends Shadow() {
       }
       @keyframes shadow {
         0% { box-shadow: none; }
-        100% { box-shadow: var(--box-shadow-inset); }
+        100% { box-shadow: var(--box-shadow); }
       }
       @keyframes shadow-mobile {
         0% { box-shadow: none; }
-        100% { box-shadow: var(--box-shadow-inset-mobile); }
+        100% { box-shadow: var(--box-shadow-mobile); }
       }
     `
     return this.fetchTemplate()
