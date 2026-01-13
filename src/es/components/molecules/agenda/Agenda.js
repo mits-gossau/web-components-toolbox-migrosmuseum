@@ -139,50 +139,51 @@ export default class Agenda extends Shadow() {
    * @returns Promise<void>
    */
   renderHTML () {
-    let json = null
-    try {
-      json = JSON.parse(this.template.content.textContent)
-    } catch (error) {
-      console.error('JSON corrupted at Agenda.js component!', {error, json, target: this})
-    }
-    this.html = json
-      ? json.reduce((acc, curr) => {
-          const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-          return /* html */`${acc}
-            <o-grid namespace="grid-12er-" width="100%" color="${curr.color}" background="${curr.backgroundColor}" color-hover="${curr.colorHover}" background-hover="${curr.backgroundColorHover}">
-              <style protected>
-                :host > section {
-                  --grid-12er-a-color: ${curr.color};
-                }
-                :host(:where(:hover, :focus)) > section {
-                  --grid-12er-a-color: ${curr.colorHover};
-                  --grid-12er-a-color-hover: ${curr.colorHover};
-                }
-              </style>
-              <section part=section>
-                <a ${link} part=date col-lg=2 col-sm=12>
-                  <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
-                </a>
-                <a ${link} part=title col-lg=6 col-sm=12>
-                  <h5>${curr.title}</h5>
-                </a>
-                <a ${link} part=description col-lg=4 col-sm=12>
-                  <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
-                </a>
-              </section>
-            </o-grid>
-          `
-        }, '')
-      : `JSON corrupted at Agenda.js component! ${JSON.stringify({json, target: this})}`
-    if (this.a) this.root.appendChild(this.a)
-    // keeping the above to be compatible but now using the migrosmuseum link component
-    if (this.migrosmuseumALink) this.root.appendChild(this.migrosmuseumALink)
     return this.fetchModules([
       {
         path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/organisms/grid/Grid.js`,
         name: 'o-grid'
       }
-    ])
+    ]).then(() => {
+      let json = null
+      try {
+        json = JSON.parse(this.template.content.textContent)
+      } catch (error) {
+        console.error('JSON corrupted at Agenda.js component!', {error, json, target: this})
+      }
+      this.html = json
+        ? json.reduce((acc, curr) => {
+            const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
+            return /* html */`${acc}
+              <o-grid namespace="grid-12er-" width="100%" color="${curr.color}" background="${curr.backgroundColor}" color-hover="${curr.colorHover}" background-hover="${curr.backgroundColorHover}">
+                <style protected>
+                  :host > section {
+                    --grid-12er-a-color: ${curr.color};
+                  }
+                  :host(:where(:hover, :focus)) > section {
+                    --grid-12er-a-color: ${curr.colorHover};
+                    --grid-12er-a-color-hover: ${curr.colorHover};
+                  }
+                </style>
+                <section part=section>
+                  <a ${link} part=date col-lg=2 col-sm=12>
+                    <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
+                  </a>
+                  <a ${link} part=title col-lg=6 col-sm=12>
+                    <h5>${curr.title}</h5>
+                  </a>
+                  <a ${link} part=description col-lg=4 col-sm=12>
+                    <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
+                  </a>
+                </section>
+              </o-grid>
+            `
+          }, '')
+        : `JSON corrupted at Agenda.js component! ${JSON.stringify({json, target: this})}`
+      if (this.a) this.root.appendChild(this.a)
+      // keeping the above to be compatible but now using the migrosmuseum link component
+      if (this.migrosmuseumALink) this.root.appendChild(this.migrosmuseumALink)
+    })
   }
 
   get a () {
