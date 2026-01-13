@@ -154,7 +154,7 @@ export default class Agenda extends Shadow() {
                 :host > section {
                   --grid-12er-a-color: ${curr.color};
                 }
-                :host(:hover) > section {
+                :host(:where(:hover, :focus)) > section {
                   --grid-12er-a-color: ${curr.colorHover};
                   --grid-12er-a-color-hover: ${curr.colorHover};
                 }
