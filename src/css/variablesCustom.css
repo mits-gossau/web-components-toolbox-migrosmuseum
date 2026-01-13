@@ -67,9 +67,7 @@
   --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
-  --font-size-mobile-px: 13;
-  --font-size-mobile: min(13px, 4vw);
-  --font-size-px: 17;
+  --font-size-mobile: min(13px, 4.1vw);
   --font-size: max(17px, 0.7vw);
   --grid-12er-a-color: var(--grid-12er-h-color);
   --grid-12er-a-height: auto;
@@ -162,7 +160,6 @@
   --navigation-default-with-styles-language-switcher-margin-last-child-mobile: 0 calc(-1 * var(--content-spacing) / 2) 0 0;
   --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
   --navigation-default-with-styles-section-background-color: var(--background-color);
-  --p-margin: auto;
   --picture-scale-up-aspect-ratio: 1/1;
   --picture-scale-up-img-height: 100%;
   --picture-scale-up-img-min-height: 100%;
