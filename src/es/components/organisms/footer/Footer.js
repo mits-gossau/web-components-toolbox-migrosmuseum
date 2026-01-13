@@ -16,7 +16,6 @@ export default class Footer extends Shadow() {
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     Promise.all(showPromises).then(() => (this.hidden = false))
-    this.scrollIntoView()
   }
 
   disconnectedCallback () {}
