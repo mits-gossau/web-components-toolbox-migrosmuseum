@@ -231,10 +231,6 @@ export default class Heading extends Shadow() {
   renderHTML () {
     this.heading = this.root.querySelector('h1, h2, h3, h4, h5') || document.createElement(this.getAttribute('tag') || 'h1')
     if (this.getAttribute('style-as')) this.heading.setAttribute('class', this.getAttribute('style-as'))
-    // copy attributes to heading
-    for (const attribute of this.attributes) {
-      if (attribute.name !== 'tag' && attribute.name !== 'style-as') this.heading.setAttribute(attribute.name, attribute.value)
-    }
     // fix font letter-spacing manually, since css does not yet support extended font letter-spacing
     if (['b', 'B', 'D', 'E', 'F', 'h', 'H', 'i', 'I', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'p', 'P', 'r', 'R', 'u', 'U'].includes(this.heading.textContent.substring(0, 1))) this.setAttribute('fix-first-letter-spacing', '')
     this.html = this.heading
