@@ -1,4 +1,73 @@
 <migrosmuseum-a-heading><h2>AGENDA</h2></migrosmuseum-a-heading>
+<div>
+  <a-button
+    namespace="button-secondary-"
+    class=active
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="all"
+  >Alle</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="performance"
+  >Performance</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="talks-und-diskussionen"
+  >Talks und Diskussionen</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="vernissage"
+  >Vernissage</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="filmscreening"
+  >Filmscreening</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="buchpraesentation"
+  >Buchpräsentation</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="special"
+  >Special</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="rundgaenge"
+  >Rundgänge</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="workshops"
+  >Workshops</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="inklusive-angebote"
+  >inklusive Angebote</a-button>
+  <a-button
+    namespace="button-secondary-"
+    answer-event-name="agenda-filter"
+    request-event-name="request-agenda-filter"
+    tag="kinder-und-jugendliche"
+  >Kinder und Jugendliche</a-button>
+</div>
 <migrosmuseum-m-agenda>
   <template>
     [{
@@ -6,8 +75,8 @@
       "colorHover": "#F8C9DF",
       "backgroundColor": "#F8C9DF",
       "backgroundColorHover": "#0E6265",
-      "date": "DO 14.6.",
-      "datetime": "2025-06-14",
+      "date": "DO 14.7.",
+      "datetime": "2025-07-14",
       "title": "ERÖFFNUNG ACCUMULATION / ZWEITE SEQUENZ",
       "descriptions": [
         "Vernissage",
@@ -17,7 +86,12 @@
       "link": {
         "href": "./eroeffnung",
         "target": "_self"
-      }
+      },
+      "clusterBy": "Juli",
+      "tags": [
+        "talks-und-diskussionen",
+        "vernissage"
+      ]
     },
     {
       "color": "#E0C9A3",
@@ -34,7 +108,104 @@
       "link": {
         "href": "./oeffentliche",
         "target": "_blank"
-      }
+      },
+      "clusterBy": "Juli",
+      "tags": [
+        "filmscreening",
+        "buchpraesentation",
+        "special"
+      ]
+    },
+    {
+      "color": "#394697",
+      "colorHover": "#FE9471",
+      "backgroundColor": "#FE9471",
+      "backgroundColorHover": "#394697",
+      "date": "SA 6.7.",
+      "datetime": "2025-07-06",
+      "title": "DIE LANGE NACHT DER ZÜRCHER MUSEEN",
+      "descriptions": [
+        "Special",
+        "18:00–01:00"
+      ],
+      "link": {
+        "href": "./lange-nacht",
+        "target": "_blank"
+      },
+      "clusterBy": "Juli",
+      "tags": [
+        "rundgaenge",
+        "workshops",
+        "inklusive-angebote"
+      ]
+    },
+    {
+      "color": "#FFF274",
+      "colorHover": "#47784F",
+      "backgroundColor": "#47784F",
+      "backgroundColorHover": "#FFF274",
+      "date": "FR 29.7.",
+      "datetime": "2025-07-29",
+      "title": "DROP-IN WORKSHOP: REISE IN FARBENFROHE FANTASIEWELTEN!",
+      "descriptions": [
+        "Kinder und Jugendliche",
+        "15:00–18:00"
+      ],
+      "link": {
+        "href": "./drop-in",
+        "target": "_blank"
+      },
+      "clusterBy": "Juli",
+      "tags": [
+        "kinder-und-jugendliche"
+      ]
+    },
+    {
+      "color": "#0E6265",
+      "colorHover": "#F8C9DF",
+      "backgroundColor": "#F8C9DF",
+      "backgroundColorHover": "#0E6265",
+      "date": "DO 14.8.",
+      "datetime": "2025-08-14",
+      "title": "ERÖFFNUNG ACCUMULATION / ZWEITE SEQUENZ",
+      "descriptions": [
+        "Vernissage",
+        "18:00–20:00",
+        "jeden letzten Fr im Monat"
+      ],
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "August",
+      "tags": [
+        "performance",
+        "talks-und-diskussionen",
+        "vernissage"
+      ]
+    },
+    {
+      "color": "#E0C9A3",
+      "colorHover": "#554596",
+      "backgroundColor": "#554596",
+      "backgroundColorHover": "#E0C9A3",
+      "date": "SA 26.8.",
+      "datetime": "2025-08-26",
+      "title": "ÖFFENTLICHE FÜHRUNG ACCUMULATION",
+      "descriptions": [
+        "Rundgänge",
+        "15:00–16:00"
+      ],
+      "link": {
+        "href": "./oeffentliche",
+        "target": "_blank"
+      },
+      "clusterBy": "August",
+      "tags": [
+        "filmscreening",
+        "buchpraesentation",
+        "special"
+      ]
     },
     {
       "color": "#394697",
@@ -51,7 +222,13 @@
       "link": {
         "href": "./lange-nacht",
         "target": "_blank"
-      }
+      },
+      "clusterBy": "August",
+      "tags": [
+        "rundgaenge",
+        "workshops",
+        "inklusive-angebote"
+      ]
     },
     {
       "color": "#FFF274",
@@ -68,7 +245,102 @@
       "link": {
         "href": "./drop-in",
         "target": "_blank"
-      }
+      },
+      "clusterBy": "August",
+      "tags": [
+        "kinder-und-jugendliche"
+      ]
+    },
+    {
+      "color": "#0E6265",
+      "colorHover": "#F8C9DF",
+      "backgroundColor": "#F8C9DF",
+      "backgroundColorHover": "#0E6265",
+      "date": "DO 14.9.",
+      "datetime": "2025-09-14",
+      "title": "ERÖFFNUNG ACCUMULATION / ZWEITE SEQUENZ",
+      "descriptions": [
+        "Vernissage",
+        "18:00–20:00",
+        "jeden letzten Fr im Monat"
+      ],
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "September",
+      "tags": [
+        "performance",
+        "talks-und-diskussionen",
+        "vernissage"
+      ]
+    },
+    {
+      "color": "#E0C9A3",
+      "colorHover": "#554596",
+      "backgroundColor": "#554596",
+      "backgroundColorHover": "#E0C9A3",
+      "date": "SA 26.9.",
+      "datetime": "2025-09-26",
+      "title": "ÖFFENTLICHE FÜHRUNG ACCUMULATION",
+      "descriptions": [
+        "Rundgänge",
+        "15:00–16:00"
+      ],
+      "link": {
+        "href": "./oeffentliche",
+        "target": "_blank"
+      },
+      "clusterBy": "September",
+      "tags": [
+        "filmscreening",
+        "buchpraesentation",
+        "special"
+      ]
+    },
+    {
+      "color": "#394697",
+      "colorHover": "#FE9471",
+      "backgroundColor": "#FE9471",
+      "backgroundColorHover": "#394697",
+      "date": "SA 6.9.",
+      "datetime": "2025-09-06",
+      "title": "DIE LANGE NACHT DER ZÜRCHER MUSEEN",
+      "descriptions": [
+        "Special",
+        "18:00–01:00"
+      ],
+      "link": {
+        "href": "./lange-nacht",
+        "target": "_blank"
+      },
+      "clusterBy": "September",
+      "tags": [
+        "rundgaenge",
+        "workshops",
+        "inklusive-angebote"
+      ]
+    },
+    {
+      "color": "#FFF274",
+      "colorHover": "#47784F",
+      "backgroundColor": "#47784F",
+      "backgroundColorHover": "#FFF274",
+      "date": "FR 29.9.",
+      "datetime": "2025-09-29",
+      "title": "DROP-IN WORKSHOP: REISE IN FARBENFROHE FANTASIEWELTEN!",
+      "descriptions": [
+        "Kinder und Jugendliche",
+        "15:00–18:00"
+      ],
+      "link": {
+        "href": "./drop-in",
+        "target": "_blank"
+      },
+      "clusterBy": "September",
+      "tags": [
+        "kinder-und-jugendliche"
+      ]
     }]
   </template>
 </migrosmuseum-m-agenda>

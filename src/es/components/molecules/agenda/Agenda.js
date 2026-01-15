@@ -9,6 +9,28 @@ import { Shadow } from '../../web-components-toolbox/src/es/components/prototype
 export default class Agenda extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
+
+    this.agendaFilterEventListener = event => {
+      let tagName
+      if ((tagName = event.composedPath()[0]?.getAttribute('tag'))) {
+        if (tagName === 'all') {
+          this.grids.forEach(grid => grid.classList.remove('hidden'))
+        } else {
+          this.grids.forEach(grid => grid.classList[grid.getAttribute('tag-names')?.split(',').some(gridTagName => tagName === gridTagName)
+            ? 'remove'
+            : 'add'
+          ]('hidden'))
+        }
+        this.dispatchEvent(new CustomEvent('agenda-filter', {
+          detail: {
+            tags: [tagName]
+          },
+          bubbles: true,
+          cancelable: true,
+          composed: true
+        }))
+      }
+    }
   }
 
   connectedCallback () {
@@ -17,9 +39,12 @@ export default class Agenda extends Shadow() {
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
     Promise.all(showPromises).then(() => (this.hidden = false))
+    document.body.addEventListener('request-agenda-filter', this.agendaFilterEventListener)
   }
 
-  disconnectedCallback () {}
+  disconnectedCallback () {
+    document.body.removeEventListener('request-agenda-filter', this.agendaFilterEventListener)
+  }
 
   /**
    * evaluates if a render is necessary
@@ -61,6 +86,9 @@ export default class Agenda extends Shadow() {
         --a-margin: var(--grid-12er-section-child-padding);
         margin-top: 1.176rem !important;
         margin-bottom: 0 !important;
+      }
+      :host > o-grid.hidden {
+        display: none;
       }
       :host > o-grid::part(section) {
         min-height: 8em;
@@ -143,6 +171,10 @@ export default class Agenda extends Shadow() {
       {
         path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/organisms/grid/Grid.js`,
         name: 'o-grid'
+      },
+      {
+        path: `${this.importMetaUrl}'../../../../atoms/heading/Heading.js`,
+        name: 'migrosmuseum-a-heading'
       }
     ]).then(() => {
       let json = null
@@ -151,34 +183,52 @@ export default class Agenda extends Shadow() {
       } catch (error) {
         console.error('JSON corrupted at Agenda.js component!', {error, json, target: this})
       }
+      let clusterBy
       this.html = json
         ? json.reduce((acc, curr) => {
-            const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-            return /* html */`${acc}
-              <o-grid namespace="grid-12er-" width="100%" color="${curr.color}" background="${curr.backgroundColor}" color-hover="${curr.colorHover}" background-hover="${curr.backgroundColorHover}">
-                <style protected>
-                  :host > section {
-                    --grid-12er-a-color: ${curr.color};
-                  }
-                  :host(:where(:hover, :focus)) > section {
-                    --grid-12er-a-color: ${curr.colorHover};
-                    --grid-12er-a-color-hover: ${curr.colorHover};
-                  }
-                </style>
-                <section part=section>
-                  <a ${link} part=date col-lg=2 col-sm=12>
-                    <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
-                  </a>
-                  <a ${link} part=title col-lg=6 col-sm=12>
-                    <h5>${curr.title}</h5>
-                  </a>
-                  <a ${link} part=description col-lg=4 col-sm=12>
-                    <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
-                  </a>
-                </section>
-              </o-grid>
-            `
-          }, '')
+          const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
+          const title = clusterBy !== curr.clusterBy ? /* html */`
+            <div class="spacer-four"></div>
+            <migrosmuseum-a-heading shadow><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
+          ` : ''
+          clusterBy = curr.clusterBy
+          return /* html */`${acc}
+            ${title}
+            <o-grid
+              namespace="grid-12er-"
+              width="100%"
+              color="${curr.color}"
+              background="${curr.backgroundColor}"
+              color-hover="${curr.colorHover}"
+              background-hover="${curr.backgroundColorHover}"
+              ${curr.tags
+                ? /* html */`tag-names="${curr.tags.join(',')}"`
+                : ''
+              }
+            >
+              <style protected>
+                :host > section {
+                  --grid-12er-a-color: ${curr.color};
+                }
+                :host(:where(:hover, :focus)) > section {
+                  --grid-12er-a-color: ${curr.colorHover};
+                  --grid-12er-a-color-hover: ${curr.colorHover};
+                }
+              </style>
+              <section part=section>
+                <a ${link} part=date col-lg=2 col-sm=12>
+                  <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
+                </a>
+                <a ${link} part=title col-lg=6 col-sm=12>
+                  <h5>${curr.title}</h5>
+                </a>
+                <a ${link} part=description col-lg=4 col-sm=12>
+                  <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
+                </a>
+              </section>
+            </o-grid>
+          `
+        }, '')
         : `JSON corrupted at Agenda.js component! ${JSON.stringify({json, target: this})}`
       if (this.a) this.root.appendChild(this.a)
       // keeping the above to be compatible but now using the migrosmuseum link component
@@ -196,6 +246,10 @@ export default class Agenda extends Shadow() {
 
   get grid () {
     return this.root.querySelector('o-grid')
+  }
+
+  get grids () {
+    return this.root.querySelectorAll('o-grid')
   }
 
   get template () {
