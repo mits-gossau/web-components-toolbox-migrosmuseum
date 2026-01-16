@@ -104,6 +104,9 @@ export default class Agenda extends Shadow() {
         line-height: 1.5;
       }
       @media only screen and (max-width: _max-width_) {
+        :host > div.spacer-four:first-of-type {
+          --spacer-four-height-mobile: 3.38em;
+        }
         :host > a, :host > migrosmuseum-a-link {
           margin-top: 0.77rem !important;
         }

@@ -51,10 +51,9 @@
   --button-secondary-background-color-hover-custom: var(--color);
   --button-secondary-border-color-hover-custom: var(--color);
   --button-secondary-border-radius: 0;
+  --button-secondary-color-active-mobile: var(--background-color);
   --button-secondary-color-active: var(--background-color);
   --button-secondary-color-hover-custom: var(--background-color);
-  --button-secondary-margin: 0 0.2em 0.3em 0;
-  --button-secondary-padding: 0.4em 0.5em 0.15em;
   --color-active: var(--color-orange);
   --color-disabled: grey;
   --color-hover: var(--color-orange);
