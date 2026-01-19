@@ -183,12 +183,96 @@ export default class Heading extends Shadow() {
       :host([show][shadow]:not([sticky])) {
         animation: shadow 3s ease-in forwards !important;
       }
+      :host([h1]) {
+        --h2-font-size: var(--h1-font-size);
+        --h3-font-size: var(--h1-font-size);
+        --h4-font-size: var(--h1-font-size);
+        --h5-font-size: var(--h1-font-size);
+        --h6-font-size: var(--h1-font-size);
+      }
+      :host([h2]) {
+        --h1-font-size: var(--h2-font-size);
+        --h3-font-size: var(--h2-font-size);
+        --h4-font-size: var(--h2-font-size);
+        --h5-font-size: var(--h2-font-size);
+        --h6-font-size: var(--h2-font-size);
+      }
+      :host([h3]) {
+        --h1-font-size: var(--h3-font-size);
+        --h2-font-size: var(--h3-font-size);
+        --h4-font-size: var(--h3-font-size);
+        --h5-font-size: var(--h3-font-size);
+        --h6-font-size: var(--h3-font-size);
+      }
+      :host([h4]) {
+        --h1-font-size: var(--h4-font-size);
+        --h2-font-size: var(--h4-font-size);
+        --h3-font-size: var(--h4-font-size);
+        --h5-font-size: var(--h4-font-size);
+        --h6-font-size: var(--h4-font-size);
+      }
+      :host([h5]) {
+        --h1-font-size: var(--h5-font-size);
+        --h2-font-size: var(--h5-font-size);
+        --h3-font-size: var(--h5-font-size);
+        --h4-font-size: var(--h5-font-size);
+        --h6-font-size: var(--h5-font-size);
+      }
+      :host([h6]) {
+        --h1-font-size: var(--h6-font-size);
+        --h2-font-size: var(--h6-font-size);
+        --h3-font-size: var(--h6-font-size);
+        --h4-font-size: var(--h6-font-size);
+        --h5-font-size: var(--h6-font-size);
+      }
       @media only screen and (max-width: _max-width_) {
         :host {
           padding: 0 var(--content-spacing-mobile, var(--content-spacing, unset));
         }
         :host([show][shadow]:not([sticky])) {
           animation: shadow-mobile 3s ease-in forwards !important;
+        }
+        :host([h1-mobile]) {
+          --h2-font-size-mobile: var(--h1-font-size-mobile);
+          --h3-font-size-mobile: var(--h1-font-size-mobile);
+          --h4-font-size-mobile: var(--h1-font-size-mobile);
+          --h5-font-size-mobile: var(--h1-font-size-mobile);
+          --h6-font-size-mobile: var(--h1-font-size-mobile);
+        }
+        :host([h2-mobile]) {
+          --h1-font-size-mobile: var(--h2-font-size-mobile);
+          --h3-font-size-mobile: var(--h2-font-size-mobile);
+          --h4-font-size-mobile: var(--h2-font-size-mobile);
+          --h5-font-size-mobile: var(--h2-font-size-mobile);
+          --h6-font-size-mobile: var(--h2-font-size-mobile);
+        }
+        :host([h3-mobile]) {
+          --h1-font-size-mobile: var(--h3-font-size-mobile);
+          --h2-font-size-mobile: var(--h3-font-size-mobile);
+          --h4-font-size-mobile: var(--h3-font-size-mobile);
+          --h5-font-size-mobile: var(--h3-font-size-mobile);
+          --h6-font-size-mobile: var(--h3-font-size-mobile);
+        }
+        :host([h4-mobile]) {
+          --h1-font-size-mobile: var(--h4-font-size-mobile);
+          --h2-font-size-mobile: var(--h4-font-size-mobile);
+          --h3-font-size-mobile: var(--h4-font-size-mobile);
+          --h5-font-size-mobile: var(--h4-font-size-mobile);
+          --h6-font-size-mobile: var(--h4-font-size-mobile);
+        }
+        :host([h5-mobile]) {
+          --h1-font-size-mobile: var(--h5-font-size-mobile);
+          --h2-font-size-mobile: var(--h5-font-size-mobile);
+          --h3-font-size-mobile: var(--h5-font-size-mobile);
+          --h4-font-size-mobile: var(--h5-font-size-mobile);
+          --h6-font-size-mobile: var(--h5-font-size-mobile);
+        }
+        :host([h6-mobile]) {
+          --h1-font-size-mobile: var(--h6-font-size-mobile);
+          --h2-font-size-mobile: var(--h6-font-size-mobile);
+          --h3-font-size-mobile: var(--h6-font-size-mobile);
+          --h4-font-size-mobile: var(--h6-font-size-mobile);
+          --h5-font-size-mobile: var(--h6-font-size-mobile);
         }
       }
       @keyframes shadow {
