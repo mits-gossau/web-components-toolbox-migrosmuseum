@@ -175,6 +175,7 @@
   --picture-scale-up-img-min-width: 100%;
   --picture-scale-up-img-object-fit: cover;
   --picture-scale-up-img-width: 100%;
+  --picture-teaser-aspect-ratio-mobile: 1.335 / 1;
   --picture-teaser-aspect-ratio: 1.5 / 1;
   --picture-teaser-img-object-fit: cover;
   --spacer-four-height-mobile: 4.6em;
@@ -191,10 +192,11 @@
   --teaser-tile-figcaption-background-color-custom: var(--color-scheme-four-background-color);
   --teaser-tile-figcaption-bg-color-equal-padding-custom: var(--teaser-tile-figcaption-padding-custom);
   --teaser-tile-figcaption-bg-color-equal-padding-mobile-custom: var(--teaser-tile-figcaption-padding-mobile-custom);
-  --teaser-tile-figcaption-padding-custom: 1em var(--content-spacing) 0;
-  --teaser-tile-figcaption-padding-mobile-custom: 1em var(--content-spacing-mobile) 0;
+  --teaser-tile-figcaption-padding-custom: 1em var(--content-spacing) 1em;
+  --teaser-tile-figcaption-padding-mobile-custom: 1em var(--content-spacing-mobile) 1em;
+  --teaser-tile-figcaption-transform-hover-mobile: none;
   --teaser-tile-h5-margin-custom: 0 0 0.42em;
-  --teaser-tile-p-margin-custom: 0 0 0.5em;
+  --teaser-tile-p-margin-custom: 0;
   --transition: color 1s ease-out, background-color 1s ease-out;
 }
 /* color schemes */
