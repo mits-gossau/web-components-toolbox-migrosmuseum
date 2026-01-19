@@ -100,10 +100,12 @@
   --h1-font-size: 14.12rem;
   --h1-line-height: 1;
   --h1-margin: 0 auto 0.8rem;
+  --h1-word-break: break-word;
   --h2-font-size-mobile: 3.54rem;
   --h2-font-size: 6.47rem;
   --h2-line-height: 1;
   --h2-margin: 0 auto 0.8rem;
+  --h2-word-break: break-word;
   --h3-font-size-mobile: 2.1rem;
   --h3-font-size: 3.3rem;
   --h3-line-height: 1.1;
@@ -173,6 +175,8 @@
   --picture-scale-up-img-min-width: 100%;
   --picture-scale-up-img-object-fit: cover;
   --picture-scale-up-img-width: 100%;
+  --picture-teaser-aspect-ratio: 1.5 / 1;
+  --picture-teaser-img-object-fit: cover;
   --spacer-four-height-mobile: 4.6em;
   --spacer-four-height: 3.6em;
   --spacer-height-mobile: 1.6em;
@@ -183,6 +187,14 @@
   --spacer-three-height: 1.6em;
   --spacer-two-height-mobile: 0.6em;
   --spacer-two-height: 0.6em;
+  --teaser-tile-background-color-custom: var(--teaser-tile-figcaption-background-color-custom);
+  --teaser-tile-figcaption-background-color-custom: var(--color-scheme-four-background-color);
+  --teaser-tile-figcaption-bg-color-equal-padding-custom: var(--teaser-tile-figcaption-padding-custom);
+  --teaser-tile-figcaption-bg-color-equal-padding-mobile-custom: var(--teaser-tile-figcaption-padding-mobile-custom);
+  --teaser-tile-figcaption-padding-custom: 1em var(--content-spacing) 0;
+  --teaser-tile-figcaption-padding-mobile-custom: 1em var(--content-spacing-mobile) 0;
+  --teaser-tile-h5-margin-custom: 0 0 0.42em;
+  --teaser-tile-p-margin-custom: 0 0 0.5em;
   --transition: color 1s ease-out, background-color 1s ease-out;
 }
 /* color schemes */
@@ -193,6 +205,9 @@
   --color-scheme-two-color: #5B3A47;
   --color-scheme-three-background-color: #F8C9DF;
   --color-scheme-three-color: #0E6265;
+  --color-scheme-four-background-color: #F4F4F4;
+  --color-scheme-four-color: var(--color);
+  --grid-12er-color-scheme-four-background-color: var(--color-scheme-four-background-color);
 }
 /* header has a breakpoint of (mobile-breakpoint="100000000px"), due to that, it is always in mobile mode. The below allows the actual mobile settings/overwrites below 1200px, same as in the Environments.js */
 @media only screen and (max-width: 767px) {
