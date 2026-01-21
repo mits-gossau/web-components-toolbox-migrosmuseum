@@ -81,63 +81,12 @@ export default class Exhibition extends Shadow() {
         display: contents;
         width: 100% !important;
       }
-      :host > a, :host > migrosmuseum-a-link {
-        --a-margin-mobile: var(--grid-12er-section-child-padding-mobile);
-        --a-margin: var(--grid-12er-section-child-padding);
-        margin-top: 1.176rem !important;
-        margin-bottom: 0 !important;
-      }
       :host > o-grid.hidden {
         display: none;
-      }
-      :host > o-grid::part(section) {
-        min-height: 8em;
-      }
-      :host > o-grid::part(date), :host > o-grid::part(title), :host > o-grid::part(description) {
-        padding: var(--grid-12er-section-child-padding);
-        padding-top: 1.176rem;
-        padding-bottom: 2.5rem;
-        width: 100%;
-      }
-      :host > o-grid::part(description-one), :host > o-grid::part(description-two) {
-        display: block;
-        line-height: 1.5;
       }
       @media only screen and (max-width: _max-width_) {
         :host > div.spacer-four:first-of-type {
           --spacer-four-height-mobile: 3.38em;
-        }
-        :host > a, :host > migrosmuseum-a-link {
-          margin-top: 0.77rem !important;
-        }
-        :host > o-grid::part(section) {
-          grid-template-rows: auto auto 1fr;
-          min-height: 10em;
-        }
-        :host > o-grid::part(date), :host > o-grid::part(title), :host > o-grid::part(description) {
-          padding: var(--grid-12er-section-child-padding-mobile);
-          padding-top: 0.77rem;
-        }
-        :host > o-grid::part(date) {
-          line-height: 1.2;
-          padding-bottom: 0;
-        }
-        :host > o-grid::part(title) {
-          padding-top: 0;
-          padding-bottom: 0;
-        }
-        :host > o-grid::part(description) {
-          padding-top: 0.7rem;
-          padding-bottom: 1.15rem;
-        }
-        :host > o-grid::part(description-one), :host > o-grid::part(description-two) {
-          display: inline;
-        }
-        :host > o-grid::part(description-two) {
-          padding-left: 1rem;
-        }
-        :host > o-grid::part(description-three) {
-          display: block;
         }
       }
     `
@@ -176,6 +125,14 @@ export default class Exhibition extends Shadow() {
         name: 'o-grid'
       },
       {
+        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/atoms/picture/Picture.js`,
+        name: 'a-picture'
+      },
+      {
+        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/teaser/Teaser.js`,
+        name: 'm-teaser'
+      },
+      {
         path: `${this.importMetaUrl}'../../../../atoms/heading/Heading.js`,
         name: 'migrosmuseum-a-heading'
       }
@@ -188,48 +145,48 @@ export default class Exhibition extends Shadow() {
       }
       let clusterBy
       this.html = json
-        ? json.reduce((acc, curr) => {
+        ? json.reduce((acc, curr, i) => {
           const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-          const title = clusterBy !== curr.clusterBy ? /* html */`
+          const start = clusterBy !== curr.clusterBy ? /* html */`
+            ${i > 0
+              ? /* html */`</section></o-grid>`
+              : ''
+            }
             <div class="spacer-four"></div>
             <migrosmuseum-a-heading shadow><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
-          ` : ''
-          clusterBy = curr.clusterBy
-          return /* html */`${acc}
-            ${title}
             <o-grid
               namespace="grid-12er-"
               width="100%"
-              color="${curr.color}"
-              background="${curr.backgroundColor}"
-              color-hover="${curr.colorHover}"
-              background-hover="${curr.backgroundColorHover}"
-              ${curr.tags
-                ? /* html */`tag-names="${curr.tags.join(',')}"`
-                : ''
-              }
+              background="var(--color-scheme-four-background-color);"
             >
-              <style protected>
-                :host > section {
-                  --grid-12er-a-color: ${curr.color};
-                }
-                :host(:where(:hover, :focus)) > section {
-                  --grid-12er-a-color: ${curr.colorHover};
-                  --grid-12er-a-color-hover: ${curr.colorHover};
-                }
-              </style>
-              <section part=section>
-                <a ${link} part=date col-lg=2 col-sm=12>
-                  <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
-                </a>
-                <a ${link} part=title col-lg=6 col-sm=12>
-                  <h5>${curr.title}</h5>
-                </a>
-                <a ${link} part=description col-lg=4 col-sm=12>
-                  <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
-                </a>
+              <section>
+          ` : ''
+          const end = i === json.length ? /* html */`
               </section>
             </o-grid>
+          ` : ''
+          clusterBy = curr.clusterBy
+          return /* html */`${acc}
+            ${start}
+            <m-teaser
+              namespace=teaser-tile-
+              ${link}
+              col-lg="4"
+              col-sm="6"
+              padding="0"
+            >
+              <figure>
+                <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
+                <figcaption>
+                  <p>
+                    <time datetime="${curr.datetimeFrom}">${curr.dateFrom}</time>–<time datetime="${curr.datetimeTo}">${curr.dateTo}</time>–
+                  </p>
+                  <h5>${curr.title}</h5>
+                  <p>${curr.description}</p>
+                </figcaption>
+              </figure>
+            </m-teaser>
+            ${end}
           `
         }, '')
         : `JSON corrupted at Exhibition.js component! ${JSON.stringify({json, target: this})}`

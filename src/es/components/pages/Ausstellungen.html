@@ -99,87 +99,234 @@
 <div class="spacer-four" show-only-desktop></div>
 <div class="spacer-four"></div>
 <migrosmuseum-a-heading><h3>ARCHIV</h3></migrosmuseum-a-heading>
-<migrosmuseum-m-tag-list>
-  <a-button
-    namespace="button-secondary-"
-    class=active
-    answer-event-name="agenda-filter"
-    request-event-name="request-agenda-filter"
-    tag="all"
-  >Jahr</a-button>
-  <a-button
-    namespace="button-secondary-"
-    answer-event-name="agenda-filter"
-    request-event-name="request-agenda-filter"
-    tag="performance"
-  >Suche</a-button>
-</migrosmuseum-m-tag-list>
-<div class="spacer-four"></div>
-<migrosmuseum-a-heading shadow><h3>2025</h3></migrosmuseum-a-heading>
 <o-grid
   namespace="grid-12er-"
-  width="100%"
-  background="var(--color-scheme-four-background-color);"
 >
   <section>
-    <m-teaser
-      namespace=teaser-tile-
-      href="#"
+    <a-select
       col-lg="4"
       col-sm="6"
       padding="0"
+      min-height="100%"
     >
-      <figure>
-        <a-picture namespace="picture-teaser-" picture-load defaultSource="../../../../img/kommt-rein-1.png"></a-picture>
-        <figcaption>
-          <p>14.6.–27.7.25</p>
-          <h5>ACCUMULATION</h5>
-          <p>Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz</p>
-        </figcaption>
-      </figure>
-    </m-teaser>
-    <m-teaser
-      namespace=teaser-tile-
-      href="#"
+      <select
+        id="year"
+        name="Jahr"
+      >
+        <option selected value="">Jahr</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+        <option value="2023">2023</option>
+      </select>
+    </a-select>
+    <a-input
       col-lg="4"
       col-sm="6"
       padding="0"
-    >
-      <figure>
-        <a-picture namespace="picture-teaser-" picture-load defaultSource="../../../../img/kommt-rein-2.png"></a-picture>
-        <figcaption>
-          <p>14.6.–27.7.25</p>
-          <h5>DINEO SESHEE RAISBE BOPAPE</h5>
-          <p>Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz</p>
-        </figcaption>
-      </figure>
-    </m-teaser>
+      min-height="100%"
+      placeholder="Suche"
+      search
+      type="search"
+    ></a-input>
   </section>
 </o-grid>
 <migrosmuseum-m-exhibition>
   <template>
     [{
-      "color": "#0E6265",
-      "colorHover": "#F8C9DF",
-      "backgroundColor": "#F8C9DF",
-      "backgroundColorHover": "#0E6265",
-      "date": "DO 14.7.",
-      "datetime": "2025-07-14",
-      "title": "ERÖFFNUNG ACCUMULATION / ZWEITE SEQUENZ",
-      "descriptions": [
-        "Vernissage",
-        "18:00–20:00",
-        "jeden letzten Fr im Monat"
-      ],
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2025-06-14",
+      "datetimeTo": "2025-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
       "link": {
         "href": "./eroeffnung",
         "target": "_self"
       },
-      "clusterBy": "Juli",
-      "tags": [
-        "talks-und-diskussionen",
-        "vernissage"
-      ]
+      "clusterBy": "2025"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2025-06-14",
+      "datetimeTo": "2025-07-25",
+      "defaultSource": "../../../../img/kommt-rein-2.png",
+      "title": "DINEO SESHEE RAISBE BOPAPE",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2025"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2024-06-14",
+      "datetimeTo": "2024-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2024"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2024-06-14",
+      "datetimeTo": "2024-07-25",
+      "defaultSource": "../../../../img/kommt-rein-2.png",
+      "title": "DINEO SESHEE RAISBE BOPAPE",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2024"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2024-06-14",
+      "datetimeTo": "2024-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2024"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2024-06-14",
+      "datetimeTo": "2024-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2024"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2024-06-14",
+      "datetimeTo": "2024-07-25",
+      "defaultSource": "../../../../img/kommt-rein-2.png",
+      "title": "DINEO SESHEE RAISBE BOPAPE",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2024"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2024-06-14",
+      "datetimeTo": "2024-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2024"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2023-06-14",
+      "datetimeTo": "2023-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2023"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2023-06-14",
+      "datetimeTo": "2023-07-25",
+      "defaultSource": "../../../../img/kommt-rein-2.png",
+      "title": "DINEO SESHEE RAISBE BOPAPE",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2023"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2023-06-14",
+      "datetimeTo": "2023-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2023"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2023-06-14",
+      "datetimeTo": "2023-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2023"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2023-06-14",
+      "datetimeTo": "2023-07-25",
+      "defaultSource": "../../../../img/kommt-rein-2.png",
+      "title": "DINEO SESHEE RAISBE BOPAPE",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2023"
+    },
+    {
+      "dateFrom": "14.6.",
+      "dateTo": "27.7.25",
+      "datetimeFrom": "2023-06-14",
+      "datetimeTo": "2023-07-25",
+      "defaultSource": "../../../../img/kommt-rein-1.png",
+      "title": "ACCUMULATION",
+      "description": "Über Ansammeln, Wachstum und Überfluss, Zweite Sequenz",
+      "link": {
+        "href": "./eroeffnung",
+        "target": "_self"
+      },
+      "clusterBy": "2023"
     }]
   </template>
 </migrosmuseum-m-exhibition>
