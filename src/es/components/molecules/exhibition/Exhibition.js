@@ -10,26 +10,15 @@ export default class Exhibition extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
 
-    this.exhibitionFilterEventListener = event => {
-      let tagName
-      if ((tagName = event.composedPath()[0]?.getAttribute('tag'))) {
-        if (tagName === 'all') {
-          this.grids.forEach(grid => grid.classList.remove('hidden'))
-        } else {
-          this.grids.forEach(grid => grid.classList[grid.getAttribute('tag-names')?.split(',').some(gridTagName => tagName === gridTagName)
-            ? 'remove'
-            : 'add'
-          ]('hidden'))
-        }
-        this.dispatchEvent(new CustomEvent('exhibition-filter', {
-          detail: {
-            tags: [tagName]
-          },
-          bubbles: true,
-          cancelable: true,
-          composed: true
-        }))
-      }
+    this.exhibitionFilterYearEventListener = event => {
+      console.log('*****year****', event)
+      // this.grids.forEach(grid => grid.classList[grid.getAttribute('tag-names')?.split(',').some(gridTagName => tagName === gridTagName)
+      //   ? 'remove'
+      //   : 'add'
+      // ]('hidden'))
+    }
+    this.exhibitionFilterTextEventListener = event => {
+      console.log('*****text****', event)
     }
   }
 
@@ -39,11 +28,13 @@ export default class Exhibition extends Shadow() {
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
     Promise.all(showPromises).then(() => (this.hidden = false))
-    document.body.addEventListener('request-exhibition-filter', this.exhibitionFilterEventListener)
+    document.body.addEventListener('request-exhibition-filter-year', this.exhibitionFilterYearEventListener)
+    document.body.addEventListener('request-exhibition-filter-text', this.exhibitionFilterTextEventListener)
   }
 
   disconnectedCallback () {
-    document.body.removeEventListener('request-exhibition-filter', this.exhibitionFilterEventListener)
+    document.body.removeEventListener('request-exhibition-filter-year', this.exhibitionFilterYearEventListener)
+    document.body.removeEventListener('request-exhibition-filter-text', this.exhibitionFilterTextEventListener)
   }
 
   /**

@@ -111,6 +111,7 @@
       padding="0"
       min-height="100%"
       chevron-down
+      selected="request-exhibition-filter-year"
     >
       <select
         id="year"
@@ -130,6 +131,9 @@
       min-height="100%"
       placeholder="Suche"
       search
+      submit-search="request-exhibition-filter-text"
+      any-key-listener
+      delete-listener
       type="search"
     ></a-input>
   </section>
