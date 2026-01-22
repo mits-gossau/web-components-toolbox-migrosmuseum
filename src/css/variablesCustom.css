@@ -43,6 +43,7 @@
   --background-color: #ffffff;
   --bg-color: var(--color);
   --bg-line-height: var(--line-height);
+  --border: 2px solid var(--color);
   --box-shadow-inset-mobile: 0px 5.6em 3em -6.4em rgba(0,0,0,1) inset;
   --box-shadow-inset: 0px 6.6em 2.4em -4.4em rgba(0,0,0,0.17) inset;
   --box-shadow-mobile: 0px -5.6em 3em -6.4em rgba(0,0,0,1) inset;
@@ -147,6 +148,7 @@
   --hr-padding: 0;
   --hr-secondary-border-bottom: 2px dotted var(--color-secondary);
   --hr-secondary-opacity: 1;
+  --input-line-height: 1em;
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --m-orange-600: #F60;
@@ -156,6 +158,7 @@
   --marquee-padding-mobile: calc(var(--content-spacing-mobile) / 0.9) var(--content-spacing-mobile) calc(var(--content-spacing-mobile) / 1.2);
   --marquee-padding: calc(var(--content-spacing) / 1.8) var(--content-spacing) calc(var(--content-spacing) / 2.3);
   --menu-icon-font-size: 2.5em;
+  --mui-form-group-height: var(--select-height);
   --navigation-default-with-styles-a-margin-mobile: 0;
   --navigation-default-with-styles-a-text-decoration: none;
   --navigation-default-with-styles-color-custom: var(--color);
@@ -178,6 +181,19 @@
   --picture-teaser-aspect-ratio-mobile: 1.335 / 1;
   --picture-teaser-aspect-ratio: 1.5 / 1;
   --picture-teaser-img-object-fit: cover;
+  --search-icon-top: 0.35em;
+  --search-input-background-color: var(--select-background-color);
+  --search-input-border-color: var(--color);
+  --search-input-border-radius: var(--select-border-radius);
+  --search-input-height: var(--select-height);
+  --search-input-padding: var(--select-padding);
+  --select-background-color: transparent;
+  --select-border-color: var(--color);
+  --select-border-radius: 0;
+  --select-border: var(--border);
+  --select-height: 100%;
+  --select-line-height: var(--input-line-height);
+  --select-padding: 0.5em 0.5em 0.35em;
   --spacer-four-height-mobile: 4.6em;
   --spacer-four-height: 3.6em;
   --spacer-height-mobile: 1.6em;
