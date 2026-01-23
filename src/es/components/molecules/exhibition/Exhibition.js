@@ -10,23 +10,51 @@ export default class Exhibition extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
 
-    this.exhibitionFilterYearEventListener = event => {
-      if (event.detail.value) {
-        this.clusterByEls.forEach(clusterByEl => clusterByEl.classList[event.detail.value === clusterByEl.getAttribute('cluster-by')
+    this.requestExhibitionFilterYearEventListener = (event, value) => {
+      if (value || (value = event?.detail.value)) {
+        this.clusterByEls.forEach(clusterByEl => clusterByEl.classList[value === clusterByEl.getAttribute('cluster-by')
           ? 'remove'
           : 'add'
         ]('hidden'))
+        const url = new URL(self.location.href)
+        url.searchParams.set('year', value)
+        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
         this.clusterByEls.forEach(clusterByEl => clusterByEl.classList.remove('hidden'))
+        const url = new URL(self.location.href)
+        url.searchParams.delete('year')
+        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       }
+      this.dispatchEvent(new CustomEvent('exhibition-filter-year', {
+        detail: {
+          selectedValue: value
+        },
+        bubbles: true,
+        cancelable: true,
+        composed: true
+      }))
     }
 
-    this.exhibitionFilterTextEventListener = event => {
-      if (event.detail.value) {
-        Exhibition.filterFunction(event.detail.value, this.teasers)
+    this.requestExhibitionFilterTextEventListener = (event, value) => {
+      if (value || (value = event?.detail.value)) {
+        Exhibition.filterFunction(value, this.teasers)
+        const url = new URL(self.location.href)
+        url.searchParams.set('search', value)
+        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
         this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
+        const url = new URL(self.location.href)
+        url.searchParams.delete('search')
+        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       }
+      this.dispatchEvent(new CustomEvent('exhibition-filter-text', {
+        detail: {
+          searchTerm: value
+        },
+        bubbles: true,
+        cancelable: true,
+        composed: true
+      }))
     }
   }
 
@@ -35,14 +63,20 @@ export default class Exhibition extends Shadow() {
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
-    Promise.all(showPromises).then(() => (this.hidden = false))
-    document.body.addEventListener('request-exhibition-filter-year', this.exhibitionFilterYearEventListener)
-    document.body.addEventListener('request-exhibition-filter-text', this.exhibitionFilterTextEventListener)
+    Promise.all(showPromises).then(() => {
+      const yearName = new URL(self.location.href).searchParams.get('year') || ''
+      if (yearName) this.requestExhibitionFilterYearEventListener(undefined, yearName)
+      const searchName = new URL(self.location.href).searchParams.get('search') || ''
+      if (searchName) this.requestExhibitionFilterTextEventListener(undefined, searchName)
+      this.hidden = false
+    })
+    document.body.addEventListener('request-exhibition-filter-year', this.requestExhibitionFilterYearEventListener)
+    document.body.addEventListener('request-exhibition-filter-text', this.requestExhibitionFilterTextEventListener)
   }
 
   disconnectedCallback () {
-    document.body.removeEventListener('request-exhibition-filter-year', this.exhibitionFilterYearEventListener)
-    document.body.removeEventListener('request-exhibition-filter-text', this.exhibitionFilterTextEventListener)
+    document.body.removeEventListener('request-exhibition-filter-year', this.requestExhibitionFilterYearEventListener)
+    document.body.removeEventListener('request-exhibition-filter-text', this.requestExhibitionFilterTextEventListener)
   }
 
   /**

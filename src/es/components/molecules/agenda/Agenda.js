@@ -10,9 +10,14 @@ export default class Agenda extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
 
-    this.agendaFilterEventListener = event => {
-      let tagName
-      if ((tagName = event.composedPath()[0]?.getAttribute('tag'))) {
+    this.requestHrefEventListener = event => {
+      const url = new URL(self.location.href)
+      url.searchParams.set('tag', event.detail.tags[0])
+      event.detail.resolve(url.href)
+    }
+
+    this.requestAgendaFilterEventListener = (event, tagName) => {
+      if (tagName || (tagName = event?.composedPath()[0]?.getAttribute('tag'))) {
         if (tagName === 'all') {
           this.grids.forEach(grid => grid.classList.remove('hidden'))
         } else {
@@ -21,6 +26,9 @@ export default class Agenda extends Shadow() {
             : 'add'
           ]('hidden'))
         }
+        const url = new URL(self.location.href)
+        url.searchParams.set('tag', tagName)
+        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
         this.dispatchEvent(new CustomEvent('agenda-filter', {
           detail: {
             tags: [tagName]
@@ -38,12 +46,18 @@ export default class Agenda extends Shadow() {
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
-    Promise.all(showPromises).then(() => (this.hidden = false))
-    document.body.addEventListener('request-agenda-filter', this.agendaFilterEventListener)
+    Promise.all(showPromises).then(() => {
+      const tagName = new URL(self.location.href).searchParams.get('tag') || 'all'
+      this.requestAgendaFilterEventListener(undefined, tagName)
+      this.hidden = false
+    })
+    document.body.addEventListener('request-href-request-agenda-filter', this.requestHrefEventListener)
+    document.body.addEventListener('request-agenda-filter', this.requestAgendaFilterEventListener)
   }
 
   disconnectedCallback () {
-    document.body.removeEventListener('request-agenda-filter', this.agendaFilterEventListener)
+    document.body.removeEventListener('request-href-request-agenda-filter', this.requestHrefEventListener)
+    document.body.removeEventListener('request-agenda-filter', this.requestAgendaFilterEventListener)
   }
 
   /**
