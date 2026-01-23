@@ -254,7 +254,6 @@ export default class Exhibition extends Shadow() {
    * @method
    * @name filterFunction
    * @kind method
-   * @memberof Rooms
    * @static
    * @param {string} filter
    * @param {HTMLElement[]} nodes
