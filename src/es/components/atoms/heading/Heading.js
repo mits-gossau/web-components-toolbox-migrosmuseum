@@ -159,7 +159,7 @@ export default class Heading extends Shadow() {
         position: sticky;
         top: 0;
       }
-      :host([hidden]), :host([not-visible]) {
+      :host([hidden]), :host(.hidden), :host([not-visible]) {
         display: none !important;
       }
       :host > * {

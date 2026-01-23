@@ -11,14 +11,22 @@ export default class Exhibition extends Shadow() {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
 
     this.exhibitionFilterYearEventListener = event => {
-      console.log('*****year****', event)
-      // this.grids.forEach(grid => grid.classList[grid.getAttribute('tag-names')?.split(',').some(gridTagName => tagName === gridTagName)
-      //   ? 'remove'
-      //   : 'add'
-      // ]('hidden'))
+      if (event.detail.value) {
+        this.clusterByEls.forEach(clusterByEl => clusterByEl.classList[event.detail.value === clusterByEl.getAttribute('cluster-by')
+          ? 'remove'
+          : 'add'
+        ]('hidden'))
+      } else {
+        this.clusterByEls.forEach(clusterByEl => clusterByEl.classList.remove('hidden'))
+      }
     }
+
     this.exhibitionFilterTextEventListener = event => {
-      console.log('*****text****', event)
+      if (event.detail.value) {
+        Exhibition.filterFunction(event.detail.value, this.teasers)
+      } else {
+        this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
+      }
     }
   }
 
@@ -72,7 +80,7 @@ export default class Exhibition extends Shadow() {
         display: contents;
         width: 100% !important;
       }
-      :host > o-grid.hidden {
+      :host > *.hidden {
         display: none;
       }
       @media only screen and (max-width: _max-width_) {
@@ -124,6 +132,10 @@ export default class Exhibition extends Shadow() {
         name: 'm-teaser'
       },
       {
+        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/loadTemplateTag/LoadTemplateTag.js`,
+        name: 'm-load-template-tag'
+      },
+      {
         path: `${this.importMetaUrl}'../../../../atoms/heading/Heading.js`,
         name: 'migrosmuseum-a-heading'
       }
@@ -143,13 +155,22 @@ export default class Exhibition extends Shadow() {
               ? /* html */`</section></o-grid>`
               : ''
             }
-            <div class="spacer-four"></div>
-            <migrosmuseum-a-heading shadow><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
+            <div class="spacer-four" cluster-by="${curr.clusterBy}"></div>
+            <migrosmuseum-a-heading shadow cluster-by="${curr.clusterBy}"><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
             <o-grid
               namespace="grid-12er-"
               width="100%"
               background="var(--color-scheme-four-background-color);"
+              cluster-by="${curr.clusterBy}"
             >
+              <style protected>
+                :host > section > *:has(> .hidden), :host > section .hidden {
+                  display: none;
+                }
+                :host > section > m-load-template-tag {
+                  min-height: 25em;
+                }
+              </style>
               <section>
           ` : ''
           const end = i === json.length ? /* html */`
@@ -159,40 +180,56 @@ export default class Exhibition extends Shadow() {
           clusterBy = curr.clusterBy
           return /* html */`${acc}
             ${start}
-            <m-teaser
-              namespace=teaser-tile-
-              ${link}
+            <m-load-template-tag
+              no-css
               col-lg="4"
               col-sm="6"
               padding="0"
             >
-              <figure>
-                <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
-                <figcaption>
-                  <p>
-                    <time datetime="${curr.datetimeFrom}">${curr.dateFrom}</time>–<time datetime="${curr.datetimeTo}">${curr.dateTo}</time>–
-                  </p>
-                  <h5>${curr.title}</h5>
-                  <p>${curr.description}</p>
-                </figcaption>
-              </figure>
-            </m-teaser>
+              <template>
+                <m-teaser
+                  namespace=teaser-tile-
+                  ${link}
+                  col-lg="4"
+                  col-sm="6"
+                  padding="0"
+                >
+                  <figure>
+                    <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
+                    <figcaption>
+                      <p>
+                        <time datetime="${curr.datetimeFrom}">${curr.dateFrom}</time>–<time datetime="${curr.datetimeTo}">${curr.dateTo}</time>
+                      </p>
+                      <h5>${curr.title}</h5>
+                      <p>${curr.description}</p>
+                    </figcaption>
+                  </figure>
+                </m-teaser>
+              </template>
+            </m-load-template-tag>
             ${end}
           `
         }, '')
         : `JSON corrupted at Exhibition.js component! ${JSON.stringify({json, target: this})}`
-      if (this.a) this.root.appendChild(this.a)
-      // keeping the above to be compatible but now using the migrosmuseum link component
-      if (this.migrosmuseumALink) this.root.appendChild(this.migrosmuseumALink)
     })
   }
 
-  get a () {
-    return this.root.querySelector('a')
-  }
-
-  get migrosmuseumALink () {
-    return this.root.querySelector('migrosmuseum-a-link')
+  /**
+   * add remove hidden class regarding if filter string is included in the node
+   *
+   * @method
+   * @name filterFunction
+   * @kind method
+   * @memberof Rooms
+   * @static
+   * @param {string} filter
+   * @param {HTMLElement[]} nodes
+   * @return {void}
+   */
+  static filterFunction (filter, nodes) {
+    filter = filter.toUpperCase()
+    // @ts-ignore
+    nodes.forEach(node => node.classList[!filter || (node.template?.content.textContent || node.figcaption.textContent).toUpperCase().includes(filter) ? 'remove' : 'add']('hidden'))
   }
 
   get grid () {
@@ -200,7 +237,15 @@ export default class Exhibition extends Shadow() {
   }
 
   get grids () {
-    return this.root.querySelectorAll('o-grid')
+    return Array.from(this.root.querySelectorAll('o-grid'))
+  }
+
+  get teasers () {
+    return this.grids.reduce((acc, grid) => [...acc, ...Array.from(grid.root.querySelectorAll('m-teaser')), ...Array.from(grid.root.querySelectorAll('m-load-template-tag'))], [])
+  }
+
+  get clusterByEls () {
+    return Array.from(this.root.querySelectorAll('[cluster-by]'))
   }
 
   get template () {
