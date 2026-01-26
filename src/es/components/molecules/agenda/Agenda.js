@@ -18,7 +18,7 @@ export default class Agenda extends Shadow() {
 
     this.requestAgendaFilterEventListener = (event, tagName) => {
       if (tagName || (tagName = event?.composedPath()[0]?.getAttribute('tag'))) {
-        if (!event?.detail.isActive || tagName === 'all') {
+        if ((event?.detail && !event?.detail.isActive) || tagName === 'all') {
           tagName = 'all'
           this.grids.forEach(grid => grid.classList.remove('hidden'))
         } else {
