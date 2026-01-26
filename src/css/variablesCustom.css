@@ -182,6 +182,8 @@
   --picture-teaser-aspect-ratio: 1.5 / 1;
   --picture-teaser-img-object-fit: cover;
   --search-icon-top: 0.35em;
+  --search-input-background-color-focus: var(--search-input-background-color-hover);
+  --search-input-background-color-hover: transparent;
   --search-input-background-color: var(--select-background-color);
   --search-input-border-color: var(--color);
   --search-input-border-radius: var(--select-border-radius);
