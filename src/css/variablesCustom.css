@@ -75,6 +75,8 @@
   --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
+  --font-size-big-mobile: 1.31rem;
+  --font-size-big: var(--h5-font-size);
   --font-size-mobile: min(13px, 4.1vw);
   --font-size: max(17px, 0.7vw);
   --grid-12er-a-color: var(--grid-12er-h-color);
@@ -130,6 +132,7 @@
   --header-default-a-menu-icon-padding-top-custom: 0;
   --header-default-align-items-custom: center;
   --header-default-background-color-custom: var(--background-color);
+  --header-default-border: 0;
   --header-default-flex-direction-mobile: row;
   --header-default-font-size-mobile: var(--font-size);
   --header-default-h3-font-size: var(--h3-font-size);
@@ -185,6 +188,7 @@
   --search-input-background-color-focus: var(--search-input-background-color-hover);
   --search-input-background-color-hover: transparent;
   --search-input-background-color: var(--select-background-color);
+  --search-input-border-color-focus: var(--outline-color);
   --search-input-border-color: var(--color);
   --search-input-border-radius: var(--select-border-radius);
   --search-input-height: var(--select-height);

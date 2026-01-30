@@ -19,12 +19,15 @@
   <script>
     const pageQuery = 'rootFolder=src&css=./src/css/variablesCustom.css&logo=./src/es/components/atoms/logo/default-/default-.html&nav=./src/es/components/molecules/navigation/default-/default-.html&footer=./src/es/components/organisms/footer/default-/default-.html'
     const localLinks = Environment.isTestingEnv
-      ? /* html */`<li><a href="./src/es/components/web-components-toolbox/docs/TemplateMigrosmuseum.html?${pageQuery}&content=./src/es/components/pages/Ausstellungen.html">Ausstellungen</a></li>`
+      ? /* html */`
+        <li><a href="./src/es/components/web-components-toolbox/docs/TemplateMigrosmuseum.html?${pageQuery}&content=./src/es/components/pages/Sammlung.html">Sammlung</a></li>
+      `
       : ''
     document.querySelector('#pages').innerHTML = /* HTML */`
       <ul>
         <li><a href="./src/es/components/web-components-toolbox/docs/TemplateMigrosmuseum.html?${pageQuery}&content=./src/es/components/pages/Home.html">Home</a></li>
         <li><a href="./src/es/components/web-components-toolbox/docs/TemplateMigrosmuseum.html?${pageQuery}&content=./src/es/components/pages/Agenda.html">Agenda</a></li>
+        <li><a href="./src/es/components/web-components-toolbox/docs/TemplateMigrosmuseum.html?${pageQuery}&content=./src/es/components/pages/Ausstellungen.html">Ausstellungen</a></li>
         ${localLinks}
       </ul>
     `
