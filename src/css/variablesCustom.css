@@ -55,6 +55,7 @@
   --button-secondary-color-active-mobile: var(--background-color);
   --button-secondary-color-active: var(--background-color);
   --button-secondary-color-hover-custom: var(--background-color);
+  --button-secondary-padding: 0.4em 0.5em 0.15em;
   --color-active: var(--color-orange);
   --color-disabled: grey;
   --color-hover: var(--color-orange);
@@ -71,6 +72,7 @@
   --details-shadow-child-margin-custom: 0;
   --details-shadow-child-margin-mobile-custom: 0;
   --details-shadow-details-box-shadow: var(--box-shadow);
+  --filter-spacing: 0.4rem;
   --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;

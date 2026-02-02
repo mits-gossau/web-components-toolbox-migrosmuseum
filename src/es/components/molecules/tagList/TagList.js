@@ -36,8 +36,7 @@ export default class TagList extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
-        --button-secondary-margin: 0 0.3em 0.3em 0;
-        --button-secondary-padding: 0.4em 0.5em 0.15em;
+        --button-secondary-margin: 0 var(--filter-spacing, 0.4em) var(--filter-spacing, 0.4em) 0;
       }
       :host > a-button::part(button) {
         white-space: nowrap;

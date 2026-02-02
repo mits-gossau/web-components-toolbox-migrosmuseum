@@ -113,12 +113,24 @@
       </nav>
   </div>
 </m-carousel-two>
-<div class="spacer-four"></div>
+<a-spacer spacer-four></a-spacer>
 <migrosmuseum-a-heading><h3>KATALOG</h3></migrosmuseum-a-heading>
-<m-tabs>
+<m-tabs namespace="tabs-button-">
   <ul class="tab-navigation">
-      <li data-tab="artists"><a href="#artists">Künstler</a></li>
-      <li data-tab="works"><a href="#works">Werke</a></li>
+      <li data-tab="artists">
+        <a-button
+          href="#artists"
+          namespace="button-secondary-"
+          tag="artist"
+        >Künstler</a-button>
+      </li>
+      <li data-tab="works">
+        <a-button
+          href="#works"
+          namespace="button-secondary-"
+          tag="works"
+        >Werke</a-button>
+      </li>
       <li>
         <a-input
           col-lg="2"
