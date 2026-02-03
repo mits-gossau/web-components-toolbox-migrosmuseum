@@ -28,7 +28,11 @@ export default class Agenda extends Shadow() {
           ]('hidden'))
         }
         const url = new URL(self.location.href)
-        url.searchParams.set('tag', tagName)
+        if (tagName === 'all') {
+          url.searchParams.delete('tag')
+        } else {
+          url.searchParams.set('tag', tagName)
+        }
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
         this.dispatchEvent(new CustomEvent('agenda-filter', {
           detail: {
