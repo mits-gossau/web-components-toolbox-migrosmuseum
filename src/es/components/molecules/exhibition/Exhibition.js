@@ -38,11 +38,16 @@ export default class Exhibition extends Shadow() {
     this.requestExhibitionFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
         Exhibition.filterFunction(value, this.teasers)
+        this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]`)).some(grid => Array.from(grid.section.children).some(child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')))
+          ? 'removeAttribute'
+          : 'setAttribute'
+        ]('hidden', ''))
         const url = new URL(self.location.href)
         url.searchParams.set('search', value)
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
         this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
+        this.headingsAndSpacers.forEach(el => el.removeAttribute('hidden'))
         const url = new URL(self.location.href)
         url.searchParams.delete('search')
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
@@ -114,7 +119,7 @@ export default class Exhibition extends Shadow() {
         display: contents;
         width: 100% !important;
       }
-      :host > *.hidden {
+      :host > *.hidden, :host > *[hidden] {
         display: none;
       }
       @media only screen and (max-width: _max-width_) {
@@ -184,7 +189,7 @@ export default class Exhibition extends Shadow() {
       this.html = json
         ? json.reduce((acc, curr, i) => {
           const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-          const start = clusterBy !== curr.clusterBy ? /* html */`
+          const start = curr.clusterBy && clusterBy !== curr.clusterBy ? /* html */`
             ${i > 0
               ? /* html */`</section></o-grid>`
               : ''
@@ -279,6 +284,10 @@ export default class Exhibition extends Shadow() {
 
   get clusterByEls () {
     return Array.from(this.root.querySelectorAll('[cluster-by]'))
+  }
+
+  get headingsAndSpacers () {
+    return Array.from(this.root.querySelectorAll('migrosmuseum-a-heading,div.spacer-four'))
   }
 
   get template () {

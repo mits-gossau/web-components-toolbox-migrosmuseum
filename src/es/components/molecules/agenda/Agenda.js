@@ -21,11 +21,16 @@ export default class Agenda extends Shadow() {
         if ((event?.detail && !event.detail.isActive) || tagName === 'all') {
           tagName = 'all'
           this.grids.forEach(grid => grid.classList.remove('hidden'))
+          this.headingsAndSpacers.forEach(el => el.removeAttribute('hidden'))
         } else {
           this.grids.forEach(grid => grid.classList[grid.getAttribute('tag-names')?.split(',').some(gridTagName => tagName === gridTagName)
             ? 'remove'
             : 'add'
           ]('hidden'))
+          this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]:not(.hidden)`)).length
+            ? 'removeAttribute'
+            : 'setAttribute'
+          ]('hidden', ''))
         }
         const url = new URL(self.location.href)
         if (tagName === 'all') {
@@ -106,7 +111,7 @@ export default class Agenda extends Shadow() {
         margin-top: 1.176rem !important;
         margin-bottom: 0 !important;
       }
-      :host > o-grid.hidden {
+      :host > *.hidden, :host > *[hidden] {
         display: none;
       }
       :host > o-grid::part(section) {
@@ -209,9 +214,9 @@ export default class Agenda extends Shadow() {
       this.html = json
         ? json.reduce((acc, curr) => {
           const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-          const title = clusterBy !== curr.clusterBy ? /* html */`
-            <div class="spacer-four"></div>
-            <migrosmuseum-a-heading shadow><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
+          const title = curr.clusterBy && clusterBy !== curr.clusterBy ? /* html */`
+            <div class="spacer-four" cluster-by="${curr.clusterBy}"></div>
+            <migrosmuseum-a-heading shadow cluster-by="${curr.clusterBy}"><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
           ` : ''
           clusterBy = curr.clusterBy
           return /* html */`${acc}
@@ -227,6 +232,7 @@ export default class Agenda extends Shadow() {
                 ? /* html */`tag-names="${curr.tags.join(',')}"`
                 : ''
               }
+              cluster-by="${curr.clusterBy}"
             >
               <style protected>
                 :host > section {
@@ -271,7 +277,11 @@ export default class Agenda extends Shadow() {
   }
 
   get grids () {
-    return this.root.querySelectorAll('o-grid')
+    return Array.from(this.root.querySelectorAll('o-grid'))
+  }
+
+  get headingsAndSpacers () {
+    return Array.from(this.root.querySelectorAll('migrosmuseum-a-heading,div.spacer-four'))
   }
 
   get template () {

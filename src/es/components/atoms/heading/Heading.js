@@ -321,7 +321,7 @@ export default class Heading extends Shadow() {
     // make a hidden element to track if this component would still be visible after scrolling (sticky does not scroll, so we don't know where we would be scrolled, if this components was static)
     if (this.hasAttribute('sticky')) {
       // @ts-ignore
-      customElements.define('heading-intersection-sensor', IntersectionSensor)
+      if (!customElements.get('heading-intersection-sensor')) customElements.define('heading-intersection-sensor', IntersectionSensor)
       const intersectionSensor = new IntersectionSensor(isIntersecting => {
         if (isIntersecting) {
           this.removeAttribute('hidden')

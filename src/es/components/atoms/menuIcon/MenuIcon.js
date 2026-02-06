@@ -36,7 +36,7 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
   renderCSS () {
     this.css = /* css */`
       :host {
-        --transition: 0.5s;
+        --transition: var(--transition-speed);
         --width: 40px;
         cursor: pointer;
         position: relative;
