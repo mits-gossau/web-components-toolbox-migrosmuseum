@@ -242,7 +242,7 @@
   --teaser-tile-h5-margin-custom: 0 0 0.42em;
   --teaser-tile-p-margin-custom: 0;
   --transition-speed: 0.2s;
-  --transition: color var(--transition-speed) ease-out, background-color var(--transition-speed) ease-out;
+  --transition: color var(--transition-speed) ease-out, background-color var(--transition-speed) ease-out, border-color var(--transition-speed) ease-out;
 }
 /* color schemes */
 :root {
