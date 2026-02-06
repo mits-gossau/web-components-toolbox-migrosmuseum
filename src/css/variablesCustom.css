@@ -198,6 +198,7 @@
   --search-input-background-color-hover: var(--color);
   --search-input-background-color: var(--select-background-color);
   --search-input-border-color-focus: var(--color);
+  --search-input-border-color-hover: var(--color);
   --search-input-border-color: var(--color);
   --search-input-border-radius: var(--select-border-radius);
   --search-input-color-focus: var(--background-color);
