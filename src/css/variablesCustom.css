@@ -158,7 +158,7 @@
   --hr-secondary-border-bottom: 2px dotted var(--color-secondary);
   --hr-secondary-opacity: 1;
   --icon-color-hover: var(--background-color);
-  --input-line-height: 1em;
+  --input-line-height: 1.2em;
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --m-orange-600: #F60;

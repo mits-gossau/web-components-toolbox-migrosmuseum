@@ -152,7 +152,7 @@ export default class Heading extends Shadow() {
         padding: 0;
       }
       :host([shadow]:not([sticky])) {
-        padding-top: 5.4em; /* matches the shadow spread */
+        padding-top: var(--shadow-padding-top, 5.4em); /* matches the shadow spread */
         margin-top: -5.4em !important;
       }
       :host([sticky]) {
