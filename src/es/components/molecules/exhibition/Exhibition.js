@@ -38,16 +38,22 @@ export default class Exhibition extends Shadow() {
     this.requestExhibitionFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
         Exhibition.filterFunction(value, this.teasers)
-        this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]`)).some(grid => Array.from(grid.section.children).some(child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')))
+        const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')
+        this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]`)).some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'removeAttribute'
           : 'setAttribute'
         ]('hidden', ''))
+        this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
+          ? 'remove'
+          : 'add'
+        ]('empty')
         const url = new URL(self.location.href)
         url.searchParams.set('search', value)
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
         this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
         this.headingsAndSpacers.forEach(el => el.removeAttribute('hidden'))
+        this.classList.remove('empty')
         const url = new URL(self.location.href)
         url.searchParams.delete('search')
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
@@ -119,12 +125,23 @@ export default class Exhibition extends Shadow() {
         display: contents;
         width: 100% !important;
       }
-      :host > *.hidden, :host > *[hidden] {
+      :host > *.hidden, :host > *[hidden], :host > p.empty {
         display: none;
       }
+      :host > p.empty {
+        padding-top: var(--spacer-four-height);
+        width: var(--content-width, 55%);
+      }
+      :host(.empty) > p.empty {
+        display: block;
+      }
       @media only screen and (max-width: _max-width_) {
-        :host > div.spacer-four:first-of-type {
+        :host > div.spacer-four:first-of-type, :host > p.empty {
           --spacer-four-height-mobile: 3.38em;
+        }
+        :host > p.empty {
+          padding-top: var(--spacer-four-height-mobile);
+          width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
         }
       }
     `

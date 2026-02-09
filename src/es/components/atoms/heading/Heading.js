@@ -145,7 +145,7 @@ export default class Heading extends Shadow() {
       :host {
         --show: none;
         display: flex !important;
-        width: 100% !important;
+        width: var(--width, 100%) !important;
         padding: 0 var(--content-spacing, unset);
       }
       :host([inline]) {
