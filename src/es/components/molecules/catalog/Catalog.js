@@ -3,46 +3,17 @@ import { Shadow } from '../../web-components-toolbox/src/es/components/prototype
 
 /**
 * @export
-* @class Exhibition
+* @class Catalog
 * @type {CustomElementConstructor}
 */
-export default class Exhibition extends Shadow() {
+export default class Catalog extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
 
-    this.requestExhibitionFilterYearEventListener = (event, value) => {
+    this.requestCatalogFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        this.clusterByEls.forEach(clusterByEl => clusterByEl.classList[value === clusterByEl.getAttribute('cluster-by')
-          ? 'remove'
-          : 'add'
-        ]('hidden'))
-        const url = new URL(self.location.href)
-        url.searchParams.set('year', value)
-        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
-      } else {
-        this.clusterByEls.forEach(clusterByEl => clusterByEl.classList.remove('hidden'))
-        const url = new URL(self.location.href)
-        url.searchParams.delete('year')
-        self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
-      }
-      this.dispatchEvent(new CustomEvent('exhibition-filter-year', {
-        detail: {
-          selectedValue: value
-        },
-        bubbles: true,
-        cancelable: true,
-        composed: true
-      }))
-    }
-
-    this.requestExhibitionFilterTextEventListener = (event, value) => {
-      if (value || (value = event?.detail.value)) {
-        Exhibition.filterFunction(value, this.teasers)
+        Catalog.filterFunction(value, this.teasers)
         const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')
-        this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]`)).some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
-          ? 'removeAttribute'
-          : 'setAttribute'
-        ]('hidden', ''))
         this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'remove'
           : 'add'
@@ -52,13 +23,12 @@ export default class Exhibition extends Shadow() {
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
         this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
-        this.headingsAndSpacers.forEach(el => el.removeAttribute('hidden'))
         this.classList.remove('empty')
         const url = new URL(self.location.href)
         url.searchParams.delete('search')
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       }
-      this.dispatchEvent(new CustomEvent('exhibition-filter-text', {
+      this.dispatchEvent(new CustomEvent('catalog-filter-text', {
         detail: {
           searchTerm: value
         },
@@ -75,19 +45,15 @@ export default class Exhibition extends Shadow() {
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
     Promise.all(showPromises).then(() => {
-      const yearName = new URL(self.location.href).searchParams.get('year') || ''
-      if (yearName) this.requestExhibitionFilterYearEventListener(undefined, yearName)
       const searchName = new URL(self.location.href).searchParams.get('search') || ''
-      if (searchName) this.requestExhibitionFilterTextEventListener(undefined, searchName)
+      if (searchName) this.requestCatalogFilterTextEventListener(undefined, searchName)
       this.hidden = false
     })
-    document.body.addEventListener('request-exhibition-filter-year', this.requestExhibitionFilterYearEventListener)
-    document.body.addEventListener('request-exhibition-filter-text', this.requestExhibitionFilterTextEventListener)
+    document.body.addEventListener('request-catalog-filter-text', this.requestCatalogFilterTextEventListener)
   }
 
   disconnectedCallback () {
-    document.body.removeEventListener('request-exhibition-filter-year', this.requestExhibitionFilterYearEventListener)
-    document.body.removeEventListener('request-exhibition-filter-text', this.requestExhibitionFilterTextEventListener)
+    document.body.removeEventListener('request-catalog-filter-text', this.requestCatalogFilterTextEventListener)
   }
 
   /**
@@ -121,6 +87,16 @@ export default class Exhibition extends Shadow() {
         --h4-margin: 0;
         --h5-margin: 0;
         --h6-margin: 0;
+        --picture-teaser-aspect-ratio: auto;
+        --picture-teaser-aspect-ratio-mobile: var(--picture-teaser-aspect-ratio);
+        --teaser-tile-figcaption-height: auto;
+        --teaser-tile-figcaption-min-height: 6em;
+        --teaser-tile-figcaption-flex-grow: 0;
+        --teaser-tile-justify-content: flex-end;
+        --teaser-tile-background-color-custom: transparent;
+        --teaser-tile-figcaption-background-color-custom: transparent;
+        --teaser-tile-figcaption-bg-color-equal-padding-custom: 0.6em 0;
+        --teaser-tile-figcaption-bg-color-equal-padding-mobile-custom: var(--teaser-tile-figcaption-bg-color-equal-padding-custom);
         display: contents;
         width: 100% !important;
       }
@@ -128,18 +104,18 @@ export default class Exhibition extends Shadow() {
         display: none;
       }
       :host > p.empty {
-        padding-top: var(--spacer-four-height);
-        width: var(--content-width, 55%);
+        padding-top: var(--spacer-two-height);
       }
       :host(.empty) > p.empty {
         display: block;
       }
       @media only screen and (max-width: _max-width_) {
-        :host > div.spacer-four:first-of-type, :host > p.empty {
-          --spacer-four-height-mobile: 3.38em;
+        :host {
+          --teaser-tile-figcaption-min-height: 9em;
         }
         :host > p.empty {
-          padding-top: var(--spacer-four-height-mobile);
+          --spacer-two-height-mobile: 3.38em;
+          padding-top: var(--spacer-two-height-mobile);
           width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
         }
       }
@@ -189,83 +165,64 @@ export default class Exhibition extends Shadow() {
       {
         path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/loadTemplateTag/LoadTemplateTag.js`,
         name: 'm-load-template-tag'
-      },
-      {
-        path: `${this.importMetaUrl}'../../../../atoms/heading/Heading.js`,
-        name: 'migrosmuseum-a-heading'
       }
     ]).then(() => {
       let json = null
       try {
         json = JSON.parse(this.template.content.textContent)
       } catch (error) {
-        console.error('JSON corrupted at Exhibition.js component!', {error, json, target: this})
+        console.error('JSON corrupted at Catalog.js component!', {error, json, target: this})
       }
-      let clusterBy
-      this.html = json
-        ? json.reduce((acc, curr, i) => {
-          const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-          const start = curr.clusterBy && clusterBy !== curr.clusterBy ? /* html */`
-            ${i > 0
-              ? /* html */`</section></o-grid>`
-              : ''
+      this.html = /* html */`
+        <o-grid
+          namespace="grid-12er-"
+          width="100%"
+          gap="0.88em"
+        >
+          <style protected>
+            :host > section > *:has(> .hidden), :host > section .hidden {
+              display: none;
             }
-            <div class="spacer-four" cluster-by="${curr.clusterBy}"></div>
-            <migrosmuseum-a-heading shadow cluster-by="${curr.clusterBy}"><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
-            <o-grid
-              namespace="grid-12er-"
-              width="100%"
-              background="var(--color-scheme-four-background-color);"
-              cluster-by="${curr.clusterBy}"
-            >
-              <style protected>
-                :host > section > *:has(> .hidden), :host > section .hidden {
-                  display: none;
-                }
-                :host > section > m-load-template-tag {
-                  min-height: 25em;
-                }
-              </style>
-              <section>
-          ` : ''
-          const end = i === json.length ? /* html */`
-              </section>
-            </o-grid>
-          ` : ''
-          clusterBy = curr.clusterBy
-          return /* html */`${acc}
-            ${start}
-            <m-load-template-tag
-              no-css
-              col-lg="4"
-              col-sm="6"
-              padding="0"
-            >
-              <template>
-                <m-teaser
-                  namespace=teaser-tile-
-                  ${link}
-                  col-lg="4"
-                  col-sm="6"
-                  padding="0"
-                >
-                  <figure>
-                    <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
-                    <figcaption>
-                      <p>
-                        <time datetime="${curr.datetimeFrom}">${curr.dateFrom}</time>–<time datetime="${curr.datetimeTo}">${curr.dateTo}</time>
-                      </p>
-                      <h5>${curr.title}</h5>
-                      <p>${curr.description}</p>
-                    </figcaption>
-                  </figure>
-                </m-teaser>
-              </template>
-            </m-load-template-tag>
-            ${end}
-          `
-        }, '')
-        : `JSON corrupted at Exhibition.js component! ${JSON.stringify({json, target: this})}`
+            :host > section > m-load-template-tag {
+              min-height: 25em;
+            }
+          </style>
+          <section>
+            ${json
+              ? json.reduce((acc, curr, i) => {
+                const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
+                return /* html */`${acc}
+                  <m-load-template-tag
+                    no-css
+                    col-lg="3"
+                    col-sm="6"
+                    padding="0"
+                  >
+                    <template>
+                      <m-teaser
+                        namespace=teaser-tile-
+                        ${link}
+                        col-lg="3"
+                        col-sm="6"
+                        padding="0"
+                      >
+                        <figure>
+                          <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
+                          <figcaption>
+                            <p>${curr.title}</p>
+                            <p>${curr.description}${curr.descriptionTwo ? `<br>${curr.descriptionTwo}` : ''}</p>
+                          </figcaption>
+                        </figure>
+                      </m-teaser>
+                    </template>
+                  </m-load-template-tag>
+                `
+              }, '')
+              : `JSON corrupted at Catalog.js component! ${JSON.stringify({json, target: this})}`
+            }
+          </section>
+        </o-grid>
+      `
     })
   }
 
@@ -300,10 +257,6 @@ export default class Exhibition extends Shadow() {
 
   get clusterByEls () {
     return Array.from(this.root.querySelectorAll('[cluster-by]'))
-  }
-
-  get headingsAndSpacers () {
-    return Array.from(this.root.querySelectorAll('migrosmuseum-a-heading,div.spacer-four'))
   }
 
   get template () {

@@ -64,7 +64,7 @@ export default class Link extends Shadow() {
       }
       :host > a > ${this.getAttribute('tag-name') || 'h6'} {
         display: flex;
-        align-items: center;
+        align-items: ${this.hasAttribute('align-items') ? this.getAttribute('align-items') : 'center'};
       }
     `
     return this.fetchTemplate()

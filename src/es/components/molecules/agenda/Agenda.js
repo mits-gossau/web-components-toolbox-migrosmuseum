@@ -95,7 +95,6 @@ export default class Agenda extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
-        --a-color: 0;
         --h1-margin: 0;
         --h2-margin: 0;
         --h3-margin: 0;
