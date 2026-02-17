@@ -91,12 +91,14 @@ export default class Heading extends Shadow() {
     this.hidden = true
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
-    if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
+    if (this.shouldRenderHTML()) {
+      if (this.hasAttribute('picture-load') && Heading.walksDownDomQueryMatchesAll(this.nextElementSibling, 'a-picture[picture-load]:not([loaded])').length > 0) showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.nextElementSibling.addEventListener('picture-load', event => resolve(), { once: true }))))
+      showPromises.push(this.renderHTML())
+    }
     // when sticky, this component is followed directly by the IntersectionSensor component, so we pick the siblings sibling
     const nextElementSibling = this.hasAttribute('sticky')
       ? this.nextElementSibling?.nextElementSibling || this.nextElementSibling
       : this.nextElementSibling
-    if (this.hasAttribute('picture-load')) showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => nextElementSibling.addEventListener('picture-load', event => resolve(), { once: true }))))
     Promise.all(showPromises).then(() => {
       // fix z-index covering this heading to a part (height)
       const fixZIndex = node => {

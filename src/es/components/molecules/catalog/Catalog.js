@@ -43,7 +43,11 @@ export default class Catalog extends Shadow() {
     this.hidden = true
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
-    if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
+    if (this.shouldRenderHTML()) {
+      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('grid-load', event => resolve(), { once: true }))))
+      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('picture-load', event => resolve(), { once: true }))))
+      showPromises.push(this.renderHTML())
+    }
     Promise.all(showPromises).then(() => {
       const searchName = new URL(self.location.href).searchParams.get('search') || ''
       if (searchName) this.requestCatalogFilterTextEventListener(undefined, searchName)
@@ -99,6 +103,9 @@ export default class Catalog extends Shadow() {
         --teaser-tile-figcaption-bg-color-equal-padding-mobile-custom: var(--teaser-tile-figcaption-bg-color-equal-padding-custom);
         display: contents;
         width: 100% !important;
+      }
+      :host([hidden]) {
+        min-height: var(--main-min-height, 75dvh);
       }
       :host > *.hidden, :host > *[hidden], :host > p.empty {
         display: none;
@@ -175,6 +182,7 @@ export default class Catalog extends Shadow() {
       }
       this.html = /* html */`
         <o-grid
+          grid-load
           namespace="grid-12er-"
           width="100%"
           gap="0.88em"

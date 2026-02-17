@@ -55,7 +55,10 @@ export default class Agenda extends Shadow() {
     this.hidden = true
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
-    if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
+    if (this.shouldRenderHTML()) {
+      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('grid-load', event => resolve(), { once: true }))))
+      showPromises.push(this.renderHTML())
+    }
     Promise.all(showPromises).then(() => {
       const tagName = new URL(self.location.href).searchParams.get('tag') || 'all'
       this.requestAgendaFilterEventListener(undefined, tagName)
@@ -103,6 +106,9 @@ export default class Agenda extends Shadow() {
         --h6-margin: 0;
         display: contents;
         width: 100% !important;
+      }
+      :host([hidden]) {
+        min-height: var(--main-min-height, 75dvh);
       }
       :host > a, :host > migrosmuseum-a-link {
         --a-margin-mobile: var(--grid-12er-section-child-padding-mobile);
@@ -221,6 +227,7 @@ export default class Agenda extends Shadow() {
           return /* html */`${acc}
             ${title}
             <o-grid
+              grid-load
               namespace="grid-12er-"
               width="100%"
               color="${curr.color}"

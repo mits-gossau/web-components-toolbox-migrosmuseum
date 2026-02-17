@@ -73,7 +73,11 @@ export default class Exhibition extends Shadow() {
     this.hidden = true
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
-    if (this.shouldRenderHTML()) showPromises.push(this.renderHTML())
+    if (this.shouldRenderHTML()) {
+      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('grid-load', event => resolve(), { once: true }))))
+      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('picture-load', event => resolve(), { once: true }))))
+      showPromises.push(this.renderHTML())
+    }
     Promise.all(showPromises).then(() => {
       const yearName = new URL(self.location.href).searchParams.get('year') || ''
       if (yearName) this.requestExhibitionFilterYearEventListener(undefined, yearName)
@@ -123,6 +127,9 @@ export default class Exhibition extends Shadow() {
         --h6-margin: 0;
         display: contents;
         width: 100% !important;
+      }
+      :host([hidden]) {
+        min-height: var(--main-min-height, 75dvh);
       }
       :host > *.hidden, :host > *[hidden], :host > p.empty {
         display: none;
@@ -213,6 +220,7 @@ export default class Exhibition extends Shadow() {
             <div class="spacer-four" cluster-by="${curr.clusterBy}"></div>
             <migrosmuseum-a-heading shadow cluster-by="${curr.clusterBy}"><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
             <o-grid
+              grid-load
               namespace="grid-12er-"
               width="100%"
               background="var(--color-scheme-four-background-color);"

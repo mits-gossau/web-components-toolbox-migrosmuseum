@@ -162,6 +162,7 @@
   --line-height: 1.234em;
   --logo-default-width-mobile-custom: min(8.5em, 107px);
   --m-orange-600: #F60;
+  --main-min-height: calc(100dvh - var(--header-default-height-mobile-custom));
   --marquee-background-color: var(--color-scheme-two-color);
   --marquee-color: var(--color-scheme-two-background-color);
   --marquee-h-color: var(--marquee-color);
