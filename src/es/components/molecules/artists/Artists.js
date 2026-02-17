@@ -3,16 +3,16 @@ import { Shadow } from '../../web-components-toolbox/src/es/components/prototype
 
 /**
 * @export
-* @class Catalog
+* @class Artists
 * @type {CustomElementConstructor}
 */
-export default class Catalog extends Shadow() {
+export default class Artists extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex-style', ...options }, ...args)
 
-    this.requestCatalogFilterTextEventListener = (event, value) => {
+    this.requestArtistsFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        Catalog.filterFunction(value, this.teasers)
+        Artists.filterFunction(value, this.teasers)
         const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')
         this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'remove'
@@ -28,7 +28,7 @@ export default class Catalog extends Shadow() {
         url.searchParams.delete('search')
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       }
-      this.dispatchEvent(new CustomEvent('catalog-filter-text', {
+      this.dispatchEvent(new CustomEvent('artists-filter-text', {
         detail: {
           searchTerm: value
         },
@@ -45,19 +45,18 @@ export default class Catalog extends Shadow() {
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) {
       showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('grid-load', event => resolve(), { once: true }))))
-      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('picture-load', event => resolve(), { once: true }))))
       showPromises.push(this.renderHTML())
     }
     Promise.all(showPromises).then(() => {
       const searchName = new URL(self.location.href).searchParams.get('search') || ''
-      if (searchName) this.requestCatalogFilterTextEventListener(undefined, searchName)
+      //if (searchName) this.requestArtistsFilterTextEventListener(undefined, searchName)
       this.hidden = false
     })
-    document.body.addEventListener('request-catalog-filter-text', this.requestCatalogFilterTextEventListener)
+    document.body.addEventListener('request-artists-filter-text', this.requestArtistsFilterTextEventListener)
   }
 
   disconnectedCallback () {
-    document.body.removeEventListener('request-catalog-filter-text', this.requestCatalogFilterTextEventListener)
+    document.body.removeEventListener('request-artists-filter-text', this.requestArtistsFilterTextEventListener)
   }
 
   /**
@@ -178,7 +177,7 @@ export default class Catalog extends Shadow() {
       try {
         json = JSON.parse(this.template.content.textContent)
       } catch (error) {
-        console.error('JSON corrupted at Catalog.js component!', {error, json, target: this})
+        console.error('JSON corrupted at Artists.js component!', {error, json, target: this})
       }
       this.html = /* html */`
         <o-grid
@@ -197,35 +196,19 @@ export default class Catalog extends Shadow() {
           </style>
           <section>
             ${json
-              ? json.reduce((acc, curr, i) => {
-                const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
-                return /* html */`${acc}
-                  <m-load-template-tag
-                    no-css
-                    col-lg="3"
-                    col-sm="6"
-                    padding="0"
-                  >
-                    <template>
-                      <m-teaser
-                        namespace=teaser-tile-
-                        ${link}
-                        col-lg="3"
-                        col-sm="6"
-                        padding="0"
-                      >
-                        <figure>
-                          <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
-                          <figcaption>
-                            <p>${curr.title}</p>
-                            <p>${curr.description}${curr.descriptionTwo ? `<br>${curr.descriptionTwo}` : ''}</p>
-                          </figcaption>
-                        </figure>
-                      </m-teaser>
-                    </template>
-                  </m-load-template-tag>
-                `
-              }, '')
+              ? Array.from(Object.keys(json)).reduce((acc, key) => /* html */`${acc}
+                <div
+                  col-lg="3"
+                  col-sm="12"
+                  padding="0"
+                >
+                  <h2>${key}</h2>
+                  ${json[key].reduce((acc, curr) => {
+                    const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
+                    return /* html */`${acc}<a ${link}>${curr.name}</a>`
+                  }, '')}
+                </div>
+              `, '')
               : `JSON corrupted at Catalog.js component! ${JSON.stringify({json, target: this})}`
             }
           </section>
@@ -253,14 +236,6 @@ export default class Catalog extends Shadow() {
 
   get grid () {
     return this.root.querySelector('o-grid')
-  }
-
-  get grids () {
-    return Array.from(this.root.querySelectorAll('o-grid'))
-  }
-
-  get teasers () {
-    return this.grids.reduce((acc, grid) => [...acc, ...Array.from(grid.root.querySelectorAll('m-teaser')), ...Array.from(grid.root.querySelectorAll('m-load-template-tag'))], [])
   }
 
   get template () {

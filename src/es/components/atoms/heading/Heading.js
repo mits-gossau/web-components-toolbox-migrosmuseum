@@ -149,6 +149,7 @@ export default class Heading extends Shadow() {
         display: flex !important;
         width: var(--width, 100%) !important;
         padding: 0 var(--content-spacing, unset);
+        ${this.hasAttribute('justify-content') ? `justify-content: ${this.getAttribute('justify-content')}` : ''}
       }
       :host([inline]) {
         padding: 0;
