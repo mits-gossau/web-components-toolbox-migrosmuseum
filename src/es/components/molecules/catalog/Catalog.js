@@ -111,7 +111,7 @@ export default class Catalog extends Shadow() {
         display: none;
       }
       :host > p.empty {
-        padding-top: var(--spacer-three-height);
+        padding-top: 2.4em;
       }
       :host(.empty) > p.empty {
         display: block;
@@ -121,8 +121,7 @@ export default class Catalog extends Shadow() {
           --teaser-tile-figcaption-min-height: 9em;
         }
         :host > p.empty {
-          --spacer-three-height-mobile: 3.38em;
-          padding-top: var(--spacer-three-height-mobile);
+          padding-top: 3.38em;
           width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
         }
       }
