@@ -38,7 +38,7 @@ export default class Exhibition extends Shadow() {
     this.requestExhibitionFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
         Exhibition.filterFunction(value, this.teasers)
-        const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')
+        const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0]?.classList.contains('hidden')
         this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]`)).some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'removeAttribute'
           : 'setAttribute'
@@ -51,7 +51,7 @@ export default class Exhibition extends Shadow() {
         url.searchParams.set('search', value)
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
-        this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
+        this.allTeasers.forEach(teaser => teaser.classList.remove('hidden'))
         this.headingsAndSpacers.forEach(el => el.removeAttribute('hidden'))
         this.classList.remove('empty')
         const url = new URL(self.location.href)
@@ -304,6 +304,10 @@ export default class Exhibition extends Shadow() {
 
   get teasers () {
     return this.grids.reduce((acc, grid) => [...acc, ...Array.from(grid.root.querySelectorAll('m-teaser')), ...Array.from(grid.root.querySelectorAll('m-load-template-tag'))], [])
+  }
+
+  get allTeasers () {
+    return this.grids.reduce((acc, grid) => [...acc, ...Array.from(grid.root.querySelectorAll('a:has(> m-teaser)')), ...Array.from(grid.root.querySelectorAll('m-teaser')), ...Array.from(grid.root.querySelectorAll('m-load-template-tag'))], [])
   }
 
   get clusterByEls () {

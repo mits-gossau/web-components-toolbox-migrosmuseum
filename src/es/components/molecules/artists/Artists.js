@@ -12,9 +12,9 @@ export default class Artists extends Shadow() {
 
     this.requestArtistsFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        Artists.filterFunction(value, this.teasers)
-        const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')
-        this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
+        Artists.filterFunction(value, this.divs)
+        Artists.filterFunction(value, this.as)
+        this.classList[this.divs.some(div => !div.classList.contains('hidden'))
           ? 'remove'
           : 'add'
         ]('empty')
@@ -22,7 +22,8 @@ export default class Artists extends Shadow() {
         url.searchParams.set('search', value)
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
-        this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
+        this.divs.forEach(div => div.classList.remove('hidden'))
+        this.as.forEach(div => div.classList.remove('hidden'))
         this.classList.remove('empty')
         const url = new URL(self.location.href)
         url.searchParams.delete('search')
@@ -49,7 +50,7 @@ export default class Artists extends Shadow() {
     }
     Promise.all(showPromises).then(() => {
       const searchName = new URL(self.location.href).searchParams.get('search') || ''
-      //if (searchName) this.requestArtistsFilterTextEventListener(undefined, searchName)
+      if (searchName) this.requestArtistsFilterTextEventListener(undefined, searchName)
       this.hidden = false
     })
     document.body.addEventListener('request-artists-filter-text', this.requestArtistsFilterTextEventListener)
@@ -110,7 +111,7 @@ export default class Artists extends Shadow() {
         display: none;
       }
       :host > p.empty {
-        padding-top: var(--spacer-two-height);
+        padding-top: var(--spacer-three-height);
       }
       :host(.empty) > p.empty {
         display: block;
@@ -120,8 +121,8 @@ export default class Artists extends Shadow() {
           --teaser-tile-figcaption-min-height: 9em;
         }
         :host > p.empty {
-          --spacer-two-height-mobile: 3.38em;
-          padding-top: var(--spacer-two-height-mobile);
+          --spacer-three-height-mobile: 3.38em;
+          padding-top: var(--spacer-three-height-mobile);
           width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
         }
       }
@@ -165,12 +166,12 @@ export default class Artists extends Shadow() {
         name: 'a-picture'
       },
       {
-        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/teaser/Teaser.js`,
-        name: 'm-teaser'
+        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/atoms/spacer/Spacer.js`,
+        name: 'a-spacer'
       },
       {
-        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/loadTemplateTag/LoadTemplateTag.js`,
-        name: 'm-load-template-tag'
+        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/teaser/Teaser.js`,
+        name: 'm-teaser'
       }
     ]).then(() => {
       let json = null
@@ -184,14 +185,14 @@ export default class Artists extends Shadow() {
           grid-load
           namespace="grid-12er-"
           width="100%"
-          gap="0.88em"
         >
           <style protected>
-            :host > section > *:has(> .hidden), :host > section .hidden {
+            :host > section .hidden {
               display: none;
             }
-            :host > section > m-load-template-tag {
-              min-height: 25em;
+            :host > section > div {
+              display: flex;
+              flex-direction: column;
             }
           </style>
           <section>
@@ -200,9 +201,11 @@ export default class Artists extends Shadow() {
                 <div
                   col-lg="3"
                   col-sm="12"
-                  padding="0"
+                  padding="2.4em 0.44em"
+                  style="border-bottom: 2px solid var(--color-tertiary);"
                 >
-                  <h2>${key}</h2>
+                  <h3>${key}</h3>
+                  <a-spacer height=1.1em></a-spacer>
                   ${json[key].reduce((acc, curr) => {
                     const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
                     return /* html */`${acc}<a ${link}>${curr.name}</a>`
@@ -231,11 +234,19 @@ export default class Artists extends Shadow() {
   static filterFunction (filter, nodes) {
     filter = filter.toUpperCase()
     // @ts-ignore
-    nodes.forEach(node => node.classList[!filter || (node.template?.content.textContent || node.figcaption.textContent).toUpperCase().includes(filter) ? 'remove' : 'add']('hidden'))
+    nodes.forEach(node => node.classList[!filter || node.textContent.toUpperCase().includes(filter) ? 'remove' : 'add']('hidden'))
   }
 
   get grid () {
     return this.root.querySelector('o-grid')
+  }
+
+  get divs () {
+    return Array.from(this.grid.root.querySelectorAll('section > div'))
+  }
+
+  get as () {
+    return Array.from(this.grid.root.querySelectorAll('section > div:not(.hidden) > a'))
   }
 
   get template () {

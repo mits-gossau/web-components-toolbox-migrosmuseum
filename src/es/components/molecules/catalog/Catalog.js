@@ -13,7 +13,7 @@ export default class Catalog extends Shadow() {
     this.requestCatalogFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
         Catalog.filterFunction(value, this.teasers)
-        const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0].classList.contains('hidden')
+        const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0]?.classList.contains('hidden')
         this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'remove'
           : 'add'
@@ -22,7 +22,7 @@ export default class Catalog extends Shadow() {
         url.searchParams.set('search', value)
         self.history.replaceState({ ...history.state, url: url.href }, document.title, url.href)
       } else {
-        this.teasers.forEach(teaser => teaser.classList.remove('hidden'))
+        this.allTeasers.forEach(teaser => teaser.classList.remove('hidden'))
         this.classList.remove('empty')
         const url = new URL(self.location.href)
         url.searchParams.delete('search')
@@ -53,11 +53,11 @@ export default class Catalog extends Shadow() {
       if (searchName) this.requestCatalogFilterTextEventListener(undefined, searchName)
       this.hidden = false
     })
-    document.body.addEventListener('request-catalog-filter-text', this.requestCatalogFilterTextEventListener)
+    document.body.addEventListener('request-artists-filter-text', this.requestCatalogFilterTextEventListener)
   }
 
   disconnectedCallback () {
-    document.body.removeEventListener('request-catalog-filter-text', this.requestCatalogFilterTextEventListener)
+    document.body.removeEventListener('request-artists-filter-text', this.requestCatalogFilterTextEventListener)
   }
 
   /**
@@ -111,7 +111,7 @@ export default class Catalog extends Shadow() {
         display: none;
       }
       :host > p.empty {
-        padding-top: var(--spacer-two-height);
+        padding-top: var(--spacer-three-height);
       }
       :host(.empty) > p.empty {
         display: block;
@@ -121,8 +121,8 @@ export default class Catalog extends Shadow() {
           --teaser-tile-figcaption-min-height: 9em;
         }
         :host > p.empty {
-          --spacer-two-height-mobile: 3.38em;
-          padding-top: var(--spacer-two-height-mobile);
+          --spacer-three-height-mobile: 3.38em;
+          padding-top: var(--spacer-three-height-mobile);
           width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
         }
       }
@@ -166,6 +166,10 @@ export default class Catalog extends Shadow() {
         name: 'a-picture'
       },
       {
+        path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/atoms/spacer/Spacer.js`,
+        name: 'a-spacer'
+      },
+      {
         path: `${this.importMetaUrl}'../../../../web-components-toolbox/src/es/components/molecules/teaser/Teaser.js`,
         name: 'm-teaser'
       },
@@ -181,6 +185,7 @@ export default class Catalog extends Shadow() {
         console.error('JSON corrupted at Catalog.js component!', {error, json, target: this})
       }
       this.html = /* html */`
+        <a-spacer height=2.4em></a-spacer>
         <o-grid
           grid-load
           namespace="grid-12er-"
@@ -261,6 +266,10 @@ export default class Catalog extends Shadow() {
 
   get teasers () {
     return this.grids.reduce((acc, grid) => [...acc, ...Array.from(grid.root.querySelectorAll('m-teaser')), ...Array.from(grid.root.querySelectorAll('m-load-template-tag'))], [])
+  }
+
+  get allTeasers () {
+    return this.grids.reduce((acc, grid) => [...acc, ...Array.from(grid.root.querySelectorAll('a:has(> m-teaser)')), ...Array.from(grid.root.querySelectorAll('m-teaser')), ...Array.from(grid.root.querySelectorAll('m-load-template-tag'))], [])
   }
 
   get template () {
