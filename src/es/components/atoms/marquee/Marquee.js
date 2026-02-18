@@ -117,7 +117,7 @@ export default class Marquee extends Shadow() {
     this.css = /* css */`
       :host {
         ${this.hasAttribute('background-color') ? `--background-color: ${this.getAttribute('background-color')};` : ''}
-        ${this.hasAttribute('color') ? `--color: ${this.getAttribute('color')};` : ''}
+        ${this.hasAttribute('color') ? `--color: ${this.getAttribute('color')};--h-color: ${this.getAttribute('color')};` : ''}
         background-color: var(--background-color, red);
         top: var(--top, unset);
         right: var(--right, unset);
