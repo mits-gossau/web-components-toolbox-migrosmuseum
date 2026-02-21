@@ -37,7 +37,7 @@ export default class Exhibition extends Shadow() {
 
     this.requestExhibitionFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        Exhibition.filterFunction(value, this.teasers)
+        Exhibition.filterFunction(value, this.teasers.reverse())
         const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0]?.classList.contains('hidden')
         this.headingsAndSpacers.forEach(el => el[Array.from(this.root.querySelectorAll(`o-grid[cluster-by="${el.getAttribute('cluster-by')}"]`)).some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'removeAttribute'

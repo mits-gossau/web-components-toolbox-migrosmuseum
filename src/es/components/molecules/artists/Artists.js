@@ -12,8 +12,8 @@ export default class Artists extends Shadow() {
 
     this.requestArtistsFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        Artists.filterFunction(value, this.divs)
-        Artists.filterFunction(value, this.as)
+        Artists.filterFunction(value, this.divs.reverse())
+        Artists.filterFunction(value, this.as.reverse())
         this.classList[this.divs.some(div => !div.classList.contains('hidden'))
           ? 'remove'
           : 'add'

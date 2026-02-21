@@ -12,7 +12,7 @@ export default class Catalog extends Shadow() {
 
     this.requestCatalogFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        Catalog.filterFunction(value, this.teasers)
+        Catalog.filterFunction(value, this.teasers.reverse())
         const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0]?.classList.contains('hidden')
         this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
           ? 'remove'
