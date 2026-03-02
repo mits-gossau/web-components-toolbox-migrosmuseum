@@ -139,6 +139,7 @@
   --header-default-align-items-custom: center;
   --header-default-background-color-custom: var(--background-color);
   --header-default-border: 0;
+  --header-default-content-spacing-mobile: 0;
   --header-default-flex-direction-mobile: row;
   --header-default-font-size-mobile: var(--font-size);
   --header-default-h3-font-size: var(--h3-font-size);
@@ -241,6 +242,7 @@
   --teaser-tile-figcaption-transform-hover-custom: 0;
   --teaser-tile-figcaption-transform-hover-mobile: none;
   --teaser-tile-h5-margin-custom: 0 0 0.42em;
+  --teaser-tile-p-font-size-custom: 1em;
   --teaser-tile-p-margin-custom: 0;
   --transition-speed: 0.2s;
   --transition: color var(--transition-speed) ease-out, background-color var(--transition-speed) ease-out, border-color var(--transition-speed) ease-out;
@@ -263,6 +265,7 @@
     --ArrowUpRight-svg-transform: translate(-0.3em, 0.35em);
     --h4-font-size-mobile: 1.23em;
     --h6-font-size: 0.777em;
+    --header-default-content-spacing-mobile: 3em;
     --header-default-font-size-mobile: var(--font-size-mobile);
     --header-default-height-mobile-custom: 8.155em;
     --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.231em;
