@@ -1,0 +1,60 @@
+<migrosmuseum-a-heading h3-mobile><h2>KUNSTVERMITTLUNG</h2></migrosmuseum-a-heading>
+<p class="font-size-big">Ob Geld, Immobilien, Kleidung oder technische Geräte – materielle Besitztümer prägen unseren Alltag. Doch auch immaterielle Güter wie sozialer Status, Einfluss, Wohlstand oder Wissen sammeln sich an.</p>
+<o-grid
+  grid-load
+  namespace="grid-12er-"
+  width="100%"
+>
+  <style protected>
+    :host > section > *:has(> .hidden), :host > section .hidden {
+      display: none;
+    }
+    :host > section > m-load-template-tag {
+      min-height: 25em;
+    }
+  </style>
+  <section>
+    <m-teaser
+      namespace=teaser-tile-
+      ${link}
+      col-lg="4"
+      col-sm="12"
+      padding="0"
+    >
+      <figure>
+        <a-picture namespace="picture-teaser-" picture-load defaultSource="../../../../img/catalog24.jpg"></a-picture>
+        <figcaption>
+          <h5>GRUPPEN</h5>
+        </figcaption>
+      </figure>
+    </m-teaser>
+    <m-teaser
+      namespace=teaser-tile-
+      ${link}
+      col-lg="4"
+      col-sm="12"
+      padding="0"
+    >
+      <figure>
+        <a-picture namespace="picture-teaser-" picture-load defaultSource="../../../../img/catalog24.jpg"></a-picture>
+        <figcaption>
+          <h5>GRUPPEN</h5>
+        </figcaption>
+      </figure>
+    </m-teaser>
+    <m-teaser
+      namespace=teaser-tile-
+      ${link}
+      col-lg="4"
+      col-sm="12"
+      padding="0"
+    >
+      <figure>
+        <a-picture namespace="picture-teaser-" picture-load defaultSource="../../../../img/catalog24.jpg"></a-picture>
+        <figcaption>
+          <h5>GRUPPEN</h5>
+        </figcaption>
+      </figure>
+    </m-teaser>
+  </section>
+</o-grid>
