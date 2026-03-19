@@ -81,7 +81,7 @@
   --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
-  --font-size-big-mobile: 1.31rem;
+  --font-size-big-mobile: 1.465rem;
   --font-size-big: var(--h5-font-size);
   --font-size-mobile: min(13px, 4.1vw);
   --font-size: max(17px, 0.7vw);
@@ -99,8 +99,8 @@
   --grid-12er-h5-margin: 0;
   --grid-12er-h6-margin: 0;
   --grid-12er-section-child-overflow: hidden;
-  --grid-12er-section-child-padding-mobile: calc(var(--content-spacing-mobile) + 0.385em) var(--content-spacing-mobile);
-  --grid-12er-section-child-padding: calc(var(--content-spacing) + 0.294em) var(--content-spacing);
+  --grid-12er-section-child-padding-mobile: var(--content-spacing-mobile);
+  --grid-12er-section-child-padding: calc(var(--content-spacing) - 0.294em) var(--content-spacing);
   --grid-12er-section-transition: var(--transition);
   --grid-12er-width: 100%;
   --h-color: var(--color);
@@ -115,7 +115,7 @@
   --h2-line-height: 1;
   --h2-margin: 0 auto 0.8rem;
   --h2-word-break: break-word;
-  --h3-font-size-mobile: 2.1rem;
+  --h3-font-size-mobile: 2.15rem;
   --h3-font-size: 3.3rem;
   --h3-line-height: 1.1;
   --h3-margin: 0 auto 0.8rem;
@@ -128,7 +128,7 @@
   --h5-line-height: 1.1;
   --h5-margin: 0 auto 0.8rem;
   --h6-font-family: var(--font-family-secondary);
-  --h6-font-size-mobile: 0.769rem;
+  --h6-font-size-mobile: 1rem;
   --h6-font-size: 1.353rem;
   --h6-line-height: var(--line-height);
   --h6-margin: 0 auto 0.8rem;
