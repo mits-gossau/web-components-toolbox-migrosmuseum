@@ -41,46 +41,99 @@ export default class MigrosmuseumNavigation extends Navigation {
   constructor (options = {}, ...args) {
     super(options, ...args)
 
+    let mouseoutListenerTimeoutId = null
     this.mouseoverListener = event => {
-      console.log('*********', event)
+      clearTimeout(mouseoutListenerTimeoutId)
+      if (!this.hasAttribute('mouse-over')) {
+        this.customStyle.textContent = Array.from(this.root.querySelectorAll('nav > ul:first-of-type > li')).reduce((acc, curr, i) => {
+          const currBoundingClientRect = curr.getBoundingClientRect()
+          return /* css */`
+            ${acc}
+            :host > nav > ul:first-of-type > li:nth-child(${i + 1}) {
+              bottom: ${(self.innerHeight - currBoundingClientRect.bottom).toFixed(2)}px;
+              left: ${currBoundingClientRect.left.toFixed(2)}px;
+            }
+          `
+        }, '') + Array.from(this.root.querySelectorAll('nav > ul')).reduce((acc, curr, i) => {
+          const currBoundingClientRect = curr.getBoundingClientRect()
+          return /* css */`
+            ${acc}
+            :host > nav > ul:nth-child(${i + 1}) {
+              bottom: ${(self.innerHeight - currBoundingClientRect.bottom).toFixed(2)}px;
+              left: ${currBoundingClientRect.left.toFixed(2)}px;
+            }
+          `
+        }, '')
+        this.setAttribute('mouse-over', '')
+        console.log('***mouseoverListener******', event, this.customStyle.textContent)
+      }
+    }
+
+    this.mouseoutListener = event => {
+      clearTimeout(mouseoutListenerTimeoutId)
+      mouseoutListenerTimeoutId = setTimeout(() => {
+        console.log('***mouseoutListener******', event)
+        this.customStyle.textContent = ''
+        this.removeAttribute('mouse-over')
+      }, 50)
     }
   }
 
   connectedCallback () {
     super.connectedCallback()
-    this.root.querySelectorAll('nav > ul > li').forEach(li => li.addEventListener('mouseover', this.mouseoverListener))
+    this.root.querySelector('nav > ul').addEventListener('mouseover', this.mouseoverListener)
+    this.root.querySelector('nav > ul').addEventListener('mouseout', this.mouseoutListener)
+    this.html = this.customStyle
   }
 
   disconnectedCallback () {
     super.disconnectedCallback()
-    this.root.querySelectorAll('nav > ul > li').forEach(li => li.removeEventListener('mouseover', this.mouseoverListener))
+    this.root.querySelector('nav > ul').removeEventListener('mouseover', this.mouseoverListener)
+    this.root.querySelector('nav > ul').removeEventListener('mouseout', this.mouseoutListener)
   }
 
   /**
-   * fetches the template
+   * renders the m-navigation css
    *
-   * @return {Promise<void>}
+   * @return {Promise<void>|void}
    */
-  fetchTemplate () {
-    /** @type {import("../../web-components-toolbox/src/es/components/prototypes/Shadow.js").fetchCSSParams[]} */
-    const styles = [
-      {
-        path: `${this.importMetaUrl}../../../../css/reset.css`, // no variables for this reason no namespace
-        namespace: false
-      },
-      {
-        path: `${this.importMetaUrl}../../../../css/style.css`, // apply namespace and fallback to allow overwriting on deeper level
-        namespaceFallback: true
+  renderCSS () {
+    const result = super.renderCSS()
+    this.css = /* css */`
+      :host {
+        --details-shadow-summary-transform-hover: none;
       }
-    ]
-    switch (this.getAttribute('namespace')) {
-      case 'navigation-default-with-styles-':
-        return this.fetchCSS([{
-          path: `${this.importMetaUrl}../../../../../../molecules/navigation/default-/default-with-styles-.css`, // apply namespace since it is specific and no fallback
-          namespace: false
-        }, ...styles], false)
-      default:
-        return Promise.resolve()
-    }
+      :host > nav > ul:first-of-type {
+        --color-hover: var(--color);
+      }
+      :host([mouse-over]) nav > ul:not(:first-of-type) {
+        position: absolute;
+        width: 100%;
+      }
+      :host([mouse-over]) nav > ul:first-of-type > li {
+        position: absolute;
+      }
+      :host([mouse-over]) nav > ul:first-of-type > li, :host([mouse-over]) nav > ul:first-of-type > li > *::part(summary) {
+        transition: transform 0.25s ease-in-out;
+      }
+      :host([mouse-over]) nav > ul:first-of-type > li:has(+ li:hover), :host([mouse-over]) nav > ul:first-of-type > li:hover > *::part(summary) {
+        transform: translateY(-1em);
+      }
+      :host([mouse-over]) nav > ul:first-of-type > li > *::part(summary) {
+        transition: transform 0.25s ease-in-out;
+      }
+      :host([mouse-over]) nav > ul:first-of-type > li:has(+ li:hover) > *::part(summary) {
+        transform: translateY(1em);
+      }
+    `
+    return result
+  }
+
+  get customStyle () {
+    return this._customStyle || (this._customStyle = (() => {
+      const style = document.createElement('style')
+      style.setAttribute('protected', 'true')
+      return style
+    })())
   }
 }
