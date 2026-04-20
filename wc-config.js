@@ -244,6 +244,11 @@
       selector: 'p-',
       url: 'web-components-toolbox/src/es/components/pages/',
       separateFolder: true
+    },
+    {
+      selector: 'm-navigation',
+      url: 'molecules/navigation/Navigation.js',
+      separateFolder: false
     }
   ] // directories
   // ↑↑↑ adjustable ↑↑↑
