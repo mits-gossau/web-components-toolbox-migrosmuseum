@@ -60,7 +60,6 @@ export default class MigrosmuseumHeader extends Header {
         transform: none !important;
       }
       :host > header > a-menu-icon.open {
-        /* margin-right: 5px; */
         position: relative;
         right: 5px;
       }
