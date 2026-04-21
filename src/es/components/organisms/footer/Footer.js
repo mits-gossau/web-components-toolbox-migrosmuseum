@@ -86,7 +86,6 @@ export default class Footer extends Shadow() {
       }
       :host > footer > section#sub > p {
         flex-shrink: 1;
-        text-align: justify;
       }
       :host > footer > section#sub > #logo > img {
         width: 10em;
