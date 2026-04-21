@@ -51,6 +51,14 @@ export default class MigrosmuseumHeader extends Header {
         font-size: var(--h6-font-size);
         margin: 0;
       }
+      :host([sticky]) {
+        position: sticky !important;
+        top: 0 !important;
+        transition: none !important;
+      }
+      :host([sticky]:not(.top)) > header {
+        transform: none !important;
+      }
       :host > header > a-menu-icon.open {
         margin-right: 5px;
       }
