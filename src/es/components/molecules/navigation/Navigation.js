@@ -117,6 +117,12 @@ export default class MigrosmuseumNavigation extends Navigation {
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(content-child):hover {
         transform: translateY(-0.15em);
       }
+      @media only screen and (max-width: _max-width_) {
+        :host([mouse-over]) nav > ul:not(:first-of-type),
+        :host([mouse-over]) nav > ul:first-of-type > li {
+          position: static !important;
+        }
+      }
     `
     return result
   }

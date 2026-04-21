@@ -60,11 +60,20 @@ export default class MigrosmuseumHeader extends Header {
         transform: none !important;
       }
       :host > header > a-menu-icon.open {
-        margin-right: 5px;
+        /* margin-right: 5px; */
+        position: relative;
+        right: 5px;
       }
       @media only screen and (max-width: _max-width_) {
         :host > header > a-logo {
           flex-grow: 0;
+        }
+        :host > header > m-navigation {
+          animation: none !important;
+        }
+        :host > header.open > m-navigation {
+          animation: none !important;
+          overflow-y: auto !important;
         }
       }
     `
@@ -117,6 +126,8 @@ export default class MigrosmuseumHeader extends Header {
             cancelable: true,
             composed: true
           }))
+
+          if (this.mNavigation) this.mNavigation.classList[prop]('open')
 
           Array.from(this.header.children).forEach(node => {
             node.classList[prop](this.getAttribute('no-scroll') || 'no-scroll')
