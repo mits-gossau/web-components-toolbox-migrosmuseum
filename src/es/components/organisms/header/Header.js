@@ -58,6 +58,7 @@ export default class MigrosmuseumHeader extends Header {
       }
       :host([sticky]:not(.top)) > header {
         transform: none !important;
+        border-bottom: none !important;
       }
       :host > header > a-menu-icon.open {
         position: relative;
