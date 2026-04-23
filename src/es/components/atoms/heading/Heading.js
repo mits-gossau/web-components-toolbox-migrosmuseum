@@ -154,6 +154,10 @@ export default class Heading extends Shadow() {
       :host([inline]) {
         padding: 0;
       }
+      /* Remove side padding when inside m-teaser */
+      :host-context(m-teaser) {
+        padding: 0 !important;
+      }
       :host([shadow]:not([sticky])) {
         padding-top: var(--shadow-padding-top, 5.4em); /* matches the shadow spread */
         margin-top: -5.4em !important;
@@ -231,6 +235,10 @@ export default class Heading extends Shadow() {
       @media only screen and (max-width: _max-width_) {
         :host {
           padding: 0 var(--content-spacing-mobile, var(--content-spacing, unset));
+        }
+        /* Remove side padding when inside m-teaser (mobile) */
+        :host-context(m-teaser) {
+          padding: 0 !important;
         }
         :host([show][shadow]:not([sticky])) {
           animation: shadow-mobile 3s ease-in forwards !important;
