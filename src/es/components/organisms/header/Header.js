@@ -112,6 +112,14 @@ export default class MigrosmuseumHeader extends Header {
     document.removeEventListener('keyup', this.escapeListener)
   }
 
+  focusFirstNavigationItem () {
+    const firstListItem = this.mNavigation?.root.querySelector('nav > ul > li:first-child')
+    const firstDetails = firstListItem?.querySelector('m-details')
+    const focusTarget = firstDetails?.root.querySelector('summary a, summary') || firstListItem?.querySelector('a')
+
+    focusTarget?.focus()
+  }
+
   /**
    * renders the html
    *
@@ -167,10 +175,7 @@ export default class MigrosmuseumHeader extends Header {
 
           // #2: Focus first menuitem when opening
           if (this.header.classList.contains('open') && this.mNavigation) {
-            setTimeout(() => {
-              const firstItem = this.mNavigation.root.querySelector('nav > ul > li:first-child summary') || this.mNavigation.root.querySelector('nav > ul > li:first-child a')
-              if (firstItem) firstItem.focus()
-            }, 100)
+            setTimeout(() => this.focusFirstNavigationItem(), 100)
           }
 
           Array.from(this.header.children).forEach(node => {
