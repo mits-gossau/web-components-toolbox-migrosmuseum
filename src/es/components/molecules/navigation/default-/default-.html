@@ -1,51 +1,51 @@
 <m-navigation id="navigation" hover="false" namespace="navigation-default-with-styles-" namespace-fallback hit-area="false" no-a-link no-focus focus-lost-close no-scroll mobile-breakpoint="100000000px">
-    <ul>
-        <li>
+    <ul role="menubar">
+        <li role="none">
             <m-details namespace="details-shadow-">
                 <details>
-                <summary><h2 role="none">PROGRAMM</h2></summary>
-                <div>
-                    <h3 role="none"><a href=#>AUSSTELLUNGEN</a></h3>
-                    <h3 role="none"><a href=#>AGENDA</a></h3>
-                    <h3 role="none"><a href=#>KUNSTVERMITTLUNG</a></h3>
+                <summary role="menuitem" aria-haspopup="true" aria-expanded="false"><h2 role="none">PROGRAMM</h2></summary>
+                <div role="menu">
+                    <h3 role="none"><a role="menuitem" href=#>AUSSTELLUNGEN</a></h3>
+                    <h3 role="none"><a role="menuitem" href=#>AGENDA</a></h3>
+                    <h3 role="none"><a role="menuitem" href=#>KUNSTVERMITTLUNG</a></h3>
                 </div>
                 </details>
             </m-details>
         </li>
-        <li>
+        <li role="none">
             <m-details namespace="details-shadow-">
                 <details>
-                <summary><h2 role="none"><a href=#>SAMMLUNG</a></h2></summary>
+                <summary role="menuitem" aria-haspopup="false"><h2 role="none"><a href=#>SAMMLUNG</a></h2></summary>
                 <div></div>
             </details>
             </m-details>
         </li>
-        <li>
+        <li role="none">
             <m-details namespace="details-shadow-">
                 <details>
-                <summary><h2 role="none">MUSEUM</h2></summary>
-                <div>
-                    <h3 role="none"><a href=#>AUSSTELLUNGEN</a></h3>
-                    <h3 role="none"><a href=#>AGENDA</a></h3>
-                    <h3 role="none"><a href=#>KUNSTVERMITTLUNG</a></h3>
+                <summary role="menuitem" aria-haspopup="true" aria-expanded="false"><h2 role="none">MUSEUM</h2></summary>
+                <div role="menu">
+                    <h3 role="none"><a role="menuitem" href=#>AUSSTELLUNGEN</a></h3>
+                    <h3 role="none"><a role="menuitem" href=#>AGENDA</a></h3>
+                    <h3 role="none"><a role="menuitem" href=#>KUNSTVERMITTLUNG</a></h3>
                 </div>
                 </details>
             </m-details>
         </li>
-        <li>
+        <li role="none">
             <m-details namespace="details-shadow-">
                 <details>
-                <summary><h2 role="none"><a href=#>BESUCH</a></h2></summary>
+                <summary role="menuitem" aria-haspopup="false"><h2 role="none"><a href=#>BESUCH</a></h2></summary>
                 <div></div>
             </details>
             </m-details>
         </li>
     </ul>
-    <ul class=language-switcher>
-        <li><h4 role="none"><a href=#>KONTAKT</a></h4></li>
-        <li><h4 role="none"><a href=#>MEDIEN</a></h4></li>
-        <li><h4 role="none"><a href=#>LIVE</a></h4></li>
-        <li><h4 role="none"><a href=#>EINFACHE SPRACHE</a></h4></li>
-        <li><h4 role="none"><a href=#><a-icon-mdx icon-name="ArrowUpRight" size="1.5em" hover-on-parent-element></a-icon-mdx>SHOP</a></h4></li>
+    <ul class=language-switcher role="menu">
+        <li role="none"><h4 role="none"><a role="menuitem" href=#>KONTAKT</a></h4></li>
+        <li role="none"><h4 role="none"><a role="menuitem" href=#>MEDIEN</a></h4></li>
+        <li role="none"><h4 role="none"><a role="menuitem" href=#>LIVE</a></h4></li>
+        <li role="none"><h4 role="none"><a role="menuitem" href=#>EINFACHE SPRACHE</a></h4></li>
+        <li role="none"><h4 role="none"><a role="menuitem" href=#><a-icon-mdx icon-name="ArrowUpRight" size="1.5em" hover-on-parent-element></a-icon-mdx>SHOP</a></h4></li>
     </ul>
 </m-navigation>

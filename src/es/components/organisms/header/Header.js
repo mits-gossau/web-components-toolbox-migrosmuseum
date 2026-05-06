@@ -80,6 +80,38 @@ export default class MigrosmuseumHeader extends Header {
     return result
   }
 
+  connectedCallback () {
+    super.connectedCallback()
+    // #7: Override Escape to focus MenuIcon instead of body
+    document.removeEventListener('keyup', this.keyupListener)
+    this.escapeListener = event => {
+      if (event.key === 'Escape') {
+        if (this.header.classList.contains('open')) {
+          this.MenuIcon.click()
+          this.MenuIcon.focus()
+        }
+      }
+    }
+    document.addEventListener('keyup', this.escapeListener)
+    // #5: Sync aria-expanded on details toggle
+    if (this.mNavigation) {
+      this.mNavigation.addEventListener('toggle', event => {
+        const details = event.target
+        if (details && details.tagName === 'DETAILS') {
+          const summary = details.querySelector('summary')
+          if (summary && summary.hasAttribute('aria-expanded')) {
+            summary.setAttribute('aria-expanded', details.hasAttribute('open') ? 'true' : 'false')
+          }
+        }
+      }, true)
+    }
+  }
+
+  disconnectedCallback () {
+    super.disconnectedCallback()
+    document.removeEventListener('keyup', this.escapeListener)
+  }
+
   /**
    * renders the html
    *
@@ -132,6 +164,14 @@ export default class MigrosmuseumHeader extends Header {
           }))
 
           if (this.mNavigation) this.mNavigation.classList[prop]('open')
+
+          // #2: Focus first menuitem when opening
+          if (this.header.classList.contains('open') && this.mNavigation) {
+            setTimeout(() => {
+              const firstItem = this.mNavigation.root.querySelector('nav > ul > li:first-child summary') || this.mNavigation.root.querySelector('nav > ul > li:first-child a')
+              if (firstItem) firstItem.focus()
+            }, 100)
+          }
 
           Array.from(this.header.children).forEach(node => {
             node.classList[prop](this.getAttribute('no-scroll') || 'no-scroll')
