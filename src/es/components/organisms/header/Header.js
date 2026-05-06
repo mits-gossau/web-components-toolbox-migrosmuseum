@@ -112,8 +112,12 @@ export default class MigrosmuseumHeader extends Header {
       ]).then(children => {
         this.MenuIcon = new children[0].constructorClass({ namespace: this.getAttribute('namespace') ? `${this.getAttribute('namespace')}a-menu-icon-` : '', namespaceFallback: this.hasAttribute('namespace-fallback'), mobileBreakpoint: this.mobileBreakpoint }) // eslint-disable-line
         this.MenuIcon.setAttribute('value', this.getAttribute('menu-icon-value'))
+        this.MenuIcon.setAttribute('aria-expanded', 'false')
+        this.MenuIcon.setAttribute('aria-controls', 'navigation')
+        this.MenuIcon.setAttribute('aria-haspopup', 'true')
         this.MenuIcon.addEventListener('click', event => {
           this.header.classList.toggle('open')
+          this.MenuIcon.setAttribute('aria-expanded', this.header.classList.contains('open') ? 'true' : 'false')
           const prop = this.header.classList.contains('open') ? 'add' : 'remove'
           if (this.getMedia() !== 'desktop') this.mNavigation.setAttribute('aria-expanded', this.header.classList.contains('open') ? 'true' : 'false')
           this.dispatchEvent(new CustomEvent(this.getAttribute('no-scroll') || 'no-scroll', {
