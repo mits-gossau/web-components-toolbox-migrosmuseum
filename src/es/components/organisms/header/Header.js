@@ -35,12 +35,34 @@ export default class MigrosmuseumHeader extends Header {
       }
       :host > header > a-logo {
         display: block;
+        order: 1;
         position: static;
         left: auto;
         z-index: auto;
         transform: none;
         top: auto;
         transition: none;
+      }
+      :host > header > a-menu-icon {
+        order: 3;
+      }
+      @media only screen and (min-width: 768px) {
+        :host > header > a-logo {
+          flex-basis: var(--logo-width, 198px);
+          flex-grow: 0;
+          flex-shrink: 0;
+          max-width: var(--logo-width, 198px);
+          min-width: var(--logo-width, 198px);
+        }
+        :host > header > a-menu-icon {
+          box-sizing: border-box;
+          flex-basis: var(--logo-width, 198px);
+          flex-grow: 0;
+          flex-shrink: 0;
+          max-width: var(--logo-width, 198px);
+          min-width: var(--logo-width, 198px);
+          width: var(--logo-width, 198px);
+        }
       }
       :host > header > :where(h1,h2,h3,h4,h5,h6,time) {
         line-height: var(--h6-line-height);
@@ -61,8 +83,8 @@ export default class MigrosmuseumHeader extends Header {
         border-bottom: none !important;
       } */
       :host > header > a-menu-icon.open {
-        position: relative;
-        right: 5px;
+        position: static;
+        right: auto;
       }
       @media only screen and (max-width: _max-width_) {
         :host > header > a-logo {
@@ -73,7 +95,10 @@ export default class MigrosmuseumHeader extends Header {
         }
         :host > header.open > m-navigation {
           animation: none !important;
+          max-width: none !important;
+          min-width: calc(100% + var(--scrollbar-width, 0px)) !important;
           overflow-y: auto !important;
+          width: calc(100% + var(--scrollbar-width, 0px)) !important;
         }
       }
     `
@@ -156,6 +181,7 @@ export default class MigrosmuseumHeader extends Header {
         this.MenuIcon.setAttribute('aria-controls', 'navigation')
         this.MenuIcon.setAttribute('aria-haspopup', 'true')
         this.MenuIcon.addEventListener('click', event => {
+          event.stopPropagation()
           this.header.classList.toggle('open')
           this.MenuIcon.setAttribute('aria-expanded', this.header.classList.contains('open') ? 'true' : 'false')
           const prop = this.header.classList.contains('open') ? 'add' : 'remove'
