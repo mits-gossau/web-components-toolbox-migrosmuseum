@@ -35,11 +35,6 @@ export default class MigrosmuseumHeader extends Header {
       }
       :host > header > a-logo {
         display: block;
-        flex-basis: var(--logo-width, 198px);
-        flex-grow: 0;
-        flex-shrink: 0;
-        max-width: var(--logo-width, 198px);
-        min-width: var(--logo-width, 198px);
         order: 1;
         position: static;
         left: auto;
@@ -49,14 +44,25 @@ export default class MigrosmuseumHeader extends Header {
         transition: none;
       }
       :host > header > a-menu-icon {
-        box-sizing: border-box;
-        flex-basis: var(--logo-width, 198px);
-        flex-grow: 0;
-        flex-shrink: 0;
-        max-width: var(--logo-width, 198px);
-        min-width: var(--logo-width, 198px);
         order: 3;
-        width: var(--logo-width, 198px);
+      }
+      @media only screen and (min-width: 768px) {
+        :host > header > a-logo {
+          flex-basis: var(--logo-width, 198px);
+          flex-grow: 0;
+          flex-shrink: 0;
+          max-width: var(--logo-width, 198px);
+          min-width: var(--logo-width, 198px);
+        }
+        :host > header > a-menu-icon {
+          box-sizing: border-box;
+          flex-basis: var(--logo-width, 198px);
+          flex-grow: 0;
+          flex-shrink: 0;
+          max-width: var(--logo-width, 198px);
+          min-width: var(--logo-width, 198px);
+          width: var(--logo-width, 198px);
+        }
       }
       :host > header > :where(h1,h2,h3,h4,h5,h6,time) {
         line-height: var(--h6-line-height);
