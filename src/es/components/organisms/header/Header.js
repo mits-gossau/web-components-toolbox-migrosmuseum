@@ -172,6 +172,7 @@ export default class MigrosmuseumHeader extends Header {
         this.MenuIcon.setAttribute('aria-controls', 'navigation')
         this.MenuIcon.setAttribute('aria-haspopup', 'true')
         this.MenuIcon.addEventListener('click', event => {
+          event.stopPropagation()
           this.header.classList.toggle('open')
           this.MenuIcon.setAttribute('aria-expanded', this.header.classList.contains('open') ? 'true' : 'false')
           const prop = this.header.classList.contains('open') ? 'add' : 'remove'
