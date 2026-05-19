@@ -97,7 +97,14 @@ export default class Link extends Shadow() {
    * @returns Promise<void>
    */
   renderHTML () {
-    this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${this.getAttribute('tag-name') || 'h6'}><a-icon-mdx icon-name="${this.getAttribute('icon-name') || 'ArrowRight'}" size="${this.getAttribute('icon-size') || '1.5em'}" hover-on-parent-element></a-icon-mdx>${this.initialTextContent}</${this.getAttribute('tag-name') || 'h6'}></a>`
+    const iconUrl = this.getAttribute('icon-url')
+    const iconName = this.getAttribute('icon-name')
+    const iconAttribute = iconUrl
+      ? `icon-url="${iconUrl}"`
+      : iconName
+        ? `icon-name="${iconName}"`
+        : 'icon-url="/assets/img/mm-icon-arrow-right.svg"'
+    this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${this.getAttribute('tag-name') || 'h6'}><a-icon-mdx ${iconAttribute} size="${this.getAttribute('icon-size') || '1.5em'}" hover-on-parent-element></a-icon-mdx>${this.initialTextContent}</${this.getAttribute('tag-name') || 'h6'}></a>`
   }
 
   get a () {
