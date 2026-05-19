@@ -38,6 +38,7 @@
 }
 
 :root {
+  scrollbar-gutter: stable;
   --a-color: var(--color);
   --a-margin: 0;
   --a-text-decoration: underline;
