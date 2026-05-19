@@ -229,8 +229,6 @@
   --select-height: 100%;
   --select-line-height: var(--input-line-height);
   --select-padding: 0.5em 0.5em 0.35em;
-  --scrollbar-gutter-desktop: stable;
-  --scrollbar-gutter-mobile: stable;
   --spacer-four-height-mobile: 4.6em;
   --spacer-four-height: 3.6em;
   --spacer-height-mobile: 1.6em;
