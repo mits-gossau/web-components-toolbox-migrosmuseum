@@ -61,6 +61,7 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
       }
       :host :where(.bar1, .bar2, .bar3) {
         justify-self: end;
+        margin-left: auto;
       }
       :host div.hidden {
         visibility: hidden;
