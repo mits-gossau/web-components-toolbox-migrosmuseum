@@ -89,7 +89,10 @@ export default class MigrosmuseumHeader extends Header {
         }
         :host > header.open > m-navigation {
           animation: none !important;
+          max-width: none !important;
+          min-width: calc(100% + (100vw - 100%)) !important;
           overflow-y: auto !important;
+          width: calc(100% + (100vw - 100%)) !important;
         }
       }
     `
