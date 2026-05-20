@@ -10,7 +10,7 @@ export default class Link extends Shadow() {
   constructor (options = {}, ...args) {
     super({ importMetaUrl: import.meta.url, tabindex: 'no-tabindex', ...options }, ...args)
 
-    this.initialTextContent = this.textContent
+    this.initialTextContent = this.textContent.trim()
   }
 
   connectedCallback () {
@@ -66,6 +66,7 @@ export default class Link extends Shadow() {
       :host > a > ${this.getAttribute('tag-name') || 'h6'} {
         display: flex;
         align-items: ${this.hasAttribute('align-items') ? this.getAttribute('align-items') : 'center'};
+        gap: var(--icon-gap, 0.25em);
       }
     `
     return this.fetchTemplate()
@@ -105,8 +106,7 @@ export default class Link extends Shadow() {
         ? `icon-name="${iconName}"`
         : 'icon-url="/assets/img/mm-icon-arrow-right.svg"'
     const iconSize = this.getAttribute('icon-size') || (iconUrl || !iconName ? '1em' : '1.5em')
-    const iconSpacing = iconUrl || !iconName ? '&nbsp;' : ''
-    this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${this.getAttribute('tag-name') || 'h6'}><a-icon-mdx ${iconAttribute} size="${iconSize}" hover-on-parent-element></a-icon-mdx>${iconSpacing}${this.initialTextContent}</${this.getAttribute('tag-name') || 'h6'}></a>`
+    this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${this.getAttribute('tag-name') || 'h6'}><a-icon-mdx ${iconAttribute} size="${iconSize}" hover-on-parent-element></a-icon-mdx>${this.initialTextContent}</${this.getAttribute('tag-name') || 'h6'}></a>`
   }
 
   get a () {
