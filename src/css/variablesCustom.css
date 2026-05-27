@@ -37,6 +37,15 @@
   overflow-wrap: break-word;
 }
 
+:root h1,
+:root h2,
+:root h3,
+:root h4,
+:root h5,
+:root h6 {
+  hyphens: manual;
+}
+
 :root {
   --a-color: var(--color);
   --a-margin: 0;
@@ -109,7 +118,7 @@
   --grid-12er-section-transition: var(--transition);
   --grid-12er-width: 100%;
   --h-color: var(--color);
-  --h-hyphens: auto;
+  --h-hyphens: manual;
   --h-transition: var(--a-transition);
   --h1-font-size-mobile: 4.46rem;
   --h1-font-size: 14.12rem;
