@@ -190,6 +190,17 @@ export default class Heading extends Shadow() {
       :host([show][shadow]:not([sticky])) {
         animation: shadow 3s ease-in forwards !important;
       }
+      :host([h1-large]) {
+        --h1-font-size: var(--h1-large-font-size, var(--h1-font-size));
+        --h1-line-height: var(--h1-large-line-height, var(--h1-line-height));
+        --h1-margin: var(--h1-large-margin, var(--h1-margin));
+        --h1-word-break: var(--h1-large-word-break, var(--h1-word-break));
+        --h2-font-size: var(--h1-large-font-size, var(--h1-font-size));
+        --h3-font-size: var(--h1-large-font-size, var(--h1-font-size));
+        --h4-font-size: var(--h1-large-font-size, var(--h1-font-size));
+        --h5-font-size: var(--h1-large-font-size, var(--h1-font-size));
+        --h6-font-size: var(--h1-large-font-size, var(--h1-font-size));
+      }
       :host([h1]) {
         --h2-font-size: var(--h1-font-size);
         --h3-font-size: var(--h1-font-size);
@@ -242,6 +253,18 @@ export default class Heading extends Shadow() {
         }
         :host([show][shadow]:not([sticky])) {
           animation: shadow-mobile 3s ease-in forwards !important;
+        }
+        :host([h1-large]),
+        :host([h1-large-mobile]) {
+          --h1-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
+          --h1-line-height-mobile: var(--h1-large-line-height-mobile, var(--h1-large-line-height, var(--h1-line-height-mobile, var(--h1-line-height))));
+          --h1-margin-mobile: var(--h1-large-margin-mobile, var(--h1-large-margin, var(--h1-margin-mobile, var(--h1-margin))));
+          --h1-word-break-mobile: var(--h1-large-word-break-mobile, var(--h1-large-word-break, var(--h1-word-break-mobile, var(--h1-word-break))));
+          --h2-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
+          --h3-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
+          --h4-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
+          --h5-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
+          --h6-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
         }
         :host([h1-mobile]) {
           --h2-font-size-mobile: var(--h1-font-size-mobile);
@@ -324,7 +347,7 @@ export default class Heading extends Shadow() {
    * @returns void
    */
   renderHTML () {
-    this.heading = this.root.querySelector('h1, h2, h3, h4, h5') || document.createElement(this.getAttribute('tag') || 'h1')
+    this.heading = this.root.querySelector('h1, h2, h3, h4, h5, h6') || document.createElement(this.getAttribute('tag') || 'h1')
     if (this.getAttribute('style-as')) this.heading.setAttribute('class', this.getAttribute('style-as'))
     // fix font letter-spacing manually, since css does not yet support extended font letter-spacing
     if (['b', 'B', 'D', 'E', 'F', 'h', 'H', 'i', 'I', 'k', 'K', 'l', 'L', 'm', 'M', 'n', 'N', 'p', 'P', 'r', 'R', 'u', 'U'].includes(this.heading.textContent.substring(0, 1))) this.setAttribute('fix-first-letter-spacing', '')
