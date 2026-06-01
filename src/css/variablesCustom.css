@@ -11,24 +11,24 @@
 @font-face {
   font-family: "PPMori";
   src: url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff") format("woff");
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PPMoriBold";
+  font-family: "PPMori";
   src: url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-Semibold.woff") format("woff");
-  font-weight: bold;
+  font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "PPMoriItalic";
+  font-family: "PPMori";
   src: url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-SemiboldItalic.woff2") format("woff2"), url("https://cdn.migros.ch/ch.migros/static/fonts/PPMori/PPMori-SemiboldItalic.woff") format("woff");
-  font-weight: bold;
-  font-style: normal;
+  font-weight: 400 700;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -91,10 +91,12 @@
   --details-shadow-child-margin-mobile-custom: 0;
   --details-shadow-details-box-shadow: var(--box-shadow);
   --filter-spacing: 0.4rem;
-  --font-family-bold: PPMoriBold, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
-  --font-family-italic: PPMoriItalic, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
+  --font-family-bold: PPMori, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
+  --font-family-italic: PPMori, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-secondary: PPMori, Avenir35Light, sans-serif;
   --font-family: PPMori, HelveticaNowText, Helvetica, Arial, sans-serif;
+  --font-weight-strong: 700;
+  --p-font-weight-strong: var(--font-weight-strong);
   --font-size-big-mobile: 1.465rem;
   --font-size-big: var(--h5-font-size);
   --font-size-mobile: min(13px, 4.1vw);
