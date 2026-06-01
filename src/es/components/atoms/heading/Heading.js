@@ -178,14 +178,14 @@ export default class Heading extends Shadow() {
       }
       :host([crop]) > * {
         transform: translateY(0.35em);
-        margin-top: -0.35em !important;
-        clip-path: rect(0 100% calc(100% - 0.35em) 0);
+        margin-top: -0.3em !important;
+        clip-path: rect(0 100% calc(100% - 0.25em) 0);
       }
       :host([fix-first-letter-spacing]) > * {
         transform: translateX(-0.075em);
       }
       :host([crop][fix-first-letter-spacing]) > * {
-        transform: translate(-0.075em, 0.35em);
+        transform: translate(-0.075em, 0.25em);
       }
       :host([show][shadow]:not([sticky])) {
         animation: shadow 3s ease-in forwards !important;
