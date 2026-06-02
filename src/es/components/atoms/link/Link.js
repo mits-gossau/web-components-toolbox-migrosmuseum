@@ -63,7 +63,7 @@ export default class Link extends Shadow() {
         margin-top: 0 !important;
         margin-bottom: 0 !important;
       }
-      :host > a > ${this.getAttribute('tag-name') || 'h6'} {
+      :host > a > ${this.getAttribute('tag-name') || 'h4'} {
         display: flex;
         align-items: ${this.hasAttribute('align-items') ? this.getAttribute('align-items') : 'center'};
         gap: var(--icon-gap, 0.25em);
@@ -106,7 +106,8 @@ export default class Link extends Shadow() {
         ? `icon-name="${iconName}"`
         : 'icon-url="/assets/img/mm-icon-arrow-right.svg"'
     const iconSize = this.getAttribute('icon-size') || (iconUrl || !iconName ? '1em' : '1.5em')
-    this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${this.getAttribute('tag-name') || 'h6'}><a-icon-mdx ${iconAttribute} size="${iconSize}" hover-on-parent-element></a-icon-mdx>${this.initialTextContent}</${this.getAttribute('tag-name') || 'h6'}></a>`
+    const tagName = this.getAttribute('tag-name') || 'h4'
+    this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${tagName}><a-icon-mdx ${iconAttribute} size="${iconSize}" hover-on-parent-element></a-icon-mdx>${this.initialTextContent}</${tagName}></a>`
   }
 
   get a () {

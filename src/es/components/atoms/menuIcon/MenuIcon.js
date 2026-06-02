@@ -38,26 +38,22 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
       :host {
         --transition: var(--transition-speed);
         --width: 40px;
+        --one-transform: translateY(calc(var(--height) + var(--spacing))) rotate(45deg);
+        --two-transform: translateY(calc(-1 * (var(--height) + var(--spacing)))) rotate(-45deg);
         cursor: pointer;
         position: relative;
       }
-      :host(:hover) {
-        --header-default-a-menu-icon-background-color: var(--color-hover);
-        color: var(--color-hover);
+      @media (hover: hover) {
+        :host(:hover) {
+          --header-default-a-menu-icon-background-color: var(--color-hover);
+          color: var(--color-hover);
+        }
       }
-      :host(:not(.${this.openClass})) *:not(span):not(style), :host(.${this.openClass}) span {
-        opacity: 0;
-      }
-      :host(.${this.openClass}) span {
-        transform: scaleX(0) skewX(65deg) translateX(3em);
-      }
-      :host span {
-        font-size: var(--menu-icon-font-size);
-        text-transform: uppercase;
-        vertical-align: middle;
-        position: absolute;
-        right: 0;
-        top: 20%;
+      @media (hover: none) {
+        :host(:hover) {
+          --header-default-a-menu-icon-background-color: var(--color);
+          color: var(--color);
+        }
       }
       :host :where(.bar1, .bar2, .bar3) {
         justify-self: end;
@@ -83,9 +79,5 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
    */
   renderHTML () {
     super.renderHTML()
-    this.html = /* html */`
-      <span>${this.getAttribute('value') || 'Menu'}</span>
-      <div class="hidden">${this.getAttribute('value') || 'Menu'}</div>
-    `
   }
 }
