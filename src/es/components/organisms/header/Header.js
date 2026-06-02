@@ -87,6 +87,10 @@ export default class MigrosmuseumHeader extends Header {
         right: auto;
       }
       @media only screen and (max-width: _max-width_) {
+        :host([sticky].show:not(.top)) > header,
+        :host([sticky]:not(.top)) > header {
+          transform: var(--sticky-transform-mobile, none);
+        }
         :host > header > a-logo {
           flex-grow: 0;
         }

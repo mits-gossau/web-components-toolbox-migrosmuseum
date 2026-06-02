@@ -291,7 +291,7 @@
     --header-default-content-spacing-mobile: 3em;
     --header-default-font-size-mobile: var(--font-size-mobile);
     --header-default-height-mobile-custom: 8.155em;
-    --header-default-padding-mobile: 4.23em var(--content-spacing-mobile) 1.231em;
+    --header-default-padding-mobile: 1.231em var(--content-spacing-mobile) 1.231em;
     --menu-icon-font-size: 1.35em;
     --navigation-default-with-styles-language-switcher-align-items-mobile: flex-start;
     --navigation-default-with-styles-language-switcher-flex-direction: column;

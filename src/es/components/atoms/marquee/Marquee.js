@@ -130,7 +130,9 @@ export default class Marquee extends Shadow() {
         visibility: hidden;
         margin: 0 !important;
         z-index: var(--z-index, 100);
-        width: var(--width, 100vw) !important;
+        width: var(--width, 100%) !important;
+        max-width: 100%;
+        box-sizing: border-box;
         white-space: nowrap;
         overflow-x: hidden;
       }:host > section {
