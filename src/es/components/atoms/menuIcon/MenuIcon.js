@@ -41,9 +41,17 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
         cursor: pointer;
         position: relative;
       }
-      :host(:hover) {
-        --header-default-a-menu-icon-background-color: var(--color-hover);
-        color: var(--color-hover);
+      @media (hover: hover) {
+        :host(:hover) {
+          --header-default-a-menu-icon-background-color: var(--color-hover);
+          color: var(--color-hover);
+        }
+      }
+      @media (hover: none) {
+        :host(:hover) {
+          --header-default-a-menu-icon-background-color: var(--color);
+          color: var(--color);
+        }
       }
       :host(:not(.${this.openClass})) *:not(span):not(style), :host(.${this.openClass}) span {
         opacity: 0;
