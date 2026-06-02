@@ -28,8 +28,11 @@ export default class MigrosmuseumHeader extends Header {
 
         this.setStickyOffsetHeight()
 
-        if (currentScrollY <= this.offsetHeight + 5) {
+        if (currentScrollY <= 1) {
           this.classList.add('top')
+          this.classList.remove('show')
+        } else if (this.classList.contains('top') && delta > 0 && currentScrollY <= this.offsetHeight + 5) {
+          // Keep the header static while scrolling down from the top so it scrolls away naturally.
           this.classList.remove('show')
         } else {
           this.classList.remove('top')
