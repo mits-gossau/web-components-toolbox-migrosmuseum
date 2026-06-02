@@ -38,6 +38,8 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
       :host {
         --transition: var(--transition-speed);
         --width: 40px;
+        --one-transform: translateY(calc(var(--height) + var(--spacing))) rotate(45deg);
+        --two-transform: translateY(calc(-1 * (var(--height) + var(--spacing)))) rotate(-45deg);
         cursor: pointer;
         position: relative;
       }
