@@ -13,6 +13,39 @@ import Header from '../../web-components-toolbox/src/es/components/organisms/hea
  * @type {CustomElementConstructor}
  */
 export default class MigrosmuseumHeader extends Header {
+  constructor (options = {}, ...args) {
+    super(options, ...args)
+
+    this.lastScrollY = self.scrollY
+    this.scrollTicking = false
+    this.scrollListener = event => {
+      if (this.scrollTicking) return
+      this.scrollTicking = true
+      self.requestAnimationFrame(() => {
+        const currentScrollY = self.scrollY
+        const delta = currentScrollY - this.lastScrollY
+        const threshold = 8
+
+        this.setStickyOffsetHeight()
+
+        if (currentScrollY <= this.offsetHeight + 5) {
+          this.classList.add('top')
+          this.classList.remove('show')
+        } else {
+          this.classList.remove('top')
+          if (delta < -threshold) {
+            this.classList.add('show')
+          } else if (delta > threshold) {
+            this.classList.remove('show')
+          }
+        }
+
+        this.lastScrollY = currentScrollY
+        this.scrollTicking = false
+      })
+    }
+  }
+
   /**
    * renders the o-header css
    *
@@ -112,6 +145,11 @@ export default class MigrosmuseumHeader extends Header {
 
   connectedCallback () {
     super.connectedCallback()
+    if (this.hasAttribute('sticky')) {
+      self.removeEventListener('scroll', this.scrollListener)
+      this.lastScrollY = self.scrollY
+      self.addEventListener('scroll', this.scrollListener, { passive: true })
+    }
     // #7: Override Escape to focus MenuIcon instead of body
     document.removeEventListener('keyup', this.keyupListener)
     this.escapeListener = event => {
