@@ -84,7 +84,7 @@ export default class MigrosmuseumHeader extends Header {
           this.classList.remove('top')
 
           if (Math.abs(delta) > jitterThreshold) {
-            if (delta > 0 || isUserScrollingDown) {
+            if (delta > 0 && isUserScrollingDown) {
               this.downScrollDistance += Math.abs(delta)
               this.upScrollDistance = 0
               if (this.downScrollDistance >= hideDistance) this.classList.remove('show')
