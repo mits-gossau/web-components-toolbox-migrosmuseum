@@ -16,30 +16,85 @@ export default class MigrosmuseumHeader extends Header {
   constructor (options = {}, ...args) {
     super(options, ...args)
 
-    this.lastScrollY = self.scrollY
+    this.lastScrollY = Math.max(0, self.scrollY)
+    this.upScrollDistance = 0
+    this.downScrollDistance = 0
+    this.lastUserScrollDirection = null
+    this.lastUserScrollDirectionAt = 0
+    this.suppressRevealUntil = 0
+    this.lastTouchY = null
     this.scrollTicking = false
+    this.wheelListener = event => {
+      if (Math.abs(event.deltaY) < 2) return
+      this.lastUserScrollDirection = event.deltaY > 0 ? 'down' : 'up'
+      this.lastUserScrollDirectionAt = Date.now()
+      if (this.lastUserScrollDirection === 'down') this.suppressRevealUntil = Date.now() + 1000
+    }
+    this.touchStartListener = event => {
+      this.lastTouchY = event.touches?.[0]?.clientY ?? null
+    }
+    this.touchMoveListener = event => {
+      const currentTouchY = event.touches?.[0]?.clientY
+      if (currentTouchY == null || this.lastTouchY == null) return
+      const touchDelta = currentTouchY - this.lastTouchY
+      if (Math.abs(touchDelta) >= 3) {
+        // Finger moves up => page scrolls down. Finger moves down => page scrolls up.
+        this.lastUserScrollDirection = touchDelta < 0 ? 'down' : 'up'
+        this.lastUserScrollDirectionAt = Date.now()
+        if (this.lastUserScrollDirection === 'down') this.suppressRevealUntil = Date.now() + 1000
+      }
+      this.lastTouchY = currentTouchY
+    }
     this.scrollListener = event => {
       if (this.scrollTicking) return
       this.scrollTicking = true
       self.requestAnimationFrame(() => {
-        const currentScrollY = self.scrollY
+        const currentScrollY = Math.max(0, self.scrollY)
         const delta = currentScrollY - this.lastScrollY
-        const threshold = 8
+        const jitterThreshold = 2
+        const hideDistance = 8
+        const revealDistance = Math.max(72, Math.round(this.offsetHeight * 0.6))
+        const now = Date.now()
+        const hasRecentUserScrollDirection = now - this.lastUserScrollDirectionAt < 500
+        const isRevealSuppressed = now < this.suppressRevealUntil
+        const isUserScrollingDown = hasRecentUserScrollDirection && this.lastUserScrollDirection === 'down'
+        const isUserScrollingUp = hasRecentUserScrollDirection && this.lastUserScrollDirection === 'up'
 
         this.setStickyOffsetHeight()
+
+        if (this.header?.classList.contains('open')) {
+          this.classList.add('show')
+          this.classList.remove('top')
+          this.lastScrollY = currentScrollY
+          this.scrollTicking = false
+          return
+        }
 
         if (currentScrollY <= 1) {
           this.classList.add('top')
           this.classList.remove('show')
-        } else if (this.classList.contains('top') && delta > 0 && currentScrollY <= this.offsetHeight + 5) {
+          this.upScrollDistance = 0
+          this.downScrollDistance = 0
+        } else if (this.classList.contains('top') && delta > jitterThreshold && currentScrollY <= this.offsetHeight + 5) {
           // Keep the header static while scrolling down from the top so it scrolls away naturally.
           this.classList.remove('show')
+          this.upScrollDistance = 0
+          this.downScrollDistance += delta
         } else {
           this.classList.remove('top')
-          if (delta < -threshold) {
-            this.classList.add('show')
-          } else if (delta > threshold) {
-            this.classList.remove('show')
+
+          if (Math.abs(delta) > jitterThreshold) {
+            if (delta > 0 || isUserScrollingDown) {
+              this.downScrollDistance += Math.abs(delta)
+              this.upScrollDistance = 0
+              if (this.downScrollDistance >= hideDistance) this.classList.remove('show')
+            } else if (delta < 0 && isUserScrollingUp && !isRevealSuppressed) {
+              this.upScrollDistance += Math.abs(delta)
+              this.downScrollDistance = 0
+              if (currentScrollY > this.offsetHeight + 5 && this.upScrollDistance >= revealDistance) this.classList.add('show')
+            } else {
+              this.upScrollDistance = 0
+            }
           }
         }
 
@@ -150,7 +205,10 @@ export default class MigrosmuseumHeader extends Header {
     super.connectedCallback()
     if (this.hasAttribute('sticky')) {
       self.removeEventListener('scroll', this.scrollListener)
-      this.lastScrollY = self.scrollY
+      this.lastScrollY = Math.max(0, self.scrollY)
+      self.addEventListener('wheel', this.wheelListener, { passive: true })
+      self.addEventListener('touchstart', this.touchStartListener, { passive: true })
+      self.addEventListener('touchmove', this.touchMoveListener, { passive: true })
       self.addEventListener('scroll', this.scrollListener, { passive: true })
     }
     // #7: Override Escape to focus MenuIcon instead of body
@@ -180,6 +238,9 @@ export default class MigrosmuseumHeader extends Header {
 
   disconnectedCallback () {
     super.disconnectedCallback()
+    self.removeEventListener('wheel', this.wheelListener)
+    self.removeEventListener('touchstart', this.touchStartListener)
+    self.removeEventListener('touchmove', this.touchMoveListener)
     document.removeEventListener('keyup', this.escapeListener)
   }
 
