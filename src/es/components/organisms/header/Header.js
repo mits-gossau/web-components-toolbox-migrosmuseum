@@ -162,7 +162,7 @@ export default class MigrosmuseumHeader extends Header {
         flex-shrink: 1;
         order: 2;
         text-align: center;
-        font-size: var(--h6-font-size);
+        /* font-size: var(--h6-font-size); */
         margin: 0;
       }
       /* :host([sticky]) {
