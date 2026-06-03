@@ -156,6 +156,8 @@
   --p-font-size-mobile: 13px;
   --p-font-size: 23px;
   --p-line-height: var(--line-height);
+  --marquee-font-size: 36px;
+  --marquee-font-size-mobile: 19px;
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
   --header-default-a-menu-icon-padding-open-custom: 0;
@@ -192,7 +194,7 @@
   --marquee-color: var(--color-scheme-two-background-color);
   --marquee-h-color: var(--marquee-color);
   --marquee-padding-mobile: calc(var(--content-spacing-mobile) / 0.9) var(--content-spacing-mobile) calc(var(--content-spacing-mobile) / 1.2);
-  --marquee-padding: calc(var(--content-spacing) / 1.8) var(--content-spacing) calc(var(--content-spacing) / 2.3);
+  --marquee-padding: calc(var(--content-spacing) / 2.5) var(--content-spacing) calc(var(--content-spacing) / 2.3);
   --menu-icon-font-size: 2.5em;
   --mui-form-group-height: var(--select-height);
   --navigation-default-with-styles-a-margin-mobile: 0;
