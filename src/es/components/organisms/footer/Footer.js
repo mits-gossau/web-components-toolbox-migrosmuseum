@@ -94,8 +94,8 @@ export default class Footer extends Shadow() {
         display: flex;
         white-space: nowrap;
       }
-      .today {
-        --h6-color: var(--color-orange);
+      :host > footer .today {
+        color: var(--color-orange);
       }
       @media only screen and (max-width: 1000px) {
         :host > footer > section#sub {
