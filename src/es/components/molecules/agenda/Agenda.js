@@ -221,7 +221,7 @@ export default class Agenda extends Shadow() {
           const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
           const title = curr.clusterBy && clusterBy !== curr.clusterBy ? /* html */`
             <div class="spacer-four" cluster-by="${curr.clusterBy}"></div>
-            <migrosmuseum-a-heading shadow cluster-by="${curr.clusterBy}"><h3>${curr.clusterBy}</h3></migrosmuseum-a-heading>
+            <migrosmuseum-a-heading shadow cluster-by="${curr.clusterBy}"><h2>${curr.clusterBy}</h2></migrosmuseum-a-heading>
           ` : ''
           clusterBy = curr.clusterBy
           return /* html */`${acc}
@@ -251,13 +251,13 @@ export default class Agenda extends Shadow() {
               </style>
               <section part=section>
                 <a ${link} part=date col-lg=2 col-sm=12>
-                  <h5><time datetime="${curr.datetime}">${curr.date}</time></h5>
+                  <h3><time datetime="${curr.datetime}">${curr.date}</time></h3>
                 </a>
                 <a ${link} part=title col-lg=6 col-sm=12>
-                  <h5>${curr.title}</h5>
+                  <h3>${curr.title}</h3>
                 </a>
                 <a ${link} part=description col-lg=4 col-sm=12>
-                  <h6>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h6>
+                  <h4>${curr.descriptions.reduce((acc, description, i) => `${acc}<span part=description${i === 0 ? '-one' : i === 1 ? '-two' : '-three'}>${description}</span>`, '')}</h4>
                 </a>
               </section>
             </o-grid>
