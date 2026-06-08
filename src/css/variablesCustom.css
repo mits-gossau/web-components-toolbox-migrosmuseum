@@ -156,8 +156,8 @@
   --p-font-size-mobile: 13px;
   --p-font-size: 23px;
   --p-line-height: var(--line-height);
-  --marquee-font-size: 36px;
-  --marquee-font-size-mobile: 19px;
+  --marquee-p-font-size: 36px;
+  --marquee-p-font-size-mobile: 19px;
   --header-default-a-menu-icon-background-color-custom: var(--color);
   --header-default-a-menu-icon-padding-custom: 0;
   --header-default-a-menu-icon-padding-open-custom: 0;
