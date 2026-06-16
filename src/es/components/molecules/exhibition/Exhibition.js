@@ -141,6 +141,9 @@ export default class Exhibition extends Shadow() {
       :host(.empty) > p.empty {
         display: block;
       }
+      :host > p{
+        font-size:17px;
+      }
       @media only screen and (max-width: _max-width_) {
         :host > div.spacer-four:first-of-type, :host > p.empty {
           --spacer-four-height-mobile: 3.38em;
@@ -263,7 +266,7 @@ export default class Exhibition extends Shadow() {
                       <p>
                         <time datetime="${curr.datetimeFrom}">${curr.dateFrom}</time>–<time datetime="${curr.datetimeTo}">${curr.dateTo}</time>
                       </p>
-                      <h5>${curr.title}</h5>
+                      <h3>${curr.title}</h5>
                       <p>${curr.description}</p>
                     </figcaption>
                   </figure>
