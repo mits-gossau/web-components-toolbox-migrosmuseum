@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- links/redirects (e.g. to the ZVV timetable) shall open in a new tab, not inside this iframe -->
+  <base target="_blank">
+  <style>
+    html, body { margin: 0; padding: 0; background: transparent; }
+    body { overflow: visible; }
+  </style>
+</head>
+<body>
+  <!--
+    Host page for the ZVV "Fahrplan-Widget" (connection search).
+    Rendered inside an iframe by molecules/zvvWidget/ZvvWidget.js so the third party
+    React widget runs in its own document where document.getElementById and the
+    widget's injected <head> styles work (neither crosses the host page shadow DOM).
+    Configuration is passed via query params (every data-* param is forwarded to the widget).
+  -->
+  <div id="zvv-connectionsearch-widget"></div>
+  <script>
+    (function () {
+      var params = new URLSearchParams(location.search)
+      var widget = document.getElementById('zvv-connectionsearch-widget')
+
+      // forward every data-* query param onto the widget placeholder
+      params.forEach(function (value, key) {
+        if (key.indexOf('data-') === 0) widget.setAttribute(key, value)
+      })
+      // defaults: Migros Museum für Gegenwartskunst / Löwenbräu
+      if (!widget.hasAttribute('data-to')) widget.setAttribute('data-to', 'Zürich, Löwenbräu')
+      if (!widget.hasAttribute('data-tolat')) widget.setAttribute('data-tolat', '47.388434')
+      if (!widget.hasAttribute('data-tolon')) widget.setAttribute('data-tolon', '8.526008')
+
+      // report the rendered height to the parent so the iframe can grow with its content
+      function postHeight () {
+        var height = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight
+        )
+        parent.postMessage({ type: 'zvv-widget-height', height: height }, '*')
+      }
+      if ('ResizeObserver' in window) new ResizeObserver(postHeight).observe(document.body)
+      window.addEventListener('load', postHeight)
+      // a couple of delayed reports to catch async widget rendering
+      ;[300, 1000, 2500].forEach(function (delay) { setTimeout(postHeight, delay) })
+
+      // load the ZVV widget script AFTER the placeholder exists so it mounts immediately
+      var script = document.createElement('script')
+      script.src = params.get('src') || 'https://fpcdn.zvv.ch/cdn/v1/widget.min.js'
+      document.body.appendChild(script)
+    })()
+  </script>
+</body>
+</html>
