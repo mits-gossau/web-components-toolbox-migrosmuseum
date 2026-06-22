@@ -90,6 +90,7 @@
   --details-shadow-child-margin-custom: 0;
   --details-shadow-child-margin-mobile-custom: 0;
   --details-shadow-details-box-shadow: var(--box-shadow);
+  --details-shadow-text-align: left;
   --filter-spacing: 0.4rem;
   --font-family-bold: PPMori, HelveticaNowTextBold, HelveticaNowText, Helvetica, Arial, sans-serif;
   --font-family-italic: PPMori, HelveticaNowTextItalic, HelveticaNowText, Helvetica, Arial, sans-serif;
