@@ -268,6 +268,7 @@ export default class Exhibition extends Shadow() {
                       </p>
                       <h3>${curr.title}</h5>
                       <p>${curr.description}</p>
+                      <p hidden>${(curr.exhibitionLongText || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()}</p>
                     </figcaption>
                   </figure>
                 </m-teaser>
