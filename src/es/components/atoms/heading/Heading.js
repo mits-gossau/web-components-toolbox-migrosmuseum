@@ -191,10 +191,11 @@ export default class Heading extends Shadow() {
         animation: shadow 3s ease-in forwards !important;
       }
       :host([h1-large]) {
-        --h1-font-size: var(--h1-large-font-size, var(--h1-font-size));
-        --h1-line-height: var(--h1-large-line-height, var(--h1-line-height));
-        --h1-margin: var(--h1-large-margin, var(--h1-margin));
-        --h1-word-break: var(--h1-large-word-break, var(--h1-word-break));
+        /* NOTE: no self-referential var() fallback (e.g. var(--h1-font-size, var(--h1-font-size))) — WebKit/Safari treats the self-reference as a cycle and drops the whole declaration, breaking h1-large sizing. */
+        --h1-font-size: var(--h1-large-font-size);
+        --h1-line-height: var(--h1-large-line-height);
+        --h1-margin: var(--h1-large-margin);
+        --h1-word-break: var(--h1-large-word-break);
         --h2-font-size: var(--h1-large-font-size, var(--h1-font-size));
         --h3-font-size: var(--h1-large-font-size, var(--h1-font-size));
         --h4-font-size: var(--h1-large-font-size, var(--h1-font-size));
@@ -256,10 +257,11 @@ export default class Heading extends Shadow() {
         }
         :host([h1-large]),
         :host([h1-large-mobile]) {
-          --h1-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
-          --h1-line-height-mobile: var(--h1-large-line-height-mobile, var(--h1-large-line-height, var(--h1-line-height-mobile, var(--h1-line-height))));
-          --h1-margin-mobile: var(--h1-large-margin-mobile, var(--h1-large-margin, var(--h1-margin-mobile, var(--h1-margin))));
-          --h1-word-break-mobile: var(--h1-large-word-break-mobile, var(--h1-large-word-break, var(--h1-word-break-mobile, var(--h1-word-break))));
+          /* NOTE: no self-referential var() fallback — WebKit/Safari treats the self-reference as a cycle and drops the declaration, breaking h1-large mobile sizing. */
+          --h1-font-size-mobile: var(--h1-large-font-size-mobile);
+          --h1-line-height-mobile: var(--h1-large-line-height-mobile, var(--h1-large-line-height, var(--h1-line-height)));
+          --h1-margin-mobile: var(--h1-large-margin-mobile, var(--h1-large-margin, var(--h1-margin)));
+          --h1-word-break-mobile: var(--h1-large-word-break-mobile, var(--h1-large-word-break, var(--h1-word-break)));
           --h2-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
           --h3-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
           --h4-font-size-mobile: var(--h1-large-font-size-mobile, var(--h1-font-size-mobile));
