@@ -185,7 +185,7 @@ export default class Heading extends Shadow() {
         transform: translateX(-0.075em);
       }
       :host([crop][fix-first-letter-spacing]) > * {
-        transform: translate(-0.075em, 0.35em);
+        transform: translate(-0.075em, 0.25em);
       }
       :host([show][shadow]:not([sticky])) {
         animation: shadow 3s ease-in forwards !important;
