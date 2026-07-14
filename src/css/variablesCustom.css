@@ -154,7 +154,7 @@
   --h6-font-size: var(--h5-font-size);
   --h6-line-height: var(--h5-line-height);
   --h6-margin: var(--h5-margin);
-  --p-font-size-mobile: 13px;
+  --p-font-size-mobile: 16px;
   --p-font-size: 23px;
   --p-line-height: var(--line-height);
   --marquee-p-font-size: 36px;
