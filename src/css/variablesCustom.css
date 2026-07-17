@@ -123,18 +123,18 @@
   --h-color: var(--color);
   --h-hyphens: manual;
   --h-transition: var(--a-transition);
-  --h1-large-font-size-mobile: 58px;
+  --h1-large-font-size-mobile: 62px;
   --h1-large-font-size: 240px;
   --h1-large-line-height: 1;
   --h1-large-margin: 0 auto 0.8rem;
   --h1-large-word-break: break-word;
-  --h1-font-size-mobile: 30px;
+  --h1-font-size-mobile: 34px;
   --h1-font-size: 110px;
   --h1-line-height: 1;
   --h1-margin: 0 auto 0.8rem;
   --h1-word-break: break-word;
-  --font-size-h1-extra-large: 50px;
-  --h2-font-size-mobile: 28px;
+  --font-size-h1-extra-large: 52px;
+  --h2-font-size-mobile: 34px;
   --h2-font-size: 56px;
   --h2-line-height: 1;
   --h2-margin: 0.5rem auto 0.8rem;
@@ -143,11 +143,11 @@
   --h3-font-size: 36px;
   --h3-line-height: 1.1;
   --h3-margin: 0 auto 0.8rem;
-  --h4-font-size-mobile: 13px;
+  --h4-font-size-mobile: 16px;
   --h4-font-size: 23px;
   --h4-line-height: var(--line-height);
   --h4-margin: 0 auto 0.8rem;
-  --h5-font-size-mobile: 10px;
+  --h5-font-size-mobile: 13px;
   --h5-font-size: 17px;
   --h5-line-height: var(--line-height);
   --h5-margin: 0 auto 0.8rem;
@@ -275,6 +275,7 @@
   --teaser-tile-p-margin-custom: 0;
   --transition-speed: 0.2s;
   --transition: color var(--transition-speed) ease-out, background-color var(--transition-speed) ease-out, border-color var(--transition-speed) ease-out;
+  --header-default-a-menu-icon-border-radius-custom: 0;
 }
 /* color schemes */
 :root {
@@ -295,7 +296,7 @@
     --h6-font-size: var(--h5-font-size);
     --header-default-content-spacing-mobile: 3em;
     --header-default-font-size-mobile: var(--font-size-mobile);
-    --header-default-height-mobile-custom: 8.155em;
+    --header-default-height-mobile-custom: 70px;
     --header-default-padding-mobile: 1.231em var(--content-spacing-mobile) 1.231em;
     --menu-icon-font-size: 1.35em;
     --navigation-default-with-styles-language-switcher-align-items-mobile: flex-start;
