@@ -148,7 +148,7 @@ export default class Heading extends Shadow() {
         --show: none;
         display: flex !important;
         width: var(--width, 100%) !important;
-        padding: 0 var(--content-spacing, unset);
+        padding: 0 var(--heading-padding-inline, var(--content-spacing, unset));
         ${this.hasAttribute('justify-content') ? `justify-content: ${this.getAttribute('justify-content')}` : ''}
       }
       :host([inline]) {
@@ -246,7 +246,7 @@ export default class Heading extends Shadow() {
       }
       @media only screen and (max-width: _max-width_) {
         :host {
-          padding: 0 var(--content-spacing-mobile, var(--content-spacing, unset));
+          padding: 0 var(--heading-padding-inline-mobile, var(--heading-padding-inline, var(--content-spacing-mobile, var(--content-spacing, unset))));
         }
         /* Remove side padding when inside m-teaser (mobile) */
         :host-context(m-teaser) {
