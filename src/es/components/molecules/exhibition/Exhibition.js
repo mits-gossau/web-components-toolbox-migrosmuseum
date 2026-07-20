@@ -144,6 +144,11 @@ export default class Exhibition extends Shadow() {
       :host > p{
         font-size:17px;
       }
+      /* year cluster heading (h3 lives in the migrosmuseum-a-heading shadow; custom props inherit across the boundary) */
+      :host migrosmuseum-a-heading[cluster-by] {
+        --h3-font-size: 56px;
+        --h3-margin: 0 0 8px 0;
+      }
       @media only screen and (max-width: _max-width_) {
         :host > div.spacer-four:first-of-type, :host > p.empty {
           --spacer-four-height-mobile: 3.38em;
@@ -151,6 +156,10 @@ export default class Exhibition extends Shadow() {
         :host > p.empty {
           padding-top: var(--spacer-four-height-mobile);
           width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
+        }
+        :host migrosmuseum-a-heading[cluster-by] {
+          --h3-font-size-mobile: 28px;
+          --h3-margin-mobile: 0 0 8px 0;
         }
       }
     `
