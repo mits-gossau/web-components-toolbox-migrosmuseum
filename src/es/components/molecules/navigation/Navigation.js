@@ -68,6 +68,19 @@ export default class MigrosmuseumNavigation extends Navigation {
     this.addEventListener('open', this.dialogOpenCloseListener)
     this.addEventListener('close', this.dialogOpenCloseListener)
     this.html = this.customStyle
+    // the mobile-breakpoint attribute is inflated (100000000px) to force the mobile layout everywhere,
+    // so real devices must be detected with an actual viewport media query.
+    // open-duration controls the css animation as well as the js element.animate fallback (isMac incl. iOS) within m-details
+    this.realMobileMatchMedia = self.matchMedia('(max-width: 767px)')
+    this.realMobileMatchMediaListener = () => Array.from(this.root.querySelectorAll('m-details')).forEach(details => {
+      if (this.realMobileMatchMedia.matches) {
+        details.setAttribute('open-duration', '1')
+      } else {
+        details.removeAttribute('open-duration')
+      }
+    })
+    this.realMobileMatchMedia.addEventListener('change', this.realMobileMatchMediaListener)
+    this.realMobileMatchMediaListener()
   }
 
   disconnectedCallback () {
@@ -77,6 +90,7 @@ export default class MigrosmuseumNavigation extends Navigation {
     ul.removeEventListener('mouseout', this.mouseoutListener)
     this.removeEventListener('open', this.dialogOpenCloseListener)
     this.removeEventListener('close', this.dialogOpenCloseListener)
+    if (this.realMobileMatchMedia) this.realMobileMatchMedia.removeEventListener('change', this.realMobileMatchMediaListener)
   }
 
   /**
@@ -121,6 +135,34 @@ export default class MigrosmuseumNavigation extends Navigation {
         :host([mouse-over]) nav > ul:not(:first-of-type),
         :host([mouse-over]) nav > ul:first-of-type > li {
           position: static !important;
+        }
+        :host > nav > ul li.open > o-nav-wrapper > section,
+        :host > nav > ul li.open > ${this.getAttribute('o-nav-wrapper') || 'o-nav-wrapper'} > section {
+          animation: var(
+            --navigation-submenu-animation-open-mobile,
+            open .2s ease
+          ) !important;
+        }
+      }
+      /* real devices: _max-width_ is inflated by the mobile-breakpoint attribute (100000000px), therefore an actual viewport query is needed */
+      @media only screen and (max-width: 767px) {
+        :host {
+          --navigation-submenu-animation-open-mobile: none;
+          --details-shadow-icon-transition: none;
+          --details-shadow-summary-transition: none;
+        }
+        :host nav > ul:first-of-type > li,
+        :host nav > ul:first-of-type > li > *::part(summary),
+        :host nav > ul:first-of-type > li > *::part(content),
+        :host nav > ul:first-of-type > li > *::part(content-child) {
+          transition: none;
+        }
+        :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover),
+        :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(summary),
+        :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover) > *::part(summary),
+        :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover) > *::part(content),
+        :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(content-child):hover {
+          transform: none;
         }
       }
     `

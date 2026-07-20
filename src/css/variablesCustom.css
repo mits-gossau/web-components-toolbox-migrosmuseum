@@ -194,7 +194,7 @@
   --icon-color-hover: var(--background-color);
   --input-line-height: 1.2em;
   --line-height: 1.234em;
-  --logo-default-width-mobile-custom: var(--header-default-logo-width-custom);
+  --logo-default-width-mobile-custom: 130px;
   --m-orange-600: #F60;
   --main-min-height: calc(100dvh - var(--header-default-height-mobile-custom));
   --marquee-background-color: var(--color-scheme-two-color);
@@ -308,5 +308,11 @@
     --navigation-default-with-styles-language-switcher-flex-direction: column;
     --navigation-default-with-styles-language-switcher-gap-mobile: 0.62em;
     --navigation-default-with-styles-language-switcher-padding: 1.31rem var(--content-spacing-mobile) 0;
+    --m-navigation-transition: none;
+    --m-navigation-transition-mobile: none;
+    --m-navigation-animation-close: none;
+    --m-navigation-animation-open: none;
+    --navigation-submenu-animation-open: none;
+    --navigation-submenu-animation-open-mobile: none;
   }
 }
