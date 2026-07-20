@@ -33,17 +33,22 @@
 }
 
 :root * {
-  hyphens: auto;
+  hyphens: none;
   overflow-wrap: break-word;
 }
 
-:root h1,
-:root h2,
-:root h3,
-:root h4,
-:root h5,
-:root h6 {
+:root h3 {
   hyphens: manual;
+}
+
+:root h4 {
+  hyphens: none;
+}
+
+@media only screen and (max-width: 767px) {
+  :root h3 {
+    hyphens: auto;
+  }
 }
 
 :root {
