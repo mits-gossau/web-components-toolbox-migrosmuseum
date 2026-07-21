@@ -45,11 +45,6 @@
   hyphens: none;
 }
 
-:root m-teaser figcaption > p {
-  --p-font-size: 17px;
-  --p-font-size-mobile: 10px;
-}
-
 @media only screen and (max-width: 767px) {
   :root h3 {
     hyphens: auto;
@@ -281,7 +276,8 @@
   --teaser-tile-figcaption-transform-hover-custom: 0;
   --teaser-tile-figcaption-transform-hover-mobile: none;
   --teaser-tile-h5-margin-custom: 0 0 0.42em;
-  --teaser-tile-p-font-size-custom: 1em;
+  --teaser-tile-p-font-size-custom: 17px;
+  --teaser-tile-p-font-size-mobile: 10px;
   --teaser-tile-p-margin-custom: 0;
   --transition-speed: 0.2s;
   --transition: color var(--transition-speed) ease-out, background-color var(--transition-speed) ease-out, border-color var(--transition-speed) ease-out;
