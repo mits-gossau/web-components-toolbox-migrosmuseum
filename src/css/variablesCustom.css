@@ -275,6 +275,9 @@
   --teaser-tile-figcaption-padding-mobile-custom: 1em var(--content-spacing-mobile) 1em;
   --teaser-tile-figcaption-transform-hover-custom: 0;
   --teaser-tile-figcaption-transform-hover-mobile: none;
+  --teaser-tile-h3-font-size-mobile: 13px;
+  --teaser-tile-h3-margin: 8px 0;
+  --teaser-tile-h3-margin-mobile: 3px 0 8px 0;
   --teaser-tile-h5-margin-custom: 0 0 0.42em;
   --teaser-tile-p-font-size-custom: 17px;
   --teaser-tile-p-font-size-mobile: 10px;
