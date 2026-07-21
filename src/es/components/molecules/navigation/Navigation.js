@@ -68,19 +68,9 @@ export default class MigrosmuseumNavigation extends Navigation {
     this.addEventListener('open', this.dialogOpenCloseListener)
     this.addEventListener('close', this.dialogOpenCloseListener)
     this.html = this.customStyle
-    // the mobile-breakpoint attribute is inflated (100000000px) to force the mobile layout everywhere,
-    // so real devices must be detected with an actual viewport media query.
-    // open-duration controls the css animation as well as the js element.animate fallback (isMac incl. iOS) within m-details
-    this.realMobileMatchMedia = self.matchMedia('(max-width: 767px)')
-    this.realMobileMatchMediaListener = () => Array.from(this.root.querySelectorAll('m-details')).forEach(details => {
-      if (this.realMobileMatchMedia.matches) {
-        details.setAttribute('open-duration', '1')
-      } else {
-        details.removeAttribute('open-duration')
-      }
-    })
-    this.realMobileMatchMedia.addEventListener('change', this.realMobileMatchMediaListener)
-    this.realMobileMatchMediaListener()
+    // open-duration controls the CSS animation as well as the JS element.animate fallback
+    // (isMac incl. iOS) within m-details. Keep it effectively disabled at every viewport size.
+    Array.from(this.root.querySelectorAll('m-details')).forEach(details => details.setAttribute('open-duration', '1'))
   }
 
   disconnectedCallback () {
@@ -90,7 +80,6 @@ export default class MigrosmuseumNavigation extends Navigation {
     ul.removeEventListener('mouseout', this.mouseoutListener)
     this.removeEventListener('open', this.dialogOpenCloseListener)
     this.removeEventListener('close', this.dialogOpenCloseListener)
-    if (this.realMobileMatchMedia) this.realMobileMatchMedia.removeEventListener('change', this.realMobileMatchMediaListener)
   }
 
   /**
@@ -102,7 +91,10 @@ export default class MigrosmuseumNavigation extends Navigation {
     const result = super.renderCSS()
     this.css = /* css */`
       :host {
+        --details-shadow-icon-transition: none;
+        --details-shadow-summary-transition: none;
         --details-shadow-summary-transform-hover: none;
+        --navigation-submenu-animation-open-mobile: none;
       }
       :host > nav > ul:first-of-type {
         --color-hover: var(--color);
@@ -118,18 +110,18 @@ export default class MigrosmuseumNavigation extends Navigation {
       :host nav > ul:first-of-type > li > *::part(summary),
       :host nav > ul:first-of-type > li > *::part(content),
       :host nav > ul:first-of-type > li > *::part(content-child) {
-        transition: transform 0.25s ease-in-out;
+        transition: none;
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover),
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(summary) {
-        transform: translateY(-${this.translateY});
+        transform: none;
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover) > *::part(summary),
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover) > *::part(content) {
-        transform: translateY(${this.translateY});
+        transform: none;
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(content-child):hover {
-        transform: translateY(-0.15em);
+        transform: none;
       }
       @media only screen and (max-width: _max-width_) {
         :host([mouse-over]) nav > ul:not(:first-of-type),
