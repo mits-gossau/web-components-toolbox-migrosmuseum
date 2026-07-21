@@ -88,7 +88,7 @@ export default class Footer extends Shadow() {
         flex-shrink: 1;
       }
       :host > footer > section#sub > #logo > img {
-        width: 10em;
+        width: 8em;
       }
       :host > footer > section#sub > .links {
         display: flex;
@@ -141,7 +141,7 @@ export default class Footer extends Shadow() {
           width: 100%;
         }
         :host > footer > section#sub > #logo > img {
-          width: 9.2em;
+          width: 11em;
         }
       }
       @keyframes shadow {
