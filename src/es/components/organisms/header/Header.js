@@ -165,6 +165,17 @@ export default class MigrosmuseumHeader extends Header {
         /* font-size: var(--h6-font-size); */
         margin: 0;
       }
+      :host > header > :where(h1,h2,h3,h4,h5,h6,time) > .opening-hours-break {
+        display: none;
+      }
+      @media only screen and (max-width: 767px) {
+        :host > header > :where(h1,h2,h3,h4,h5,h6,time) {
+          text-align: left;
+        }
+        :host > header > :where(h1,h2,h3,h4,h5,h6,time) > .opening-hours-break {
+          display: initial;
+        }
+      }
       /* :host([sticky]) {
         position: sticky !important;
         top: 0 !important;
