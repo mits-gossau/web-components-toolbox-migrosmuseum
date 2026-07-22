@@ -125,6 +125,8 @@ export default class MigrosmuseumHeader extends Header {
         flex-shrink: 0;
       }
       :host > header > a-logo {
+        --logo-default-img-margin: 0 0 -15px 0;
+        --logo-default-img-margin-mobile: 0 0 -5px 0;
         display: block;
         order: 1;
         position: static;
@@ -170,6 +172,7 @@ export default class MigrosmuseumHeader extends Header {
       }
       @media only screen and (max-width: 767px) {
         :host > header > :where(h1,h2,h3,h4,h5,h6,time) {
+          flex-grow: 0;
           text-align: left;
         }
         :host > header > :where(h1,h2,h3,h4,h5,h6,time) > .opening-hours-break {
