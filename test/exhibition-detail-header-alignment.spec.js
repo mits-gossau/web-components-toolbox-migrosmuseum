@@ -3,8 +3,8 @@ const { test, expect } = require('@playwright/test')
 const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const viewports = [
-  { name: 'desktop', width: 1440, height: 900, closeOffset: 14, headingPaddingRight: '50px' },
-  { name: 'mobile', width: 390, height: 844, closeOffset: 0, headingPaddingRight: '20px' }
+  { name: 'desktop', width: 1440, height: 900, closeOffset: 14, headingPaddingRight: '50px', headerPaddingBottom: '20px' },
+  { name: 'mobile', width: 390, height: 844, closeOffset: 0, headingPaddingRight: '20px', headerPaddingBottom: '16px' }
 ]
 
 for (const viewport of viewports) {
@@ -23,18 +23,37 @@ for (const viewport of viewports) {
     await expect(detailHeader.locator('h1')).toHaveCSS('padding-right', viewport.headingPaddingRight)
   })
 
-  test(`exhibition subtitle follows the heading on ${viewport.name}`, async ({ page }) => {
+  test(`exhibition heading and subtitle use balanced spacing on ${viewport.name}`, async ({ page }) => {
     test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against a local Umbraco instance')
 
     await page.setViewportSize(viewport)
     await page.goto(`${localSite}${pagePath}`)
     await page.waitForLoadState('networkidle')
 
-    const detailHeader = await page.locator('.exhibition-detail-block').first().boundingBox()
-    const subtitle = await page.locator('.exhibition-detail-block h3').first().boundingBox()
+    const detailHeader = page.locator('.exhibition-detail-header')
+    const subtitleBlock = page.locator('.exhibition-detail-subtitle')
+    const heading = detailHeader.locator('h1')
+    const subtitle = subtitleBlock.locator('h3')
+    const detailHeaderBox = await detailHeader.boundingBox()
+    const headingBox = await heading.boundingBox()
+    const subtitleBlockBox = await subtitleBlock.boundingBox()
+    const subtitleBox = await subtitle.boundingBox()
 
-    expect(detailHeader).not.toBeNull()
-    expect(subtitle).not.toBeNull()
-    expect(subtitle.y - (detailHeader.y + detailHeader.height)).toBeCloseTo(0, 1)
+    expect(detailHeaderBox).not.toBeNull()
+    expect(headingBox).not.toBeNull()
+    expect(subtitleBlockBox).not.toBeNull()
+    expect(subtitleBox).not.toBeNull()
+    expect(subtitleBox.y - (detailHeaderBox.y + detailHeaderBox.height)).toBeCloseTo(0, 1)
+    expect(Math.abs(
+      (subtitleBox.y - (headingBox.y + headingBox.height)) -
+      (subtitleBlockBox.y + subtitleBlockBox.height - (subtitleBox.y + subtitleBox.height))
+    )).toBeLessThan(1)
+    await expect(detailHeader).toHaveCSS('padding-bottom', viewport.headerPaddingBottom)
+    await expect(subtitle).toHaveCSS('margin-bottom', '0px')
+
+    if (viewport.name === 'mobile') {
+      await expect(heading).toHaveCSS('margin-bottom', '0px')
+      await expect(subtitleBlock).toHaveCSS('padding-bottom', '16px')
+    }
   })
 }
