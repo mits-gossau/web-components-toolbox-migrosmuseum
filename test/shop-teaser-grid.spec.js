@@ -4,8 +4,8 @@ const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const shopLinks = 'a[href*="shop.migrosmuseum.ch"]'
 const viewports = [
-  { name: 'desktop', width: 1440, height: 900, expectedRows: 1, itemsPerRow: 4 },
-  { name: 'mobile', width: 390, height: 844, expectedRows: 2, itemsPerRow: 2 }
+  { name: 'desktop', width: 1440, height: 900, expectedRows: 1, itemsPerRow: 4, captionTextSize: '19px' },
+  { name: 'mobile', width: 390, height: 844, expectedRows: 2, itemsPerRow: 2, captionTextSize: '10px' }
 ]
 
 for (const viewport of viewports) {
@@ -40,11 +40,14 @@ for (const viewport of viewports) {
     await page.waitForLoadState('networkidle')
 
     const captions = page.locator(`${shopLinks} figcaption`)
+    const captionTexts = page.locator(`${shopLinks} figcaption p`)
     await expect(captions).toHaveCount(4)
+    await expect(captionTexts).toHaveCount(4)
 
     for (let index = 0; index < 4; index++) {
       await expect(captions.nth(index)).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
       await expect(captions.nth(index)).toHaveCSS('padding', '0px')
+      await expect(captionTexts.nth(index)).toHaveCSS('font-size', viewport.captionTextSize)
     }
   })
 }
