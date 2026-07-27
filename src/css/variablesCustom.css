@@ -284,6 +284,7 @@
   --teaser-tile-p-margin-custom: 0;
   --transition-speed: 0.2s;
   --transition: color var(--transition-speed) ease-out, background-color var(--transition-speed) ease-out, border-color var(--transition-speed) ease-out;
+  --ul-padding-left: 25px;
   --header-default-a-menu-icon-border-radius-custom: 0;
 }
 /* color schemes */
