@@ -6,7 +6,7 @@ const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const viewports = [
   { name: 'mobile', width: 390, height: 844, sectionFontSize: '13px', textFontSize: '13px', linkLineHeight: '17px', logoWidth: '150px' },
-  { name: 'desktop', width: 1440, height: 900, sectionFontSize: '23px', textFontSize: '17px', linkLineHeight: '21px', logoWidth: '184px' }
+  { name: 'desktop', width: 1440, height: 900, sectionFontSize: '23px', textFontSize: '19px', linkLineHeight: '21px', logoWidth: '184px' }
 ]
 
 for (const viewport of viewports) {
