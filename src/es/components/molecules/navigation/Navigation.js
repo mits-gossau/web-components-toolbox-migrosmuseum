@@ -108,17 +108,19 @@ export default class MigrosmuseumNavigation extends Navigation {
       }
       :host nav > ul:first-of-type > li,
       :host nav > ul:first-of-type > li > *::part(summary),
-      :host nav > ul:first-of-type > li > *::part(content),
+      :host nav > ul:first-of-type > li > *::part(content) {
+        transition: transform 0.25s ease-in-out;
+      }
       :host nav > ul:first-of-type > li > *::part(content-child) {
         transition: none;
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover),
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(summary) {
-        transform: none;
+        transform: translateY(-${this.translateY});
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover) > *::part(summary),
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:has(+ li:hover) > *::part(content) {
-        transform: none;
+        transform: translateY(${this.translateY});
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(content-child):hover {
         transform: none;
