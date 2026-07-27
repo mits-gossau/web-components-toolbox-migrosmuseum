@@ -133,7 +133,7 @@ export default class Footer extends Shadow() {
         :host > footer > section#sub {
           flex-wrap: wrap;
           gap: 1em;
-          font-size: 0.769em;
+          font-size: 1em;
           margin-top: 1em;
         }
         :host > footer > section#sub > p {
