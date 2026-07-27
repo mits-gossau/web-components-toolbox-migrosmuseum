@@ -179,6 +179,9 @@ export default class MigrosmuseumHeader extends Header {
           display: initial;
         }
       }
+      :host([sticky].show:not(.top)) > header {
+        border-bottom: none !important;
+      }
       /* :host([sticky]) {
         position: sticky !important;
         top: 0 !important;
