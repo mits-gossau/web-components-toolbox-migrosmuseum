@@ -3,8 +3,8 @@ const { test, expect } = require('@playwright/test')
 const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const viewports = [
-  { name: 'desktop', width: 1440, height: 900, closeOffset: 14 },
-  { name: 'mobile', width: 390, height: 844, closeOffset: 0 }
+  { name: 'desktop', width: 1440, height: 900, closeOffset: 14, headingPaddingRight: '50px' },
+  { name: 'mobile', width: 390, height: 844, closeOffset: 0, headingPaddingRight: '20px' }
 ]
 
 for (const viewport of viewports) {
@@ -20,5 +20,6 @@ for (const viewport of viewports) {
     const closeIcon = await detailHeader.locator('a-icon-mdx svg').boundingBox()
 
     expect(closeIcon.y - heading.y).toBeCloseTo(viewport.closeOffset, 1)
+    await expect(detailHeader.locator('h1')).toHaveCSS('padding-right', viewport.headingPaddingRight)
   })
 }
