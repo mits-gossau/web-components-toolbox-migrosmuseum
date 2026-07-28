@@ -118,6 +118,8 @@ export default class Artists extends Shadow() {
       }
       @media only screen and (max-width: _max-width_) {
         :host {
+          --a-font-size-mobile: 16px;
+          --h3-font-size-mobile: var(--h2-font-size-mobile);
           --teaser-tile-figcaption-min-height: 9em;
         }
         :host > p.empty {
