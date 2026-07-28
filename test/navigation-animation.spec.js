@@ -55,14 +55,34 @@ test('mobile language switcher uses compact text', async ({ page }) => {
     navigation.shadowRoot?.querySelectorAll('ul.language-switcher .font-size-h1').length || 0
   ))).toBeGreaterThan(0)
 
-  const itemStyles = await navigation.evaluate(navigation => (
+  await expect.poll(() => navigation.evaluate(navigation => (
     Array.from(navigation.shadowRoot.querySelectorAll('ul.language-switcher .font-size-h1'))
-      .map(link => {
+      .every(link => {
         const styles = getComputedStyle(link)
-        return { fontSize: styles.fontSize, marginLeft: styles.marginLeft }
+        return styles.fontSize === '19px' && styles.marginLeft === '3px'
       })
-  ))
+  ))).toBe(true)
+})
 
-  expect(itemStyles).not.toHaveLength(0)
-  expect(itemStyles).toEqual(itemStyles.map(() => ({ fontSize: '19px', marginLeft: '3px' })))
+test('mobile second navigation level uses a five pixel gap', async ({ page }) => {
+  test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(localSite, { waitUntil: 'domcontentloaded' })
+
+  const navigation = page.locator('m-navigation')
+  await navigation.waitFor({ state: 'attached' })
+  await expect.poll(() => navigation.evaluate(navigation => (
+    navigation.shadowRoot
+      ?.querySelector('nav > ul:first-of-type m-details')
+      ?.shadowRoot?.querySelectorAll('[part="content-child"]').length || 0
+  ))).toBeGreaterThan(1)
+
+  const contentStyle = await navigation.evaluate(navigation => {
+    const details = navigation.shadowRoot.querySelector('nav > ul:first-of-type m-details')
+    const styles = getComputedStyle(details.shadowRoot.querySelector('[part="content"]'))
+    return { display: styles.display, gap: styles.gap }
+  })
+
+  expect(contentStyle).toEqual({ display: 'flex', gap: '5px' })
 })
