@@ -16,6 +16,7 @@ test('desktop navigation animates level one only', async ({ page }) => {
 
     return {
       item: getComputedStyle(firstLevelItem).transition,
+      firstSummaryPaddingTop: getComputedStyle(details.shadowRoot.querySelector('.summary.icon')).paddingTop,
       summary: transitionForPart('summary'),
       content: transitionForPart('content'),
       children: Array.from(details.shadowRoot.querySelectorAll('[part="content-child"]'))
@@ -24,6 +25,7 @@ test('desktop navigation animates level one only', async ({ page }) => {
   })
 
   expect(transitions.item).toContain('transform')
+  expect(transitions.firstSummaryPaddingTop).toBe('15px')
   expect(transitions.summary).toContain('transform')
   expect(transitions.content).toContain('transform')
   expect(transitions.children).not.toHaveLength(0)

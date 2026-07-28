@@ -99,6 +99,11 @@ export default class MigrosmuseumNavigation extends Navigation {
       :host > nav > ul:first-of-type {
         --color-hover: var(--color);
       }
+      @media only screen and (min-width: 768px) {
+        :host nav > ul:first-of-type > li:first-child > m-details {
+          --details-shadow-summary-padding: 15px 0 0.5em;
+        }
+      }
       :host([mouse-over]) nav > ul:not(:first-of-type) {
         position: absolute;
         width: 100%;
