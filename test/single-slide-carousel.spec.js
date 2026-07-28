@@ -52,3 +52,35 @@ test('museum carousel uses large fully opaque navigation dots', async ({ page })
     }
   })).toEqual({ gap: '8px', height: '20px', opacity: '1', width: '20px' })
 })
+
+test('museum carousel uses compact dots with accessible touch targets on mobile', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(demoPage)
+
+  const multipleSlides = page.locator('[data-test="multiple-slide-carousel"]')
+
+  await expect.poll(() => multipleSlides.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const nav = root.querySelector('nav')
+    const inactiveDot = nav && Array.from(nav.children).find(dot => !dot.classList.contains('active'))
+
+    if (!nav || !inactiveDot) return null
+
+    const touchTargetStyle = getComputedStyle(inactiveDot)
+    const visibleDotStyle = getComputedStyle(inactiveDot, '::before')
+
+    return {
+      gap: getComputedStyle(nav).gap,
+      touchTargetHeight: touchTargetStyle.height,
+      touchTargetWidth: touchTargetStyle.width,
+      visibleDotHeight: visibleDotStyle.height,
+      visibleDotWidth: visibleDotStyle.width
+    }
+  })).toEqual({
+    gap: '8px',
+    touchTargetHeight: '24px',
+    touchTargetWidth: '24px',
+    visibleDotHeight: '14px',
+    visibleDotWidth: '14px'
+  })
+})
