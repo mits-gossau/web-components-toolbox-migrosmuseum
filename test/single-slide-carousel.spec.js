@@ -53,34 +53,46 @@ test('museum carousel uses large fully opaque navigation dots', async ({ page })
   })).toEqual({ gap: '8px', height: '20px', opacity: '1', width: '20px' })
 })
 
-test('museum carousel uses compact dots with accessible touch targets on mobile', async ({ page }) => {
+test('museum carousel aligns compact dots with consistent spacing on mobile', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto(demoPage)
 
   const multipleSlides = page.locator('[data-test="multiple-slide-carousel"]')
+  const textLeft = await page.locator('[data-test="mobile-text-alignment"]').evaluate(text => text.getBoundingClientRect().left)
 
-  await expect.poll(() => multipleSlides.evaluate(carousel => {
+  await expect.poll(() => multipleSlides.evaluate((carousel, textLeft) => {
     const root = carousel.root || carousel.shadowRoot || carousel
     const nav = root.querySelector('nav')
-    const inactiveDot = nav && Array.from(nav.children).find(dot => !dot.classList.contains('active'))
+    const dots = nav && Array.from(nav.children)
+    const activeDot = nav && nav.querySelector('.active')
+    const inactiveDot = dots && dots.find(dot => !dot.classList.contains('active'))
 
-    if (!nav || !inactiveDot) return null
+    if (!nav || !activeDot || !inactiveDot || dots.length < 2) return null
 
-    const touchTargetStyle = getComputedStyle(inactiveDot)
-    const visibleDotStyle = getComputedStyle(inactiveDot, '::before')
+    const activeTargetStyle = getComputedStyle(activeDot)
+    const activeVisibleDotStyle = getComputedStyle(activeDot, '::before')
+    const inactiveTargetStyle = getComputedStyle(inactiveDot)
+    const firstDotRect = dots[0].getBoundingClientRect()
+    const secondDotRect = dots[1].getBoundingClientRect()
+    const visibleDotWidth = parseFloat(activeVisibleDotStyle.width)
+    const visibleDotInset = (firstDotRect.width - visibleDotWidth) / 2
 
     return {
-      gap: getComputedStyle(nav).gap,
-      touchTargetHeight: touchTargetStyle.height,
-      touchTargetWidth: touchTargetStyle.width,
-      visibleDotHeight: visibleDotStyle.height,
-      visibleDotWidth: visibleDotStyle.width
+      activeTargetBackground: activeTargetStyle.backgroundColor,
+      touchTargetHeight: inactiveTargetStyle.height,
+      touchTargetWidth: inactiveTargetStyle.width,
+      visibleDotHeight: activeVisibleDotStyle.height,
+      visibleDotTextAligned: Math.abs(firstDotRect.left + visibleDotInset - textLeft) < 0.1,
+      visibleDotSpacing: secondDotRect.left - firstDotRect.left - visibleDotWidth,
+      visibleDotWidth: activeVisibleDotStyle.width
     }
-  })).toEqual({
-    gap: '8px',
-    touchTargetHeight: '24px',
-    touchTargetWidth: '24px',
+  }, textLeft)).toEqual({
+    activeTargetBackground: 'rgba(0, 0, 0, 0)',
+    touchTargetHeight: '22px',
+    touchTargetWidth: '22px',
     visibleDotHeight: '14px',
+    visibleDotTextAligned: true,
+    visibleDotSpacing: 8,
     visibleDotWidth: '14px'
   })
 })
