@@ -55,11 +55,14 @@ test('mobile language switcher uses compact text', async ({ page }) => {
     navigation.shadowRoot?.querySelectorAll('ul.language-switcher .font-size-h1').length || 0
   ))).toBeGreaterThan(0)
 
-  const fontSizes = await navigation.evaluate(navigation => (
+  const itemStyles = await navigation.evaluate(navigation => (
     Array.from(navigation.shadowRoot.querySelectorAll('ul.language-switcher .font-size-h1'))
-      .map(link => getComputedStyle(link).fontSize)
+      .map(link => {
+        const styles = getComputedStyle(link)
+        return { fontSize: styles.fontSize, marginLeft: styles.marginLeft }
+      })
   ))
 
-  expect(fontSizes).not.toHaveLength(0)
-  expect(fontSizes).toEqual(fontSizes.map(() => '19px'))
+  expect(itemStyles).not.toHaveLength(0)
+  expect(itemStyles).toEqual(itemStyles.map(() => ({ fontSize: '19px', marginLeft: '3px' })))
 })
