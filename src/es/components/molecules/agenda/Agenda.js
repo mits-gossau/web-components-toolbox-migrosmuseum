@@ -111,7 +111,7 @@ export default class Agenda extends Shadow() {
         min-height: var(--main-min-height, 75dvh);
       }
       :host > migrosmuseum-a-heading[cluster-by] {
-        margin-bottom: var(--agenda-cluster-heading-margin-bottom, 12px);
+        padding-bottom: var(--agenda-cluster-heading-margin-bottom, 12px);
       }
       :host > a, :host > migrosmuseum-a-link {
         --a-margin-mobile: var(--grid-12er-section-child-padding-mobile);
