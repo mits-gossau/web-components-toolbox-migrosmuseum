@@ -156,6 +156,9 @@ export default class MigrosmuseumNavigation extends Navigation {
         :host nav > ul.language-switcher > li > .font-size-h1 {
           margin-left: 3px;
         }
+        :host nav > ul:first-of-type > li > m-details {
+          --details-shadow-summary-padding: 1.12em 0 1.12em;
+        }
         :host nav > ul:first-of-type > li > *::part(content) {
           display: flex;
           flex-direction: column;

@@ -86,3 +86,31 @@ test('mobile second navigation level uses a five pixel gap', async ({ page }) =>
 
   expect(contentStyle).toEqual({ display: 'flex', gap: '5px' })
 })
+
+test('mobile first navigation level uses balanced summary padding', async ({ page }) => {
+  test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto(localSite, { waitUntil: 'domcontentloaded' })
+
+  const navigation = page.locator('m-navigation')
+  await navigation.waitFor({ state: 'attached' })
+  await expect.poll(() => navigation.evaluate(navigation => Boolean(
+    navigation.shadowRoot
+      ?.querySelector('nav > ul:first-of-type m-details')
+      ?.shadowRoot?.querySelector('.summary.icon')
+  ))).toBe(true)
+
+  const padding = await navigation.evaluate(navigation => {
+    const details = navigation.shadowRoot.querySelector('nav > ul:first-of-type m-details')
+    const styles = getComputedStyle(details.shadowRoot.querySelector('.summary.icon'))
+    return {
+      customProperty: getComputedStyle(details).getPropertyValue('--details-shadow-summary-padding').trim(),
+      top: styles.paddingTop,
+      bottom: styles.paddingBottom
+    }
+  })
+
+  expect(padding.customProperty).toBe('1.12em 0 1.12em')
+  expect(padding.bottom).toBe(padding.top)
+})
