@@ -150,6 +150,9 @@ export default class MigrosmuseumNavigation extends Navigation {
           --details-shadow-icon-transition: none;
           --details-shadow-summary-transition: none;
         }
+        :host nav > ul.language-switcher {
+          --h1-font-size-mobile: 19px;
+        }
         :host nav > ul:first-of-type > li,
         :host nav > ul:first-of-type > li > *::part(summary),
         :host nav > ul:first-of-type > li > *::part(content),
