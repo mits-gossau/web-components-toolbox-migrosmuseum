@@ -15,11 +15,13 @@ for (const viewport of viewports) {
     await page.waitForLoadState('networkidle')
 
     const leapYearHeading = page.getByRole('heading', { level: 2, name: 'LEAP YEAR' })
+    const accumulationHeading = page.getByRole('heading', { level: 2, name: 'ACCUMULATION' })
     const secondH2Heading = page.getByRole('heading', { level: 2, name: '27.9.25-18.1.26' })
     const h4Heading = page.getByRole('heading', { level: 4, name: 'Haegue Yang' })
     const regularH4Heading = page.getByRole('heading', { level: 4, name: 'Instagram' })
 
     await expect(leapYearHeading).toHaveCount(1)
+    await expect(accumulationHeading).toHaveCount(1)
     await expect(secondH2Heading).toHaveCount(1)
     await expect(h4Heading).toHaveCount(1)
     expect(await h4Heading.evaluate(element => [
@@ -30,6 +32,28 @@ for (const viewport of viewports) {
     await expect(h4Heading).toHaveCSS('margin-bottom', viewport.h4MarginBottom)
     await expect(regularH4Heading).toHaveCSS('margin-top', '0px')
     await expect(regularH4Heading).toHaveCSS('margin-bottom', viewport.regularH4MarginBottom)
+
+    for (const exhibitionHeading of [leapYearHeading, accumulationHeading]) {
+      const spacing = await exhibitionHeading.evaluate(element => {
+        const styles = window.getComputedStyle(element)
+        let paddedContainer = element.parentElement
+        while (paddedContainer && window.getComputedStyle(paddedContainer).paddingTop === '0px') {
+          paddedContainer = paddedContainer.parentElement
+        }
+        const probe = document.createElement('span')
+        probe.style.paddingTop = 'var(--content-spacing)'
+        element.append(probe)
+        const resolvedContentSpacing = window.getComputedStyle(probe).paddingTop
+        probe.remove()
+        return {
+          contentSpacing: resolvedContentSpacing,
+          headingPaddingTop: styles.paddingTop,
+          containerPaddingTop: paddedContainer ? window.getComputedStyle(paddedContainer).paddingTop : null
+        }
+      })
+      expect(spacing.headingPaddingTop).toBe('0px')
+      if (viewport.name === 'desktop') expect(spacing.containerPaddingTop).toBe(spacing.contentSpacing)
+    }
 
     if (viewport.secondH2MarginBottom) await expect(secondH2Heading).toHaveCSS('margin-bottom', viewport.secondH2MarginBottom)
     if (viewport.h4MarginTop) await expect(h4Heading).toHaveCSS('margin-top', viewport.h4MarginTop)
