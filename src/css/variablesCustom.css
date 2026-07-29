@@ -214,7 +214,7 @@
   --navigation-default-with-styles-language-switcher-gap: 1.59em;
   --navigation-default-with-styles-language-switcher-justify-content-last-child-mobile: flex-end;
   --navigation-default-with-styles-language-switcher-justify-content: flex-start;
-  --navigation-default-with-styles-language-switcher-margin-last-child-mobile: 0 calc(-1 * var(--content-spacing) / 2) 0 0;
+  --navigation-default-with-styles-language-switcher-margin-last-child-mobile: 20px calc(-1 * var(--content-spacing) / 2) 0 0;
   --navigation-default-with-styles-language-switcher-padding: 0 var(--content-spacing);
   --navigation-default-with-styles-section-background-color: var(--background-color);
   --picture-scale-up-aspect-ratio: 1.252 / 1;

@@ -62,6 +62,17 @@ test('mobile language switcher uses compact text', async ({ page }) => {
         return styles.fontSize === '19px' && styles.marginLeft === '3px'
       })
   ))).toBe(true)
+
+  const lastUtilityItem = await navigation.evaluate(navigation => {
+    const item = navigation.shadowRoot.querySelector('ul.language-switcher > li:last-child')
+    return {
+      marginTop: getComputedStyle(item).marginTop,
+      text: item.textContent.trim()
+    }
+  })
+
+  expect(lastUtilityItem.marginTop).toBe('20px')
+  expect(lastUtilityItem.text).toContain('SHOP')
 })
 
 test('mobile second navigation level uses a five pixel gap', async ({ page }) => {
