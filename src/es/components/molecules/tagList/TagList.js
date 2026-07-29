@@ -45,9 +45,15 @@ export default class TagList extends Shadow() {
         :host {
           --button-secondary-background-color-hover-custom: var(--background-color);
           --button-secondary-color-hover-custom: var(--color);
+          --button-secondary-font-size-mobile: 16px;
+          --button-secondary-padding: 5px 0.5em;
           display: flex !important;
+          font-size: 16px;
           flex-wrap: nowrap;
+          margin-left: 10px !important;
+          margin-right: 0 !important;
           overflow-x: scroll;
+          width: calc(100% - 10px) !important;
         }
       }
     `
