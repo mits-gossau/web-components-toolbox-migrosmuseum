@@ -91,13 +91,13 @@ export default class ZvvWidget extends Shadow() {
     this.css = /* css */`
       :host {
         display: var(--display, block);
-        width: 320px;
+        width: var(--width, 100%);
         margin: var(--margin, 0);
         box-sizing: border-box;
       }
       :host > iframe {
         border: 0 none;
-        width: 320px;
+        width: 100%;
         height: var(--height, 480px);
         display: block;
         color-scheme: light;
