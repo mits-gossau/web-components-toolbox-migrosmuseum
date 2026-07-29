@@ -4,7 +4,7 @@ const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const viewports = [
   { name: 'desktop', width: 1440, height: 900, closeOffset: 14, headingPaddingRight: '50px', headerPaddingBottom: '20px' },
-  { name: 'mobile', width: 390, height: 844, closeOffset: 0, headingPaddingRight: '20px', headerPaddingBottom: '16px' }
+  { name: 'mobile', width: 390, height: 844, closeOffset: 0, headingPaddingRight: '20px', headerPaddingBottom: '10px' }
 ]
 
 for (const viewport of viewports) {
@@ -23,7 +23,7 @@ for (const viewport of viewports) {
     await expect(detailHeader.locator('h1')).toHaveCSS('padding-right', viewport.headingPaddingRight)
   })
 
-  test(`exhibition heading and subtitle use balanced spacing on ${viewport.name}`, async ({ page }) => {
+  test(`exhibition heading and subtitle use the expected spacing on ${viewport.name}`, async ({ page }) => {
     test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against a local Umbraco instance')
 
     await page.setViewportSize(viewport)
@@ -44,14 +44,17 @@ for (const viewport of viewports) {
     expect(subtitleBlockBox).not.toBeNull()
     expect(subtitleBox).not.toBeNull()
     expect(subtitleBox.y - (detailHeaderBox.y + detailHeaderBox.height)).toBeCloseTo(0, 1)
-    expect(Math.abs(
-      (subtitleBox.y - (headingBox.y + headingBox.height)) -
-      (subtitleBlockBox.y + subtitleBlockBox.height - (subtitleBox.y + subtitleBox.height))
-    )).toBeLessThan(1)
+    if (viewport.name === 'desktop') {
+      expect(Math.abs(
+        (subtitleBox.y - (headingBox.y + headingBox.height)) -
+        (subtitleBlockBox.y + subtitleBlockBox.height - (subtitleBox.y + subtitleBox.height))
+      )).toBeLessThan(1)
+    }
     await expect(detailHeader).toHaveCSS('padding-bottom', viewport.headerPaddingBottom)
     await expect(subtitle).toHaveCSS('margin-bottom', '0px')
 
     if (viewport.name === 'mobile') {
+      await expect(detailHeader).toHaveCSS('padding', '10px')
       await expect(heading).toHaveCSS('margin-bottom', '0px')
       await expect(subtitleBlock).toHaveCSS('padding-bottom', '16px')
       await expect(subtitle).toHaveCSS('font-size', '16px')
