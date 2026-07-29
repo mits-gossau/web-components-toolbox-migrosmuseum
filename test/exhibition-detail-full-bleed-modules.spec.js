@@ -41,5 +41,11 @@ for (const viewport of viewports) {
     expect(agendaBox.width).toBeCloseTo(viewport.width, 2)
     expect(ordinaryBox.x).toBeGreaterThan(0)
     expect(ordinaryBox.width).toBeLessThan(viewport.width)
+
+    if (viewport.name === 'mobile') {
+      const textBox = await page.locator('.exhibition-detail-textcol > :visible').first().boundingBox()
+
+      expect(ordinaryBox.x).toBeCloseTo(textBox.x, 2)
+    }
   })
 }
