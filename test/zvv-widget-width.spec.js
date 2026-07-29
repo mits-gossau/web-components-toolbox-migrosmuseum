@@ -27,5 +27,6 @@ for (const viewport of [
 
     expect(widgetBox.width).toBeCloseTo(parentBox.width, 2)
     expect(iframeBox.width).toBeCloseTo(parentBox.width, 2)
+    expect(await widget.evaluate(element => element.minHeight)).toBe(300)
   })
 }

@@ -29,14 +29,14 @@ import { Shadow } from '../../web-components-toolbox/src/es/components/prototype
  *  {string} [data-tolon="8.526008"] destination longitude
  *  {string} [data-*] any further ZVV data attribute is forwarded as is
  *  {string} [src="https://fpcdn.zvv.ch/cdn/v1/widget.min.js"] widget script url
- *  {string} [height="480px"] initial iframe height (auto-grows to the content height)
+ *  {string} [height="300px"] initial iframe height (auto-grows to the content height)
  *  {string} [namespace] css namespace
  * }
  * @css {
  *  var(--display, block);
  *  var(--width, 100%);
  *  var(--margin, 0);
- *  var(--height, 480px);
+ *  var(--height, 300px);
  * }
  */
 export default class ZvvWidget extends Shadow() {
@@ -98,7 +98,7 @@ export default class ZvvWidget extends Shadow() {
       :host > iframe {
         border: 0 none;
         width: 100%;
-        height: var(--height, 480px);
+        height: var(--height, 300px);
         display: block;
         color-scheme: light;
       }
@@ -174,6 +174,6 @@ export default class ZvvWidget extends Shadow() {
    * @return {number}
    */
   get minHeight () {
-    return parseInt(this.getAttribute('height'), 10) || 480
+    return parseInt(this.getAttribute('height'), 10) || 300
   }
 }
