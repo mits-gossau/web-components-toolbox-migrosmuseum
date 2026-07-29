@@ -34,8 +34,10 @@ for (const viewport of viewports) {
         desktop: parseFloat(window.getComputedStyle(element).getPropertyValue('--content-spacing')) * rootFontSize,
         cells: Array.from(section.children, cell => {
           const styles = window.getComputedStyle(cell)
+          const contentChildren = Array.from(cell.children).filter(child => child.localName !== 'style')
           return {
             left: parseFloat(styles.paddingLeft),
+            pictureOnly: contentChildren.length === 1 && contentChildren[0].localName === 'a-picture',
             right: parseFloat(styles.paddingRight)
           }
         })
@@ -50,7 +52,11 @@ for (const viewport of viewports) {
       for (const grid of gridSpacing) {
         for (let index = 1; index < grid.cells.length; index += 2) {
           expect(grid.cells[index].left).toBe(0)
-          expect(grid.cells[index].right).toBeCloseTo(grid.desktop, 2)
+          if (grid.cells[index].pictureOnly) {
+            expect(grid.cells[index].right).toBe(0)
+          } else {
+            expect(grid.cells[index].right).toBeCloseTo(grid.desktop, 2)
+          }
         }
       }
     }
