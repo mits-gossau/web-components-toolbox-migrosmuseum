@@ -54,6 +54,7 @@ for (const viewport of viewports) {
     if (viewport.name === 'mobile') {
       await expect(heading).toHaveCSS('margin-bottom', '0px')
       await expect(subtitleBlock).toHaveCSS('padding-bottom', '16px')
+      await expect(subtitle).toHaveCSS('font-size', '16px')
     }
   })
 }
