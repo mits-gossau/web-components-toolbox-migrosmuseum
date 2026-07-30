@@ -43,7 +43,7 @@ class IntersectionSensor extends Intersection() {
         height: 0;
         width: 100% !important;
       }
-      :host([hidden]) {
+      :host([not-visible]) {
         visibility: hidden;
       }
       :host([show][shadow]) {
@@ -362,12 +362,12 @@ export default class Heading extends Shadow() {
         if (isIntersecting) {
           this.removeAttribute('hidden')
           this.removeAttribute('not-visible')
-          intersectionSensor.removeAttribute('hidden')
+          intersectionSensor.removeAttribute('not-visible')
         } else {
           this.setAttribute('hidden', '')
           // not-visible is a workaround of the later this.hidden = false
           this.setAttribute('not-visible', '')
-          intersectionSensor.setAttribute('hidden', '')
+          intersectionSensor.setAttribute('not-visible', '')
         }
       })
       if (this.hasAttribute('shadow')) intersectionSensor.setAttribute('shadow', '')
