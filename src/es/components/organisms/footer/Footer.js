@@ -141,7 +141,8 @@ export default class Footer extends Shadow() {
           width: 100%;
         }
         :host > footer > section#sub > #logo > img {
-          width: 150px;
+          width: 136px;
+          margin-top: 2px;
         }
       }
       @keyframes shadow {
