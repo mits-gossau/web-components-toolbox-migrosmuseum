@@ -126,7 +126,7 @@ export default class MigrosmuseumHeader extends Header {
       }
       :host > header > a-logo {
         --logo-default-img-margin: 0 0 -15px 0;
-        --logo-default-img-margin-mobile: 0 0 -5px 0;
+        --logo-default-img-margin-mobile: 5px 0 0 0;
         display: block;
         order: 1;
         position: static;
