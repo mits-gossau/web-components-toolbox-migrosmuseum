@@ -31,7 +31,7 @@ test('carousel hides navigation only when it has one slide', async ({ page }) =>
   await expect.poll(() => carouselState(multipleSlides)).toEqual({ slideCount: 2, visibleArrowCount: 2, visibleDotCount: 2 })
 })
 
-test('museum carousel uses large fully opaque navigation dots', async ({ page }) => {
+test('museum carousel uses compact fully opaque navigation dots', async ({ page }) => {
   await page.goto(demoPage)
 
   const multipleSlides = page.locator('[data-test="multiple-slide-carousel"]')
@@ -45,14 +45,26 @@ test('museum carousel uses large fully opaque navigation dots', async ({ page })
 
     const navStyle = getComputedStyle(nav)
     const dotStyle = getComputedStyle(inactiveDot)
+    const visibleDotStyle = getComputedStyle(inactiveDot, '::before')
 
     return {
       gap: navStyle.gap,
-      height: dotStyle.height,
+      touchTargetHeight: dotStyle.height,
+      touchTargetWidth: dotStyle.width,
       opacity: dotStyle.opacity,
-      width: dotStyle.width
+      visibleDotBorderWidth: visibleDotStyle.borderWidth,
+      visibleDotHeight: visibleDotStyle.height,
+      visibleDotWidth: visibleDotStyle.width
     }
-  })).toEqual({ gap: '8px', height: '20px', opacity: '1', width: '20px' })
+  })).toEqual({
+    gap: '8px',
+    opacity: '1',
+    touchTargetHeight: '16px',
+    touchTargetWidth: '16px',
+    visibleDotBorderWidth: '1px',
+    visibleDotHeight: '12px',
+    visibleDotWidth: '12px'
+  })
 })
 
 test('museum carousel aligns compact dots with consistent spacing on mobile', async ({ page }) => {
@@ -83,18 +95,20 @@ test('museum carousel aligns compact dots with consistent spacing on mobile', as
       activeTargetBackground: activeTargetStyle.backgroundColor,
       touchTargetHeight: inactiveTargetStyle.height,
       touchTargetWidth: inactiveTargetStyle.width,
+      visibleDotBorderWidth: activeVisibleDotStyle.borderWidth,
       visibleDotHeight: activeVisibleDotStyle.height,
-      visibleDotTextAligned: Math.abs(firstDotRect.left + visibleDotInset - textLeft) < 0.1,
+      visibleDotTextOffset: Math.round((firstDotRect.left + visibleDotInset - textLeft) * 100) / 100,
       visibleDotSpacing: secondDotRect.left - firstDotRect.left - visibleDotWidth,
       visibleDotWidth: activeVisibleDotStyle.width
     }
   }, textLeft)).toEqual({
     activeTargetBackground: 'rgba(0, 0, 0, 0)',
-    touchTargetHeight: '22px',
-    touchTargetWidth: '22px',
-    visibleDotHeight: '14px',
-    visibleDotTextAligned: true,
-    visibleDotSpacing: 8,
-    visibleDotWidth: '14px'
+    touchTargetHeight: '16px',
+    touchTargetWidth: '16px',
+    visibleDotBorderWidth: '1px',
+    visibleDotHeight: '12px',
+    visibleDotTextOffset: 0,
+    visibleDotSpacing: 4,
+    visibleDotWidth: '12px'
   })
 })

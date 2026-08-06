@@ -4,8 +4,8 @@ const { test, expect } = require('@playwright/test')
 
 const localSite = process.env.UMBRACO_BASE_URL
 const viewports = [
-  { name: 'desktop', width: 1440, height: 900, navPadding: '23px', spacing: 23 },
-  { name: 'mobile', width: 390, height: 844, navPadding: '9px', spacing: 13 }
+  { name: 'desktop', width: 1440, height: 900, navPadding: '21px', spacing: 23 },
+  { name: 'mobile', width: 390, height: 844, navPadding: '11px', spacing: 13 }
 ]
 
 for (const viewport of viewports) {
