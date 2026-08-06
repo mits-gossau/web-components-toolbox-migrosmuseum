@@ -5,7 +5,7 @@ const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken
 const shopLinks = 'a[href*="shop.migrosmuseum.ch"]'
 const viewports = [
   { name: 'desktop', width: 1440, height: 900, expectedRows: 1, itemsPerRow: 4, captionTextSize: '19px' },
-  { name: 'mobile', width: 390, height: 844, expectedRows: 2, itemsPerRow: 2, captionTextSize: '10px' }
+  { name: 'mobile', width: 390, height: 844, expectedRows: 2, itemsPerRow: 2, captionTextSize: '13px' }
 ]
 
 for (const viewport of viewports) {
