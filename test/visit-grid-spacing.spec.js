@@ -61,4 +61,33 @@ for (const viewport of viewports) {
       }
     }
   })
+
+  test(`homepage news grid matches visit page spacing on ${viewport.name}`, async ({ page }) => {
+    test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
+
+    await page.setViewportSize(viewport)
+    await page.goto(localSite, { waitUntil: 'domcontentloaded' })
+
+    const heading = page.getByRole('heading', { name: 'Yasmin Naderi Afschar neu in der Co-Leitung', exact: true }).first()
+    await expect(heading).toBeAttached()
+
+    const spacing = await heading.evaluate(element => {
+      const firstCell = element.closest('.richText').parentElement
+      const secondCell = firstCell.nextElementSibling
+      const styles = window.getComputedStyle(secondCell)
+      const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize)
+      return {
+        contentSpacing: parseFloat(styles.getPropertyValue('--content-spacing')) * rootFontSize,
+        left: parseFloat(styles.paddingLeft),
+        right: parseFloat(styles.paddingRight)
+      }
+    })
+
+    if (viewport.name === 'mobile') {
+      expect(spacing.right).toBeCloseTo(spacing.left, 2)
+    } else {
+      expect(spacing.left).toBe(0)
+      expect(spacing.right).toBeCloseTo(spacing.contentSpacing, 2)
+    }
+  })
 }
