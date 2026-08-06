@@ -194,22 +194,18 @@ export default class Marquee extends Shadow() {
   }
 
   /**
-   * Does set host visible after receiving the absolute width of the text by an animation frame
-   * takes the absolute width aka. offsetWidth and generates the animation-duration and the keyframes of the marquee animation
+   * Sets the host visible after reading the overflowing content width in an animation frame.
+   * Keeps the live marquee in document flow while generating its animation duration and keyframes.
    *
    * @return {void}
    */
   renderCSSByChildrenOffsetWidth () {
     Promise.all(Array.from(this.root.children).map(node => {
       if (node.tagName === 'STYLE') return null
-      const position = node.style.position
-      // set node position to absolute to receive the actual node width incl. overflow
-      node.style.position = 'absolute'
       return new Promise(resolve => {
-        self.requestAnimationFrame(timeStamp => {
-          resolve(node.offsetWidth)
-          node.style.position = position
-        })
+        self.requestAnimationFrame(timeStamp => resolve(
+          Math.max(node.clientWidth, ...Array.from(node.children).map(child => child.scrollWidth))
+        ))
       })
     })).then(offsetWidths => Math.max(...offsetWidths)).then(offsetWidth => {
       this.css = ''
