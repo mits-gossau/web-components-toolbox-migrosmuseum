@@ -53,3 +53,38 @@ test('marquee starts half a viewport beyond the left edge', async ({ page }) => 
     return new DOMMatrix(startTransform).m41 / innerWidth
   })).toBeCloseTo(0.5, 5)
 })
+
+test('marquee continues seamlessly with half a viewport between repetitions', async ({ page }) => {
+  await page.goto(demoPage)
+
+  const marquee = page.locator('[data-test="marquee"]')
+  await expect.poll(() => marquee.evaluate(element => {
+    const section = element.root?.querySelector('section')
+    const animation = section?.getAnimations({ subtree: true })[0]
+    return Boolean(animation?.effect.target?.children.length === 2)
+  })).toBe(true)
+
+  const loop = await marquee.evaluate(async element => {
+    const section = element.root.querySelector('section')
+    const animation = section.getAnimations({ subtree: true })[0]
+    const [first, second] = animation.effect.target.children
+
+    animation.pause()
+    animation.currentTime = 0
+    await new Promise(resolve => requestAnimationFrame(resolve))
+    const firstStart = first.getBoundingClientRect()
+    const secondStart = second.getBoundingClientRect()
+
+    animation.currentTime = Number(animation.effect.getTiming().duration) - 1
+    await new Promise(resolve => requestAnimationFrame(resolve))
+    const secondEnd = second.getBoundingClientRect()
+
+    return {
+      gapInViewports: (secondStart.left - firstStart.right) / innerWidth,
+      loopOffset: Math.abs(secondEnd.left - firstStart.left)
+    }
+  })
+
+  expect(loop.gapInViewports).toBeCloseTo(0.5, 2)
+  expect(loop.loopOffset).toBeLessThan(1)
+})

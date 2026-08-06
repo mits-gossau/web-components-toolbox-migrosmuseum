@@ -138,10 +138,16 @@ export default class Marquee extends Shadow() {
       }:host > section {
         transition: transform .3s ease;
       }
-      :host > section > * {
+      :host > section > .marquee-track {
+        display: flex;
+        column-gap: 50vw;
+        width: max-content;
         animation: marquee ${this._animationDuration = this.getAttribute('animation-duration') || 15}s linear infinite;
       }
-      :host > section > * a {
+      :host > section > .marquee-track > .marquee-copy {
+        flex: 0 0 auto;
+      }
+      :host > section > .marquee-track > .marquee-copy > * a {
         color: var(--a-color, var(--color-secondary, var(--color, pink)));
         font-weight: var(--a-font-weight, var(--font-weight, normal));
         text-align: var(--a-text-align, unset);
@@ -150,11 +156,13 @@ export default class Marquee extends Shadow() {
         display: var(--a-display, inline);
         margin: var(--a-margin, var(--content-spacing, unset)) auto;
       }
-      :host > section > * a:hover, :host > section > * a:active, :host > section > * a:focus {
+      :host > section > .marquee-track > .marquee-copy > * a:hover,
+      :host > section > .marquee-track > .marquee-copy > * a:active,
+      :host > section > .marquee-track > .marquee-copy > * a:focus {
         color: var(--a-color-hover, var(--color-hover-secondary, var(--color-hover, var(--color, green))));
         text-decoration: var(--a-text-decoration-hover, var(--text-decoration-hover, var(--a-text-decoration, var(--text-decoration, none))));
       }
-      :host > section > * {
+      :host > section > .marquee-track > .marquee-copy > * {
         margin: 0 !important;
       }
       @media only screen and (max-width: _max-width_) {
@@ -162,7 +170,7 @@ export default class Marquee extends Shadow() {
           font-size: var(--font-size-mobile, var(--font-size, 1rem));
           padding: var(--padding-mobile, var(--padding, 0.672em 0));
         }
-        :host > section > * a {
+        :host > section > .marquee-track > .marquee-copy > * a {
           margin: var(--a-margin-mobile, var(--a-margin, var(--content-spacing-mobile, var(--content-spacing, unset)))) auto;
         }
       }
@@ -200,14 +208,13 @@ export default class Marquee extends Shadow() {
    * @return {void}
    */
   renderCSSByChildrenOffsetWidth () {
-    Promise.all(Array.from(this.root.children).map(node => {
-      if (node.tagName === 'STYLE') return null
-      return new Promise(resolve => {
-        self.requestAnimationFrame(timeStamp => resolve(
-          Math.max(node.clientWidth, ...Array.from(node.children).map(child => child.scrollWidth))
-        ))
+    new Promise(resolve => {
+      self.requestAnimationFrame(timeStamp => {
+        const content = this.root.querySelector('.marquee-copy:not([aria-hidden])') ||
+          Array.from(this.root.children).find(node => node.tagName !== 'STYLE')
+        resolve(content.clientWidth)
       })
-    })).then(offsetWidths => Math.max(...offsetWidths)).then(offsetWidth => {
+    }).then(offsetWidth => {
       this.css = ''
       this.css = /* css */`
         :host {
@@ -228,10 +235,10 @@ export default class Marquee extends Shadow() {
   generateAnimationDuration (animationDuration = this._animationDuration || 15) {
     this._animationDuration = animationDuration = Math.round(animationDuration)
     return /* css */`
-      :host > section > * {
+      :host > section > .marquee-track {
         animation-duration: ${animationDuration}s;
       }
-      :host(:hover) > section > *, :host(:focus) > section > * {
+      :host(:hover) > section > .marquee-track, :host(:focus) > section > .marquee-track {
         animation-play-state: paused;
       }
     `
@@ -262,9 +269,18 @@ export default class Marquee extends Shadow() {
    */
   renderHTML () {
     this.section = this.root.appendChild(document.createElement('section'))
+    const track = this.section.appendChild(document.createElement('div'))
+    const copy = track.appendChild(document.createElement('div'))
+    track.classList.add('marquee-track')
+    copy.classList.add('marquee-copy')
     Array.from(this.root.children).forEach(node => {
       if (node === this.section || node.getAttribute('slot') || node.nodeName === 'STYLE') return false
-      this.section.appendChild(node)
+      copy.appendChild(node)
     })
+    const repeatedCopy = copy.cloneNode(true)
+    repeatedCopy.setAttribute('aria-hidden', 'true')
+    repeatedCopy.querySelectorAll('[id]').forEach(node => node.removeAttribute('id'))
+    repeatedCopy.querySelectorAll('a, button, input, select, textarea, [tabindex]').forEach(node => node.setAttribute('tabindex', '-1'))
+    track.appendChild(repeatedCopy)
   }
 }
