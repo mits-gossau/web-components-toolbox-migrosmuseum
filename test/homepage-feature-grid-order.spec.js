@@ -33,6 +33,10 @@ for (const viewport of viewports) {
         .map(cell => cell.label)
     })
 
-    expect(visualOrder).toEqual(['image', 'LEAP YEAR', 'image', 'ACCUMULATION'])
+    const expectedOrder = viewport.name === 'mobile'
+      ? ['image', 'LEAP YEAR', 'image', 'ACCUMULATION']
+      : ['LEAP YEAR', 'image', 'ACCUMULATION', 'image']
+
+    expect(visualOrder).toEqual(expectedOrder)
   })
 }
