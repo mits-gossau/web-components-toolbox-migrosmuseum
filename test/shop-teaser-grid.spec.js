@@ -40,14 +40,17 @@ for (const viewport of viewports) {
     await page.waitForLoadState('networkidle')
 
     const captions = page.locator(`${shopLinks} figcaption`)
+    const captionTitles = page.locator(`${shopLinks} figcaption h3`)
     const captionTexts = page.locator(`${shopLinks} figcaption p`)
     await expect(captions).toHaveCount(4)
+    await expect(captionTitles).toHaveCount(4)
     await expect(captionTexts).toHaveCount(4)
 
     for (let index = 0; index < 4; index++) {
       await expect(captions.nth(index)).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
       await expect(captions.nth(index)).toHaveCSS('padding', '0px')
       await expect(captionTexts.nth(index)).toHaveCSS('font-size', viewport.captionTextSize)
+      if (viewport.name === 'mobile') await expect(captionTitles.nth(index)).toHaveCSS('font-size', '22px')
     }
   })
 }

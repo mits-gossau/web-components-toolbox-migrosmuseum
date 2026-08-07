@@ -13,12 +13,18 @@ test('exhibition archive filters match the mobile collection typography', async 
   const searchInput = filter.locator('a-input input')
   const searchIcon = filter.locator('a-input button svg')
   const archiveYear = page.locator('migrosmuseum-m-exhibition migrosmuseum-a-heading[cluster-by] h3').first()
+  const archiveTeaserLoader = page.locator('migrosmuseum-m-exhibition m-load-template-tag').first()
+  const archiveTitle = page.locator('migrosmuseum-m-exhibition m-teaser h3').first()
 
   await expect(yearSelect).toBeVisible({ timeout: 30000 })
   await expect(archiveYear).toBeAttached({ timeout: 30000 })
+  await expect(archiveTeaserLoader).toBeAttached({ timeout: 30000 })
+  await archiveTeaserLoader.scrollIntoViewIfNeeded()
+  await expect(archiveTitle).toBeVisible({ timeout: 30000 })
   await expect(searchInput).toHaveCSS('font-size', '16px')
   await expect(yearSelect).toHaveCSS('font-size', '16px')
   await expect(archiveYear).toHaveCSS('font-size', '34px')
+  await expect(archiveTitle).toHaveCSS('font-size', '16px')
 
   const inputBox = await searchInput.boundingBox()
   const iconBox = await searchIcon.boundingBox()

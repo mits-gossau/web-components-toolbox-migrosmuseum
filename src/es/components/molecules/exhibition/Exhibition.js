@@ -150,6 +150,9 @@ export default class Exhibition extends Shadow() {
         --h3-margin: 0 0 8px 0;
       }
       @media only screen and (max-width: _max-width_) {
+        :host {
+          --teaser-tile-h3-font-size-mobile: 16px;
+        }
         :host > div.spacer-four:first-of-type, :host > p.empty {
           --spacer-four-height-mobile: 3.38em;
         }
