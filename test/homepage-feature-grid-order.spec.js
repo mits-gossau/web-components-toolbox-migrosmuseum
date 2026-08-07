@@ -7,7 +7,7 @@ const viewports = [
 ]
 
 for (const viewport of viewports) {
-  test(`homepage feature grid shows each image before its title on ${viewport.name}`, async ({ page }) => {
+  test(`homepage feature grid keeps its expected order and paired hover on ${viewport.name}`, async ({ page }) => {
     test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
 
     await page.setViewportSize(viewport)
@@ -47,5 +47,28 @@ for (const viewport of viewports) {
 
     expect(visualOrder.visualOrder).toEqual(expectedOrder)
     if (viewport.name === 'desktop') expect(visualOrder.imageRightPaddings).toEqual(['0px', '0px'])
+
+    if (viewport.name === 'desktop') {
+      for (const title of [firstTitle, page.getByRole('heading', { level: 2, name: 'ACCUMULATION' })]) {
+        const titleCell = title.locator('xpath=ancestor::div[@col-lg][1]')
+        const imageCell = titleCell.locator('xpath=following-sibling::div[1]')
+        const readColors = () => title.evaluate(element => ({
+          background: window.getComputedStyle(element.closest('div[col-lg]')).backgroundColor,
+          text: window.getComputedStyle(element).color
+        }))
+
+        await titleCell.hover()
+        await page.waitForTimeout(500)
+        const titleHoverColors = await readColors()
+
+        await page.mouse.move(viewport.width - 10, 10)
+        await page.waitForTimeout(500)
+        expect(await readColors()).not.toEqual(titleHoverColors)
+
+        await imageCell.hover()
+        await page.waitForTimeout(500)
+        expect(await readColors()).toEqual(titleHoverColors)
+      }
+    }
   })
 }
