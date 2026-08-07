@@ -311,7 +311,7 @@
     --menu-icon-font-size: 1.35em;
     --navigation-default-with-styles-language-switcher-align-items-mobile: flex-start;
     --navigation-default-with-styles-language-switcher-flex-direction: column;
-    --navigation-default-with-styles-language-switcher-gap-mobile: 0.62em;
+    --navigation-default-with-styles-language-switcher-gap-mobile: 0.52em;
     --navigation-default-with-styles-language-switcher-padding: 1.31rem var(--content-spacing-mobile) 0;
     --m-navigation-transition: none;
     --m-navigation-transition-mobile: none;
