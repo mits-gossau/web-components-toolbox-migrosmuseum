@@ -158,7 +158,7 @@ export default class Exhibition extends Shadow() {
           width: var(--content-width-mobile, calc(100% - var(--content-spacing-mobile, var(--content-spacing)) * 2));
         }
         :host migrosmuseum-a-heading[cluster-by] {
-          --h3-font-size-mobile: 28px;
+          --h3-font-size-mobile: 34px;
           --h3-margin-mobile: 0 0 8px 0;
         }
       }
