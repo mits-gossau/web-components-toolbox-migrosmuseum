@@ -21,7 +21,8 @@ for (const viewport of viewports) {
       const section = firstCell?.parentElement
       if (!section) return []
 
-      return Array.from(section.children)
+      const cells = Array.from(section.children)
+      const visualOrder = cells
         .map((cell, domIndex) => ({
           domIndex,
           label: cell.querySelector('a-picture')
@@ -31,12 +32,20 @@ for (const viewport of viewports) {
         }))
         .sort((a, b) => a.order - b.order || a.domIndex - b.domIndex)
         .map(cell => cell.label)
+
+      return {
+        imageRightPaddings: cells
+          .filter(cell => cell.querySelector('a-picture'))
+          .map(cell => window.getComputedStyle(cell).paddingRight),
+        visualOrder
+      }
     })
 
     const expectedOrder = viewport.name === 'mobile'
       ? ['image', 'LEAP YEAR', 'image', 'ACCUMULATION']
       : ['LEAP YEAR', 'image', 'ACCUMULATION', 'image']
 
-    expect(visualOrder).toEqual(expectedOrder)
+    expect(visualOrder.visualOrder).toEqual(expectedOrder)
+    if (viewport.name === 'desktop') expect(visualOrder.imageRightPaddings).toEqual(['0px', '0px'])
   })
 }
