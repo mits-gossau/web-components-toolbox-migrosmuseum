@@ -1,5 +1,7 @@
 const { test, expect } = require('@playwright/test')
 
+/* global document, getComputedStyle */
+
 const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const viewports = [
@@ -8,6 +10,31 @@ const viewports = [
 ]
 
 for (const viewport of viewports) {
+  test(`exhibition nested ten-column cells stay flush on ${viewport.name}`, async ({ page }) => {
+    test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
+
+    await page.setViewportSize(viewport)
+    await page.goto(`${localSite}${pagePath}`, { waitUntil: 'domcontentloaded' })
+
+    const grids = page.locator('.exhibition-detail-modules o-grid')
+    await expect(grids.first()).toBeVisible({ timeout: 30000 })
+
+    await expect.poll(() => grids.evaluateAll(elements => elements.flatMap(grid => {
+      const section = grid.shadowRoot?.querySelector('section') || grid.querySelector(':scope > section')
+      return Array.from(section?.children || [])
+        .filter(cell => cell.getAttribute('col-lg') === '10')
+    }).length)).toBeGreaterThan(0)
+
+    const paddings = await grids.evaluateAll(elements => elements.flatMap(grid => {
+      const section = grid.shadowRoot?.querySelector('section') || grid.querySelector(':scope > section')
+      return Array.from(section?.children || [])
+        .filter(cell => cell.getAttribute('col-lg') === '10')
+        .map(cell => parseFloat(getComputedStyle(cell).paddingLeft))
+    }))
+
+    expect(paddings).toEqual(paddings.map(() => 0))
+  })
+
   test(`exhibition video and agenda use full bleed layout on ${viewport.name}`, async ({ page }) => {
     test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
 
@@ -32,15 +59,16 @@ for (const viewport of viewports) {
       video.boundingBox(),
       agenda.boundingBox()
     ])
+    const layoutViewportWidth = await page.evaluate(() => document.body.clientWidth)
 
     expect(modulesBox.x).toBeCloseTo(0, 2)
-    expect(modulesBox.width).toBeCloseTo(viewport.width, 2)
+    expect(modulesBox.width).toBeCloseTo(layoutViewportWidth, 2)
     expect(videoBox.x).toBeCloseTo(0, 2)
-    expect(videoBox.width).toBeCloseTo(viewport.width, 2)
+    expect(videoBox.width).toBeCloseTo(layoutViewportWidth, 2)
     expect(agendaBox.x).toBeCloseTo(0, 2)
-    expect(agendaBox.width).toBeCloseTo(viewport.width, 2)
+    expect(agendaBox.width).toBeCloseTo(layoutViewportWidth, 2)
     expect(ordinaryBox.x).toBeGreaterThan(0)
-    expect(ordinaryBox.width).toBeLessThan(viewport.width)
+    expect(ordinaryBox.width).toBeLessThan(layoutViewportWidth)
 
     if (viewport.name === 'mobile') {
       const textBox = await page.locator('.exhibition-detail-textcol > :visible').first().boundingBox()
