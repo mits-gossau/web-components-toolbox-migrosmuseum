@@ -2,7 +2,6 @@
 import Navigation from '../../web-components-toolbox/src/es/components/molecules/navigation/Navigation.js'
 
 /* global self */
-/* global CustomEvent */
 
 /**
  * MigrosmuseumNavigation is mainly for the li hover up animation like file drawer
@@ -38,6 +37,7 @@ export default class MigrosmuseumNavigation extends Navigation {
 
     let animationendListener
     this.dialogOpenCloseListener = event => {
+      event.detail?.child?.toggleAttribute('data-open', event.type === 'open')
       const hasAttributeMouseOver = this.hasAttribute('mouse-over')
       if (hasAttributeMouseOver) {
         this.setAttribute('mouse-over-dialog-opening-closing', '')
@@ -56,7 +56,7 @@ export default class MigrosmuseumNavigation extends Navigation {
           this.setAttribute('mouse-over', '')
           this.removeAttribute('mouse-over-dialog-opening-closing')
         }
-      }, {once: true}))
+      }, { once: true }))
     }
   }
 
@@ -99,11 +99,6 @@ export default class MigrosmuseumNavigation extends Navigation {
       :host > nav > ul:first-of-type {
         --color-hover: var(--color);
       }
-      @media only screen and (min-width: 768px) {
-        :host nav > ul:first-of-type > li:first-child > m-details {
-          --details-shadow-summary-padding: 15px 0 0.5em;
-        }
-      }
       :host([mouse-over]) nav > ul:not(:first-of-type) {
         position: absolute;
         width: 100%;
@@ -129,6 +124,11 @@ export default class MigrosmuseumNavigation extends Navigation {
       }
       :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > *::part(content-child):hover {
         transform: none;
+      }
+      @media only screen and (min-width: 768px) {
+        :host(:where([mouse-over], [mouse-over-dialog-opening-closing])) nav > ul:first-of-type > li:hover > m-details[data-open]::part(summary) {
+          transform: none;
+        }
       }
       @media only screen and (max-width: _max-width_) {
         :host([mouse-over]) nav > ul:not(:first-of-type),

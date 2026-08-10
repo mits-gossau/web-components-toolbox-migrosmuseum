@@ -17,7 +17,7 @@ test('desktop navigation animates level one only', async ({ page }) => {
 
     return {
       item: getComputedStyle(firstLevelItem).transition,
-      firstSummaryPaddingTop: getComputedStyle(details.shadowRoot.querySelector('.summary.icon')).paddingTop,
+      summaryPadding: getComputedStyle(details).getPropertyValue('--details-shadow-summary-padding').trim(),
       summary: transitionForPart('summary'),
       content: transitionForPart('content'),
       children: Array.from(details.shadowRoot.querySelectorAll('[part="content-child"]'))
@@ -26,7 +26,7 @@ test('desktop navigation animates level one only', async ({ page }) => {
   })
 
   expect(transitions.item).toContain('transform')
-  expect(transitions.firstSummaryPaddingTop).toBe('15px')
+  expect(transitions.summaryPadding).toBe('1.02em 0 0.5em')
   expect(transitions.summary).toContain('transform')
   expect(transitions.content).toContain('transform')
   expect(transitions.children).not.toHaveLength(0)
@@ -41,6 +41,23 @@ test('desktop navigation animates level one only', async ({ page }) => {
   ))
 
   expect(summaryTransform).not.toBe('none')
+})
+
+test('desktop open level one heading stays in place on hover', async ({ page }) => {
+  await page.goto(demoPage)
+  const navigation = page.locator('m-navigation')
+  await navigation.waitFor()
+
+  const firstLevelItem = navigation.locator('nav > ul:first-of-type > li').first()
+  const details = firstLevelItem.locator('m-details')
+  await details.locator('summary').click()
+  await expect(details).toHaveAttribute('data-open', '')
+
+  await firstLevelItem.hover()
+  await expect.poll(() => details.evaluate(details => ({
+    summary: getComputedStyle(details.shadowRoot.querySelector('[part="summary"]')).transform,
+    summaryPadding: getComputedStyle(details).getPropertyValue('--details-shadow-summary-padding').trim()
+  }))).toEqual({ summary: 'none', summaryPadding: '1.02em 0 0.5em' })
 })
 
 test('mobile language switcher uses compact text', async ({ page }) => {
