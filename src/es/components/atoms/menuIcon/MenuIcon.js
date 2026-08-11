@@ -40,7 +40,10 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
         --width: 40px;
         --one-transform: translateY(calc(var(--height) + var(--spacing))) rotate(45deg);
         --two-transform: translateY(calc(-1 * (var(--height) + var(--spacing)))) rotate(-45deg);
+        align-items: flex-end;
         cursor: pointer;
+        display: flex !important;
+        flex-direction: column;
         position: relative;
       }
       @media (hover: hover) {
@@ -54,10 +57,6 @@ export default class MigrosmuseumMenuIcon extends MenuIcon {
           --header-default-a-menu-icon-background-color: var(--color);
           color: var(--color);
         }
-      }
-      :host :where(.bar1, .bar2, .bar3) {
-        justify-self: end;
-        margin-left: auto;
       }
       :host div.hidden {
         visibility: hidden;
