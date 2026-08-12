@@ -5,12 +5,13 @@ const { test, expect } = require('@playwright/test')
 const localSite = process.env.UMBRACO_BASE_URL
 const pagePath = '/programm/ausstellungen/disobedience-archive-canopy-for-broken-time'
 const viewports = [
+  { name: 'large desktop', width: 1920, height: 1080 },
   { name: 'desktop', width: 1440, height: 900 },
   { name: 'mobile', width: 390, height: 844 }
 ]
 
 for (const viewport of viewports) {
-  test(`exhibition nested ten-column cells stay flush on ${viewport.name}`, async ({ page }) => {
+  test(`exhibition nested ten-column cells use the responsive alignment inset on ${viewport.name}`, async ({ page }) => {
     test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
 
     await page.setViewportSize(viewport)
@@ -32,7 +33,11 @@ for (const viewport of viewports) {
         .map(cell => parseFloat(getComputedStyle(cell).paddingLeft))
     }))
 
-    expect(paddings).toEqual(paddings.map(() => 0))
+    if (viewport.name === 'mobile') {
+      expect(paddings).toEqual(paddings.map(() => 0))
+    } else {
+      expect(paddings.every(padding => padding > 0)).toBe(true)
+    }
   })
 
   test(`exhibition video and agenda use full bleed layout on ${viewport.name}`, async ({ page }) => {
@@ -70,10 +75,9 @@ for (const viewport of viewports) {
     expect(ordinaryBox.x).toBeGreaterThan(0)
     expect(ordinaryBox.width).toBeLessThan(layoutViewportWidth)
 
-    if (viewport.name === 'mobile') {
-      const textBox = await page.locator('.exhibition-detail-textcol > :visible').first().boundingBox()
+    const textBox = await page.locator('.exhibition-detail-textcol > :visible').first().boundingBox()
+    const ordinaryContentBox = await ordinaryModule.locator('[col-lg="10"] > :visible').first().boundingBox()
 
-      expect(ordinaryBox.x).toBeCloseTo(textBox.x, 2)
-    }
+    expect(ordinaryContentBox.x).toBeCloseTo(textBox.x, 1)
   })
 }
