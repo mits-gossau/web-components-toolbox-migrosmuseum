@@ -37,6 +37,13 @@ for (const viewport of viewports) {
       expect(paddings).toEqual(paddings.map(() => 0))
     } else {
       expect(paddings.every(padding => padding > 0)).toBe(true)
+
+      const h3HeadingPaddings = await page
+        .locator('.exhibition-detail-modules migrosmuseum-a-heading:has(> h3)')
+        .evaluateAll(elements => elements.map(element => parseFloat(getComputedStyle(element).paddingLeft)))
+
+      expect(h3HeadingPaddings.length).toBeGreaterThan(0)
+      expect(h3HeadingPaddings).toEqual(h3HeadingPaddings.map(() => 0))
     }
   })
 
