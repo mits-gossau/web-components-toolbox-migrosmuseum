@@ -78,6 +78,8 @@ for (const viewport of viewports) {
     const textBox = await page.locator('.exhibition-detail-textcol > :visible').first().boundingBox()
     const ordinaryContentBox = await ordinaryModule.locator('[col-lg="10"] > :visible').first().boundingBox()
 
-    expect(ordinaryContentBox.x).toBeCloseTo(textBox.x, 1)
+    // Chromium rounds the percentage-based text column and the rem/vw grid inset on separate
+    // subpixels. Keep the tolerance below half a pixel while still catching the former ~10px gap.
+    expect(ordinaryContentBox.x).toBeCloseTo(textBox.x, 0)
   })
 }
