@@ -105,10 +105,15 @@
 }
 
 #onetrust-consent-sdk #onetrust-pc-btn-handler,
-#onetrust-consent-sdk #onetrust-pc-sdk button {
+#onetrust-consent-sdk #onetrust-pc-sdk button:not([ot-accordion]) {
   background-color: #fff !important;
   border-color: #000 !important;
   color: #000 !important;
+}
+
+#onetrust-consent-sdk #onetrust-pc-sdk button[ot-accordion] {
+  background-color: transparent !important;
+  border: 0 !important;
 }
 
 #onetrust-consent-sdk .ot-switch input:checked + .ot-switch-nob,
