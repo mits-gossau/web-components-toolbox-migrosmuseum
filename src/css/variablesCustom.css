@@ -67,9 +67,13 @@
 }
 
 #onetrust-consent-sdk #onetrust-banner-sdk *,
-#onetrust-consent-sdk #onetrust-pc-sdk *,
 #onetrust-consent-sdk #ot-sdk-cookie-policy * {
   border-color: #000;
+}
+
+#onetrust-consent-sdk #onetrust-pc-sdk * {
+  border-color: #000;
+  color: #000 !important;
 }
 
 #onetrust-consent-sdk #onetrust-banner-sdk h2,
@@ -94,17 +98,14 @@
 }
 
 #onetrust-consent-sdk #onetrust-accept-btn-handler,
-#onetrust-consent-sdk #onetrust-reject-all-handler,
-#onetrust-consent-sdk #onetrust-pc-sdk .save-preference-btn-handler,
-#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-refuse-all-handler,
-#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-accept-all-handler {
+#onetrust-consent-sdk #onetrust-reject-all-handler {
   background-color: #000 !important;
   border-color: #000 !important;
   color: #fff !important;
 }
 
 #onetrust-consent-sdk #onetrust-pc-btn-handler,
-#onetrust-consent-sdk #onetrust-pc-sdk button:not(.save-preference-btn-handler):not(.ot-pc-refuse-all-handler):not(.ot-pc-accept-all-handler) {
+#onetrust-consent-sdk #onetrust-pc-sdk button {
   background-color: #fff !important;
   border-color: #000 !important;
   color: #000 !important;
