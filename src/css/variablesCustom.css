@@ -51,6 +51,74 @@
   }
 }
 
+/* OneTrust injects tenant colors inline, so the monochrome theme needs !important. */
+#onetrust-consent-sdk #onetrust-banner-sdk,
+#onetrust-consent-sdk #onetrust-pc-sdk,
+#onetrust-consent-sdk #ot-sdk-cookie-policy {
+  background-color: #fff !important;
+  border-color: #000 !important;
+  color: #000 !important;
+  filter: grayscale(1);
+}
+
+#onetrust-consent-sdk #onetrust-banner-sdk *,
+#onetrust-consent-sdk #onetrust-pc-sdk *,
+#onetrust-consent-sdk #ot-sdk-cookie-policy * {
+  border-color: #000;
+}
+
+#onetrust-consent-sdk #onetrust-banner-sdk h2,
+#onetrust-consent-sdk #onetrust-banner-sdk h3,
+#onetrust-consent-sdk #onetrust-banner-sdk p,
+#onetrust-consent-sdk #onetrust-pc-sdk h2,
+#onetrust-consent-sdk #onetrust-pc-sdk h3,
+#onetrust-consent-sdk #onetrust-pc-sdk h4,
+#onetrust-consent-sdk #onetrust-pc-sdk p,
+#onetrust-consent-sdk #onetrust-pc-sdk label,
+#onetrust-consent-sdk #ot-sdk-cookie-policy h2,
+#onetrust-consent-sdk #ot-sdk-cookie-policy h3,
+#onetrust-consent-sdk #ot-sdk-cookie-policy p {
+  color: #000 !important;
+}
+
+#onetrust-consent-sdk #onetrust-banner-sdk a,
+#onetrust-consent-sdk #onetrust-pc-sdk a,
+#onetrust-consent-sdk #ot-sdk-cookie-policy a {
+  color: #000 !important;
+  text-decoration: underline;
+}
+
+#onetrust-consent-sdk #onetrust-accept-btn-handler,
+#onetrust-consent-sdk #onetrust-reject-all-handler,
+#onetrust-consent-sdk #onetrust-pc-sdk .save-preference-btn-handler,
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-refuse-all-handler,
+#onetrust-consent-sdk #onetrust-pc-sdk .ot-pc-accept-all-handler {
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+#onetrust-consent-sdk #onetrust-pc-btn-handler,
+#onetrust-consent-sdk #onetrust-pc-sdk button:not(.save-preference-btn-handler):not(.ot-pc-refuse-all-handler):not(.ot-pc-accept-all-handler) {
+  background-color: #fff !important;
+  border-color: #000 !important;
+  color: #000 !important;
+}
+
+#onetrust-consent-sdk .ot-switch input:checked + .ot-switch-nob,
+#onetrust-consent-sdk .ot-checkbox input:checked + label::before {
+  background-color: #000 !important;
+  border-color: #000 !important;
+}
+
+#onetrust-consent-sdk .ot-switch input:checked + .ot-switch-nob::before {
+  background-color: #fff !important;
+}
+
+#onetrust-consent-sdk input {
+  accent-color: #000 !important;
+}
+
 :root {
   --a-color: var(--color);
   --a-margin: 0;
