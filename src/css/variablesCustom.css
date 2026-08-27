@@ -61,6 +61,10 @@
   filter: grayscale(1);
 }
 
+#onetrust-consent-sdk #onetrust-banner-sdk {
+  border: 0 !important;
+}
+
 #onetrust-consent-sdk #onetrust-banner-sdk *,
 #onetrust-consent-sdk #onetrust-pc-sdk *,
 #onetrust-consent-sdk #ot-sdk-cookie-policy * {
