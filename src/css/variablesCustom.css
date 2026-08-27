@@ -63,6 +63,7 @@
 
 #onetrust-consent-sdk #onetrust-banner-sdk {
   border: 0 !important;
+  outline: 0 !important;
 }
 
 #onetrust-consent-sdk #onetrust-banner-sdk *,
