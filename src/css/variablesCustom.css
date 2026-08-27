@@ -119,6 +119,11 @@
   accent-color: #000 !important;
 }
 
+#onetrust-consent-sdk #ot-sdk-btn-floating,
+#onetrust-consent-sdk .ot-floating-button {
+  display: none !important;
+}
+
 :root {
   --a-color: var(--color);
   --a-margin: 0;
