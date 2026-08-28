@@ -170,8 +170,11 @@ export default class Heading extends Shadow() {
         position: sticky;
         top: 0;
       }
-      :host([hidden]), :host(.hidden), :host([not-visible]) {
+      :host([hidden]), :host(.hidden) {
         display: none !important;
+      }
+      :host([not-visible]) {
+        visibility: hidden;
       }
       :host > * {
         margin-left: 0 !important;
@@ -368,8 +371,8 @@ export default class Heading extends Shadow() {
           this.removeAttribute('not-visible')
           intersectionSensor.removeAttribute('not-visible')
         } else {
-          this.setAttribute('hidden', '')
-          // not-visible is a workaround of the later this.hidden = false
+          // Keep the sticky heading in the document flow to avoid changing the
+          // scroll position when its intersection sensor leaves the viewport.
           this.setAttribute('not-visible', '')
           intersectionSensor.setAttribute('not-visible', '')
         }
