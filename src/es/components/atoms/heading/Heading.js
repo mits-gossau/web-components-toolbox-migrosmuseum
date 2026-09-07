@@ -90,6 +90,7 @@ export default class Heading extends Shadow() {
 
   connectedCallback () {
     this.hidden = true
+    if (this.getRootNode()?.host?.localName === 'm-teaser') this.setAttribute('teaser-child', '')
     const showPromises = []
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) {
@@ -172,6 +173,9 @@ export default class Heading extends Shadow() {
         padding: 0;
       }
       /* Remove side padding when inside m-teaser */
+      :host([teaser-child]) {
+        padding: 0 !important;
+      }
       :host-context(m-teaser) {
         padding: 0 !important;
       }
