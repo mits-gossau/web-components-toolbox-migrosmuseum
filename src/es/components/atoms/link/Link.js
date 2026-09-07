@@ -107,8 +107,9 @@ export default class Link extends Shadow() {
         : 'icon-url="/assets/img/mm-icon-arrow-right.svg"'
     const iconSize = this.getAttribute('icon-size') || (iconUrl || !iconName ? '1em' : '1.5em')
     const tagName = this.getAttribute('tag-name') || 'h4'
-    // no-icon opts out of the injected a-icon-mdx, e.g. when the label text already carries its own arrow (footer newsletter)
-    const icon = this.hasAttribute('no-icon') ? '' : `<a-icon-mdx ${iconAttribute} size="${iconSize}" hover-on-parent-element></a-icon-mdx>`
+    const hasTextArrow = /^[←→↑↓↗]/u.test(this.initialTextContent)
+    // no-icon and textual arrows opt out of the injected a-icon-mdx.
+    const icon = this.hasAttribute('no-icon') || hasTextArrow ? '' : `<a-icon-mdx ${iconAttribute} size="${iconSize}" hover-on-parent-element></a-icon-mdx>`
     this.html = /* html */`<a href="${this.getAttribute('href')}"${this.hasAttribute('target') ? ` target="${this.getAttribute('target')}"` : ''}><${tagName}>${icon}${this.initialTextContent}</${tagName}></a>`
   }
 
