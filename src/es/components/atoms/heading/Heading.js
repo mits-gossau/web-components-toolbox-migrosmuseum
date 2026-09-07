@@ -1,4 +1,5 @@
 // @ts-check
+/* global customElements */
 import { Shadow } from '../../web-components-toolbox/src/es/components/prototypes/Shadow.js'
 import { Intersection } from '../../web-components-toolbox/src/es/components/prototypes/Intersection.js'
 
@@ -100,24 +101,36 @@ export default class Heading extends Shadow() {
       while (node && !node.localName.includes('-')) node = node.nextElementSibling
       return node
     }
-    const nextElementSibling = findNextWebComponent(this.hasAttribute('sticky')
-      ? this.nextElementSibling?.nextElementSibling || this.nextElementSibling
-      : this.nextElementSibling)
     Promise.all(showPromises).then(() => {
-      // fix z-index covering this heading to a part (height)
+      // Ensure following content paints above the sticky heading until the next
+      // sticky heading takes over. A single sibling is not sufficient when a
+      // short component such as a marquee precedes the main content block.
       const fixZIndex = node => {
         const isWebComponent = typeof node?.setCss === 'function'
-        if (isWebComponent) node.css =  /* css */`
-          :host {
-            position: relative;
-          }
-        `
+        if (isWebComponent) {
+          node.css = /* css */`
+            :host {
+              position: relative;
+            }
+          `
+        }
         return isWebComponent
+      }
+      const fixFollowingZIndexes = () => {
+        let node = findNextWebComponent(this.nextElementSibling?.nextElementSibling || this.nextElementSibling)
+        let allFixed = true
+
+        while (node && !(node.hasAttribute('sticky') && node.localName.includes('heading'))) {
+          if (!fixZIndex(node)) allFixed = false
+          node = findNextWebComponent(node.nextElementSibling)
+        }
+
+        return allFixed
       }
       this.setAttribute('show', '')
       if (this.hasAttribute('sticky')) {
         this.nextElementSibling.setAttribute('show', '')
-        if (!fixZIndex(nextElementSibling)) setTimeout(() => fixZIndex(nextElementSibling), 50)
+        if (!fixFollowingZIndexes()) setTimeout(fixFollowingZIndexes, 50)
       }
       this.hidden = false
     })
@@ -192,7 +205,7 @@ export default class Heading extends Shadow() {
         transform: translateX(-0.075em);
       }
       :host([crop][fix-first-letter-spacing]) > * {
-        transform: translate(-0.075em, 0.275em);
+        transform: translate(-0.075em, 0.25em);
       }
       :host([show][shadow]:not([sticky])) {
         animation: shadow 3s ease-in forwards !important;

@@ -126,7 +126,7 @@ export default class Marquee extends Shadow() {
         color: var(--color, white);
         font-size: var(--font-size, 1rem);
         padding: var(--padding, 0.672em 0);
-        position: var(--position, static);
+        position: var(--position, relative);
         visibility: hidden;
         margin: 0 !important;
         z-index: var(--z-index, 100);

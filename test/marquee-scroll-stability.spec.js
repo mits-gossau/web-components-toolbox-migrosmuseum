@@ -4,6 +4,15 @@ const { test, expect } = require('@playwright/test')
 
 const demoPage = 'src/es/components/web-components-toolbox/docs/Template.html?rootFolder=src&css=./src/css/variablesCustom.css&content=./test/fixtures/marquee-resize.html'
 
+test('marquee establishes one stacking context for its background and text', async ({ page }) => {
+  await page.goto(demoPage)
+
+  const marquee = page.locator('[data-test="marquee"]')
+
+  await expect(marquee).toHaveCSS('position', 'relative')
+  await expect(marquee).toHaveCSS('z-index', '100')
+})
+
 test('marquee width measurement keeps its content in document flow', async ({ page }) => {
   await page.goto(demoPage)
 
