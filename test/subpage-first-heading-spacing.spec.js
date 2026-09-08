@@ -36,8 +36,10 @@ for (const viewport of viewports) {
     await page.goto(`${localSite}/programm/agenda/eroeffnung-accumulation`, { waitUntil: 'domcontentloaded' })
 
     const firstHeading = page.locator('#content h1').first()
+    const closeLink = page.locator('#content [data-history-back-fallback]').first()
     await expect(firstHeading).toHaveCount(1)
     await expect(firstHeading).toHaveCSS('margin-top', '20px')
+    await expect(closeLink).toHaveCSS('margin-top', '20px')
   })
 
   test(`exhibition detail h1 keeps its existing top margin on ${viewport.name}`, async ({ page }) => {
