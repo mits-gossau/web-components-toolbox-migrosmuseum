@@ -29,6 +29,17 @@ for (const viewport of viewports) {
     await expect(firstHeading).not.toHaveCSS('margin-top', '20px')
   })
 
+  test(`agenda detail h1 has the same 20 pixel top margin on ${viewport.name}`, async ({ page }) => {
+    test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
+
+    await page.setViewportSize(viewport)
+    await page.goto(`${localSite}/programm/agenda/eroeffnung-accumulation`, { waitUntil: 'domcontentloaded' })
+
+    const firstHeading = page.locator('#content h1').first()
+    await expect(firstHeading).toHaveCount(1)
+    await expect(firstHeading).toHaveCSS('margin-top', '20px')
+  })
+
   test(`exhibition detail h1 keeps its existing top margin on ${viewport.name}`, async ({ page }) => {
     test.skip(!localSite, 'Set UMBRACO_BASE_URL to run tests against the local Umbraco site')
 
