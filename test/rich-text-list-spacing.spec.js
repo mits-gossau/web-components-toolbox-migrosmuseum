@@ -51,22 +51,26 @@ test('bullet and decimal markers share the same left edge and text column', asyn
         const text = element.querySelector('p')
 
         return {
+          alignItems: getComputedStyle(element).alignItems,
+          display: getComputedStyle(element).display,
           itemPaddingLeft: getComputedStyle(element).paddingLeft,
           markerContent: marker.content,
           markerFontSize: marker.fontSize,
-          markerLeft: element.getBoundingClientRect().x + parseFloat(marker.left),
-          markerTop: marker.top,
+          markerLeft: element.getBoundingClientRect().x,
+          markerPosition: marker.position,
           paddingLeft: getComputedStyle(element.parentElement).paddingLeft,
           textLeft: text.getBoundingClientRect().x,
-          textMarkerGap: text.getBoundingClientRect().x - (element.getBoundingClientRect().x + parseFloat(marker.left))
+          textMarkerGap: text.getBoundingClientRect().x - element.getBoundingClientRect().x
         }
       })
     ))
 
     expect(alignment[0].markerContent).toBe('"•"')
     expect(alignment[1].markerContent).toContain('counter(rich-text-list-item)')
+    expect(alignment.map(item => item.display)).toEqual(['grid', 'grid'])
+    expect(alignment.map(item => item.alignItems)).toEqual(['baseline', 'baseline'])
+    expect(alignment.map(item => item.markerPosition)).toEqual(['static', 'static'])
     expect(alignment.map(item => item.markerFontSize)).toEqual(['16px', '16px'])
-    expect(alignment.map(item => item.markerTop)).toEqual(['1px', '2px'])
     expect(alignment.map(item => item.paddingLeft)).toEqual(['15px', '15px'])
     expect(alignment.map(item => item.itemPaddingLeft)).toEqual(['0px', '0px'])
     expect(alignment.map(item => item.textMarkerGap)).toEqual([15, 15])
