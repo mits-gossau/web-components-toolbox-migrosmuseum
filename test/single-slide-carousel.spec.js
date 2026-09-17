@@ -112,3 +112,73 @@ test('museum carousel aligns compact dots with consistent spacing on mobile', as
     visibleDotWidth: '12px'
   })
 })
+
+test('museum carousel keeps slides visible while swiping', async ({ page }) => {
+  await page.goto(demoPage)
+
+  const carousel = page.locator('[data-test="swipe-carousel"]')
+
+  await expect.poll(() => carousel.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const inactiveSlide = root.querySelector('section > :not(.active)')
+
+    return inactiveSlide && getComputedStyle(inactiveSlide).opacity
+  })).toBe('1')
+})
+
+test('museum carousel keeps the active dot filled while swiping', async ({ page }) => {
+  await page.goto(demoPage)
+
+  const carousel = page.locator('[data-test="swipe-carousel"]')
+  await expect.poll(() => carousel.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const section = root.querySelector('section')
+    const activeDot = root.querySelector('nav > .active')
+
+    return Boolean(section && activeDot && !section.classList.contains('scrolling'))
+  })).toBe(true)
+
+  const colors = await carousel.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const section = root.querySelector('section')
+    const activeDot = root.querySelector('nav > .active')
+
+    const restingColor = getComputedStyle(activeDot, '::before').backgroundColor
+    section.classList.add('scrolling')
+    const scrollingColor = getComputedStyle(activeDot, '::before').backgroundColor
+
+    return { restingColor, scrollingColor }
+  })
+
+  expect(colors.restingColor).not.toBe('rgba(0, 0, 0, 0)')
+  expect(colors.scrollingColor).toBe(colors.restingColor)
+})
+
+test('carousel selects the nearest slide at an intermediate scroll position', async ({ page }) => {
+  await page.goto(demoPage)
+
+  const carousel = page.locator('[data-test="swipe-carousel"]')
+  await expect.poll(() => carousel.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const section = root.querySelector('section')
+
+    return !carousel.hidden && section && section.clientWidth > 0
+  })).toBe(true)
+
+  await carousel.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const section = root.querySelector('section')
+
+    section.style.scrollBehavior = 'auto'
+    section.style.scrollSnapType = 'none'
+    section.scrollLeft = section.clientWidth * 2.35
+    section.dispatchEvent(new Event('scroll'))
+  })
+
+  await expect.poll(() => carousel.evaluate(carousel => {
+    const root = carousel.root || carousel.shadowRoot || carousel
+    const section = root.querySelector('section')
+
+    return Array.from(section.children).findIndex(slide => slide.classList.contains('active'))
+  })).toBe(2)
+})
