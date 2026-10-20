@@ -12,7 +12,6 @@ export default class Catalog extends Shadow() {
 
     this.requestCatalogFilterTextEventListener = (event, value) => {
       if (value || (value = event?.detail.value)) {
-        this.pictureLoadResolve()
         Catalog.filterFunction(value, this.teasers.reverse())
         const checkForVisibleTeasersFunc = child => !child.classList.contains('hidden') && !child.children?.[0]?.classList.contains('hidden')
         this.classList[this.grids.some(grid => Array.from(grid.section.children).some(checkForVisibleTeasersFunc))
@@ -46,13 +45,6 @@ export default class Catalog extends Shadow() {
     if (this.shouldRenderCSS()) showPromises.push(this.renderCSS())
     if (this.shouldRenderHTML()) {
       showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => this.addEventListener('grid-load', event => resolve(), { once: true }))))
-      showPromises.push(/** @type {Promise<void>} */(new Promise(resolve => {
-        this.addEventListener('picture-load', event => resolve(), { once: true })
-        this.pictureLoadResolve = () => {
-          resolve()
-          this.pictureLoadResolve = () => {}
-        }
-      })))
       showPromises.push(this.renderHTML())
     }
     Promise.all(showPromises).then(() => {
@@ -226,7 +218,14 @@ export default class Catalog extends Shadow() {
                         padding="0"
                       >
                         <figure>
-                          <a-picture namespace="picture-teaser-" picture-load defaultSource="${curr.defaultSource}"></a-picture>
+                          <a-picture
+                            namespace="picture-teaser-"
+                            sources-widths="320,640"
+                            sizes="(max-width: ${this.mobileBreakpoint}) 50vw, 25vw"
+                            loading="lazy"
+                            no-bad-quality
+                            defaultSource="${curr.defaultSource}"
+                          ></a-picture>
                           <figcaption>
                             <p>${curr.title}</p>
                             <p>${curr.description}${curr.descriptionTwo ? `<br>${curr.descriptionTwo}` : ''}</p>

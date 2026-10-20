@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>body { margin: 0; } migrosmuseum-m-catalog { --content-width: 100%; }</style>
+  </head>
+  <body>
+    <migrosmuseum-m-catalog><p class="empty">No works found</p><template></template></migrosmuseum-m-catalog>
+    <script type="module">
+      import Catalog from '../../src/es/components/molecules/catalog/Catalog.js'
+      const noImages = new URL(location.href).searchParams.has('no-images')
+      document.querySelector('template').content.textContent = JSON.stringify(Array.from({ length: 40 }, (_, index) => ({
+        defaultSource: noImages ? '' : `/media/catalog-${index}.svg?width=640&format=webp&quality=80`,
+        title: `Artist ${index}`,
+        description: `Work ${index}`,
+        link: { href: `/works/${index}`, target: '_self' }
+      })))
+      customElements.define('migrosmuseum-m-catalog', Catalog)
+    </script>
+  </body>
+</html>
