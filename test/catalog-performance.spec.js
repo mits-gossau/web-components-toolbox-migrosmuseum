@@ -3,6 +3,19 @@ const { test, expect } = require('@playwright/test')
 const fixture = 'test/fixtures/catalog-performance.html'
 const image = '<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480"><rect width="640" height="480" fill="orange"/></svg>'
 
+test('signed image URLs retain all parameters and visible images finish loading', async ({ page }) => {
+  const invalid = []
+  await page.route('**/media/catalog-*', async route => {
+    const url = new URL(route.request().url())
+    const valid = url.search === '?width=640&height=480&format=webp&quality=80&hmac=test-signature'
+    if (!valid) invalid.push(url.href)
+    await route.fulfill({ status: valid ? 200 : 400, contentType: 'image/svg+xml', body: valid ? image : '' })
+  })
+  await page.goto(`${fixture}?signed`)
+  await expect.poll(() => page.locator('m-teaser').first().locator('img').evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true)
+  expect(invalid).toEqual([])
+})
+
 test('catalog becomes visible while its images are still pending', async ({ page }) => {
   let releaseImages
   const pending = new Promise(resolve => { releaseImages = resolve })

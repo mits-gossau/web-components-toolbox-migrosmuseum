@@ -10,8 +10,9 @@
     <script type="module">
       import Catalog from '../../src/es/components/molecules/catalog/Catalog.js'
       const noImages = new URL(location.href).searchParams.has('no-images')
+      const signed = new URL(location.href).searchParams.has('signed')
       document.querySelector('template').content.textContent = JSON.stringify(Array.from({ length: 40 }, (_, index) => ({
-        defaultSource: noImages ? '' : `/media/catalog-${index}.svg?width=640&format=webp&quality=80`,
+        defaultSource: noImages ? '' : `/media/catalog-${index}.svg?width=640&height=480&format=webp&quality=80${signed ? '&hmac=test-signature' : ''}`,
         title: `Artist ${index}`,
         description: `Work ${index}`,
         link: { href: `/works/${index}`, target: '_self' }

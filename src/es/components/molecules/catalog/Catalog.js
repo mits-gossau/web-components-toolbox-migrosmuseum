@@ -202,6 +202,9 @@ export default class Catalog extends Shadow() {
             ${json
               ? json.reduce((acc, curr, i) => {
                 const link = Object.keys(curr.link || {}).reduce((acc, key) => `${acc} ${key}="${curr.link[key]}"`, '')
+                // Signed crop URLs must retain their query parameters. An explicit
+                // source prevents Picture from generating unsigned derivatives.
+                const signedSource = curr.defaultSource && new URL(curr.defaultSource, self.location.href).searchParams.has('hmac')
                 return /* html */`${acc}
                   <m-load-template-tag
                     no-css
@@ -222,10 +225,10 @@ export default class Catalog extends Shadow() {
                             namespace="picture-teaser-"
                             sources-widths="320,640"
                             sizes="(max-width: ${this.mobileBreakpoint}) 50vw, 25vw"
-                            loading="lazy"
+                            loading="eager"
                             no-bad-quality
                             defaultSource="${curr.defaultSource}"
-                          ></a-picture>
+                          >${signedSource ? `<source srcset="${curr.defaultSource}">` : ''}</a-picture>
                           <figcaption>
                             <p>${curr.title}</p>
                             <p>${curr.description}${curr.descriptionTwo ? `<br>${curr.descriptionTwo}` : ''}</p>
