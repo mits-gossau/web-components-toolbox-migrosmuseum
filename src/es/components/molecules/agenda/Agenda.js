@@ -144,7 +144,7 @@ export default class Agenda extends Shadow() {
         }
         :host > o-grid::part(section) {
           grid-template-rows: auto auto 1fr;
-          min-height: 10em;
+          min-height: 11em;
         }
         :host > o-grid::part(date), :host > o-grid::part(title), :host > o-grid::part(description) {
           padding: var(--grid-12er-section-child-padding-mobile);
