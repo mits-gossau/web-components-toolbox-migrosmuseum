@@ -32,6 +32,10 @@
   font-display: swap;
 }
 
+:root {
+  --agenda-event-min-height-mobile: 11em;
+}
+
 :root * {
   hyphens: none;
   overflow-wrap: break-word;
